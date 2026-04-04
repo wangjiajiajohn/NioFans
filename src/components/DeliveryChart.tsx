@@ -390,17 +390,7 @@ export default function DeliveryChart() {
           </div>
         </div>
       </div>
-
-      {/* ── Footer ── */}
-      <footer style={{ padding: '36px 16px 48px', textAlign: 'center', marginTop: '8px' }}>
-        <div className="divider" style={{ marginBottom: '28px' }} />
-        <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.24em', color: '#0D0D0D', textTransform: 'uppercase', marginBottom: '8px' }}>
-          Blue Sky Coming
-        </p>
-        <p style={{ fontSize: '9px', color: '#AAAAAA', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
-          © 2026 NIO Fans Portal · 非官方数据
-        </p>
-      </footer>
     </div>
   );
 }
+

@@ -1,98 +1,76 @@
 "use client";
 import React, { useState } from 'react';
 
+type BrandId = 'ONVO' | 'Firefly' | 'NIO';
 
 interface ModelConfig {
   id: string;
-  name: string;         // display name e.g. "ONVO L90"
-  brand: 'ONVO' | 'Firefly' | 'NIO';
-  tag: string;          // e.g. "家庭智能SUV"
-  thumb: string;        // public image path
-  available: false;     // data not yet available
+  name: string;
+  brand: BrandId;
+  tag: string;
+  color: string;
 }
 
 const MODELS: ModelConfig[] = [
-  {
-    id: 'l90',
-    name: 'L90',
-    brand: 'ONVO',
-    tag: '家庭智能 SUV · 首款热销车型',
-    thumb: '/hero_car.png',
-    available: false,
-  },
-  {
-    id: 'firefly',
-    name: '萤火虫',
-    brand: 'Firefly',
-    tag: '城市微型纯电 · 品牌首款',
-    thumb: '/hero_car.png',
-    available: false,
-  },
-  {
-    id: 'es8',
-    name: 'ES8',
-    brand: 'NIO',
-    tag: '旗舰六七座 SUV · 经典战略车型',
-    thumb: '/hero_car.png',
-    available: false,
-  },
+  { id: 'l90',      name: 'L90',    brand: 'ONVO',    tag: '家庭智能 SUV · 首款热销车型',      color: '#4E7CF6' },
+  { id: 'firefly',  name: '萤火虫', brand: 'Firefly', tag: '城市微型纯电 · 品牌首款',          color: '#E8940A' },
+  { id: 'es8',      name: 'ES8',    brand: 'NIO',     tag: '旗舰六七座 SUV · 经典战略车型',    color: '#00A3DA' },
 ];
 
-const BRAND_COLOR: Record<string, string> = {
-  ONVO: '#4E7CF6',
-  Firefly: '#F0A500',
-  NIO: '#00A3DA',
-};
-
 export default function ModelSection() {
-  const [activeId, setActiveId] = useState<string>('l90');
+  const [activeId, setActiveId] = useState('l90');
   const model = MODELS.find(m => m.id === activeId)!;
-  const brandColor = BRAND_COLOR[model.brand];
 
   return (
-    <section style={{ padding: '32px 16px 48px', background: '#FAFAFA', borderTop: '1px solid #EFEFEF' }}>
-      {/* Header */}
-      <div style={{ marginBottom: '20px' }}>
-        <p
-          style={{
-            fontSize: '9px', fontWeight: 700, letterSpacing: '0.24em',
-            textTransform: 'uppercase', color: '#AAAAAA', marginBottom: '6px',
-          }}
-        >
+    <section style={{ background: '#0B0F14', padding: '32px 0 48px' }}>
+
+      {/* ── Section header ── */}
+      <div style={{ padding: '0 16px', marginBottom: '24px' }}>
+        <p style={{
+          fontSize: '9px', fontWeight: 700, letterSpacing: '0.26em',
+          textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '8px',
+        }}>
           Vehicle Delivery · 车型月交付
         </p>
-        <h2
-          style={{
-            fontSize: '22px', fontWeight: 200, letterSpacing: '-0.01em',
-            color: '#0D0D0D', lineHeight: 1.1,
-          }}
-        >
+        <h2 style={{
+          fontSize: '24px', fontWeight: 200, letterSpacing: '-0.01em',
+          color: '#FFFFFF', lineHeight: 1.15,
+        }}>
           特定车型<br />月度交付数据
         </h2>
       </div>
 
-      {/* Model tabs */}
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', overflowX: 'auto' }} className="no-scrollbar">
+      {/* ── Model selector tabs ── */}
+      <div
+        style={{ display: 'flex', padding: '0 16px', gap: '6px', marginBottom: '20px', overflowX: 'auto' }}
+        className="no-scrollbar"
+      >
         {MODELS.map(m => {
           const isActive = m.id === activeId;
-          const color = BRAND_COLOR[m.brand];
           return (
             <button
               key={m.id}
               onClick={() => setActiveId(m.id)}
               style={{
                 display: 'flex', flexDirection: 'column', alignItems: 'flex-start',
-                padding: '10px 14px', borderRadius: '12px', border: '1px solid',
-                borderColor: isActive ? color : '#E8E8E8',
-                background: isActive ? `${color}10` : '#FFFFFF',
-                cursor: 'pointer', transition: 'all 0.2s', flexShrink: 0,
-                minWidth: '92px',
+                padding: '11px 16px', borderRadius: '12px', border: '1px solid',
+                borderColor: isActive ? m.color : 'rgba(255,255,255,0.08)',
+                background: isActive ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
+                cursor: 'pointer', transition: 'all 0.2s', flexShrink: 0, minWidth: '88px',
               }}
             >
-              <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: isActive ? color : '#BBBBBB', marginBottom: '3px' }}>
+              <span style={{
+                fontSize: '7px', fontWeight: 700, letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: isActive ? m.color : 'rgba(255,255,255,0.2)',
+                marginBottom: '4px',
+              }}>
                 {m.brand}
               </span>
-              <span style={{ fontSize: '15px', fontWeight: 300, color: isActive ? '#0D0D0D' : '#888', letterSpacing: '-0.01em' }}>
+              <span style={{
+                fontSize: '16px', fontWeight: 300, letterSpacing: '-0.01em',
+                color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.35)',
+              }}>
                 {m.name}
               </span>
             </button>
@@ -100,105 +78,90 @@ export default function ModelSection() {
         })}
       </div>
 
-      {/* Content card */}
-      <div
-        style={{
-          background: '#FFFFFF', borderRadius: '16px',
-          border: '1px solid #EBEBEB', overflow: 'hidden',
-        }}
-      >
-        {/* Card header */}
-        <div style={{ padding: '16px 16px 14px', borderBottom: '1px solid #F0F0F0', display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div
-            style={{
-              width: '36px', height: '36px', borderRadius: '10px',
-              background: `${brandColor}12`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <span style={{ fontSize: '10px', fontWeight: 800, color: brandColor, letterSpacing: '0.02em' }}>
-              {model.brand.slice(0, 2).toUpperCase()}
+      {/* ── Content card ── */}
+      <div style={{ padding: '0 16px' }}>
+        <div style={{
+          borderRadius: '16px', overflow: 'hidden',
+          border: `1px solid rgba(255,255,255,0.07)`,
+          background: 'rgba(255,255,255,0.03)',
+        }}>
+
+          {/* Card top stripe */}
+          <div style={{
+            height: '2px',
+            background: `linear-gradient(90deg, ${model.color}, transparent)`,
+          }} />
+
+          {/* Card header */}
+          <div style={{ padding: '18px 18px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <span style={{
+              fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em',
+              textTransform: 'uppercase', color: model.color,
+            }}>
+              {model.brand}
             </span>
-          </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.14em', color: brandColor, textTransform: 'uppercase' }}>
-                {model.brand}
-              </span>
-              <span style={{ fontSize: '14px', fontWeight: 500, color: '#0D0D0D' }}>{model.name}</span>
-            </div>
-            <div style={{ fontSize: '10px', color: '#AAAAAA', marginTop: '2px', letterSpacing: '0.02em' }}>
+            {' '}
+            <span style={{ fontSize: '16px', fontWeight: 400, color: '#FFFFFF', marginLeft: '4px' }}>
+              {model.name}
+            </span>
+            <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', marginTop: '4px', letterSpacing: '0.03em' }}>
               {model.tag}
+            </p>
+          </div>
+
+          {/* Empty/Coming-soon state */}
+          <div style={{
+            padding: '44px 24px 40px',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
+          }}>
+            {/* Subtle waveform placeholder */}
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '56px', marginBottom: '28px' }}>
+              {[22, 38, 28, 52, 35, 66, 44, 72, 50, 80, 58, 68].map((h, i) => (
+                <div key={i} style={{
+                  width: '12px', height: `${h}%`, borderRadius: '2px 2px 1px 1px',
+                  background: `${model.color}`,
+                  opacity: 0.08 + (i / 12) * 0.08,
+                }} />
+              ))}
             </div>
-          </div>
-        </div>
 
-        {/* Coming-soon empty state */}
-        <div
-          style={{
-            padding: '48px 24px 40px', display: 'flex', flexDirection: 'column',
-            alignItems: 'center', textAlign: 'center',
-          }}
-        >
-          {/* Dashed placeholder chart bars */}
-          <div
-            style={{
-              display: 'flex', alignItems: 'flex-end', gap: '6px',
-              height: '80px', marginBottom: '24px', opacity: 0.2,
-            }}
-          >
-            {[40, 55, 35, 70, 50, 80, 60, 90, 65, 100, 75, 85].map((h, i) => (
-              <div
-                key={i}
-                style={{
-                  width: '14px', height: `${h}%`,
-                  border: `1.5px dashed ${brandColor}`,
-                  borderRadius: '3px 3px 1px 1px',
-                  background: 'transparent',
-                }}
-              />
-            ))}
-          </div>
+            {/* Status badge */}
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '7px',
+              background: `${model.color}14`,
+              border: `1px solid ${model.color}35`,
+              color: model.color,
+              fontSize: '9px', fontWeight: 700, letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              padding: '6px 16px', borderRadius: '100px',
+              marginBottom: '16px',
+            }}>
+              <span style={{
+                width: '4px', height: '4px', background: model.color,
+                borderRadius: '50%', display: 'inline-block',
+                animation: 'pulse 2s infinite',
+              }} />
+              数据建设中
+            </div>
 
-          {/* Status pill */}
-          <div
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              background: `${brandColor}10`, border: `1px solid ${brandColor}30`,
-              color: brandColor, fontSize: '10px', fontWeight: 600,
-              letterSpacing: '0.08em', padding: '6px 14px', borderRadius: '100px',
-              marginBottom: '14px',
-            }}
-          >
-            <span style={{ width: '4px', height: '4px', background: brandColor, borderRadius: '50%', display: 'inline-block', opacity: 0.7 }} />
-            数据建设中
-          </div>
-
-          <p style={{ fontSize: '12px', fontWeight: 300, color: '#AAAAAA', lineHeight: 1.6, maxWidth: '240px' }}>
-            {model.brand} {model.name} 车型级月度交付数据<br />
-            即将上线，敬请期待
-          </p>
-
-          {/* Bottom decoration */}
-          <div style={{ marginTop: '28px', display: 'flex', gap: '4px' }}>
-            {[1,2,3].map(i => (
-              <div
-                key={i}
-                style={{
-                  width: '4px', height: '4px', borderRadius: '50%',
-                  background: brandColor, opacity: 0.15 + i * 0.15,
-                }}
-              />
-            ))}
+            <p style={{
+              fontSize: '11px', fontWeight: 300, color: 'rgba(255,255,255,0.25)',
+              lineHeight: 1.7, maxWidth: '220px', letterSpacing: '0.02em',
+            }}>
+              {model.brand} {model.name} 车型级<br />
+              月度交付数据即将上线
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Coming soon models hint */}
-      <div style={{ marginTop: '16px', padding: '0 4px' }}>
-        <p style={{ fontSize: '9px', color: '#CCCCCC', letterSpacing: '0.1em', textAlign: 'center', textTransform: 'uppercase' }}>
-          More Models · ET9 · ES6 · EC7 · ET5T · Coming Soon
+      {/* More models hint */}
+      <div style={{ marginTop: '20px', textAlign: 'center' }}>
+        <p style={{
+          fontSize: '8px', color: 'rgba(255,255,255,0.12)',
+          letterSpacing: '0.2em', textTransform: 'uppercase',
+        }}>
+          ET9 · ES6 · EC7 · ET5T · More Coming
         </p>
       </div>
     </section>
