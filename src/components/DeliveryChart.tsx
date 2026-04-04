@@ -164,7 +164,8 @@ export default function DeliveryChart() {
       </div>
 
       {/* ── Chart Shell ── */}
-      <div style={{ padding: '20px 16px 0' }} className="anim-fade-up delay-3">
+      <div style={{ padding: '0 16px 24px', marginTop: '20px', background: 'linear-gradient(to bottom, #FFFFFF 0%, #0B0F14 28px)' }} className="anim-fade-up delay-3">
+
         <div className="chart-shell" style={{ padding: '20px 16px 16px' }}>
 
           {/* Header row with toggle */}

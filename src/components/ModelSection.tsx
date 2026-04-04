@@ -22,10 +22,12 @@ export default function ModelSection() {
   const model = MODELS.find(m => m.id === activeId)!;
 
   return (
-    <section style={{ background: '#0B0F14', padding: '32px 0 48px' }}>
+    <section style={{ background: '#0B0F14', padding: '0 0 48px' }}>
+
 
       {/* ── Section header ── */}
-      <div style={{ padding: '0 16px', marginBottom: '24px' }}>
+      <div style={{ padding: '28px 16px 0', marginBottom: '24px' }}>
+
         <p style={{
           fontSize: '9px', fontWeight: 700, letterSpacing: '0.26em',
           textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: '8px',
