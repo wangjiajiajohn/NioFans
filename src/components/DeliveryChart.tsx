@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FLAT_DELIVERY_DATA } from '@/constants/nioData';
 
-type ViewMode = 'monthly' | 'quarterly';
+type ViewMode = 'monthly' | 'quarterly' | 'yearly';
 
 interface BarData {
   id: string;
@@ -61,13 +61,19 @@ const latestYoY = prevYearLatest
   ? ((latestEntry.value - prevYearLatest.value) / prevYearLatest.value * 100).toFixed(1)
   : null;
 
-const yearGroups = ['21','22','23','24','25','26'].map(y => ({
-  year: `20${y}`,
-  total: FLAT_DELIVERY_DATA.filter(d => d.month.startsWith(y)).reduce((s, d) => s + d.value, 0),
-}));
-const maxAnnual = Math.max(...yearGroups.map(y => y.total));
+const YEARLY_BARS: BarData[] = ['21','22','23','24','25','26'].map(y => {
+  const total = FLAT_DELIVERY_DATA.filter(d => d.month.startsWith(y)).reduce((s, d) => s + d.value, 0);
+  return {
+    id: `20${y}`,
+    value: total,
+    shortLabel: `20${y}`,
+    fullLabel: `20${y}年`,
+    isYearStart: true,
+    yearStr: `20${y}`,
+  };
+});
 
-// ── Formatters ─────────────────────────────────────────────────────
+// ── KPI stats ──────────────────────────────────────────────────────
 const fmtK = (v: number) => v >= 10000 ? `${(v / 10000).toFixed(1)}万` : v.toLocaleString('zh-CN');
 const signStr = (v: number) => v >= 0 ? '+' : '';
 const trendColor = (v: number) => v >= 0 ? '#34C759' : '#FF453A';
@@ -80,11 +86,11 @@ export default function DeliveryChart() {
   const [selectedIndexOverride, setSelectedIndexOverride] = useState<number | 'latest' | null>('latest');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const bars = viewMode === 'monthly' ? MONTHLY_BARS : QUARTERLY_BARS;
+  const bars = viewMode === 'monthly' ? MONTHLY_BARS : viewMode === 'quarterly' ? QUARTERLY_BARS : YEARLY_BARS;
   const maxVal = Math.max(...bars.map(b => b.value));
-  const yoyOffset = viewMode === 'monthly' ? 12 : 4;
-  const containerW = viewMode === 'monthly' ? 24 : 44;
-  const barW = viewMode === 'monthly' ? 14 : 28;
+  const yoyOffset = viewMode === 'monthly' ? 12 : viewMode === 'quarterly' ? 4 : 1;
+  const containerW = viewMode === 'monthly' ? 24 : viewMode === 'quarterly' ? 44 : 56;
+  const barW = viewMode === 'monthly' ? 14 : viewMode === 'quarterly' ? 28 : 36;
 
   // Resolve selected index: 'latest' means always point at last bar
   const selectedIndex: number | null =
@@ -165,7 +171,8 @@ export default function DeliveryChart() {
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px' }}>
             <div>
               <p style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#00A3DA', marginBottom: '4px' }}>
-                全周期{viewMode === 'monthly' ? '月度' : '季度'}交付
+                全周期{viewMode === 'monthly' ? '月度' : viewMode === 'quarterly' ? '季度' : '年度'}交付
+
               </p>
               <p style={{ fontSize: '18px', fontWeight: 300, color: '#FFFFFF', letterSpacing: '-0.02em', lineHeight: 1 }}>
                 2021 — 2026
@@ -174,7 +181,8 @@ export default function DeliveryChart() {
             {/* Mode toggle */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
               <div style={{ display: 'flex', background: 'rgba(255,255,255,0.07)', borderRadius: '8px', padding: '3px', gap: '2px' }}>
-                {(['monthly', 'quarterly'] as ViewMode[]).map(mode => (
+                {(['monthly', 'quarterly', 'yearly'] as ViewMode[]).map(mode => (
+
                   <button
                     key={mode}
                     onClick={() => setViewMode(mode)}
@@ -186,7 +194,7 @@ export default function DeliveryChart() {
                       color: viewMode === mode ? '#0D0D0D' : 'rgba(255,255,255,0.35)',
                     }}
                   >
-                    {mode === 'monthly' ? '月度' : '季度'}
+                    {mode === 'monthly' ? '月度' : mode === 'quarterly' ? '季度' : '年度'}
                   </button>
                 ))}
               </div>
@@ -357,36 +365,6 @@ export default function DeliveryChart() {
               <div style={{ width: '8px', height: '8px', borderRadius: '2px', background: '#1A2535' }} />
               <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>常规</span>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Annual Bar Summary ── */}
-      <div style={{ padding: '20px 16px 0' }} className="anim-fade-up delay-4">
-        <div style={{ background: '#F8F8F8', borderRadius: '16px', padding: '18px 16px', border: '1px solid #EBEBEB' }}>
-          <p className="section-label" style={{ marginBottom: '16px' }}>年度交付总量对比</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {yearGroups.map((y, i) => {
-              const pct = (y.total / maxAnnual) * 100;
-              const isLatestYear = i === yearGroups.length - 1;
-              return (
-                <div key={y.year} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ width: '32px', fontSize: '11px', fontWeight: 600, color: isLatestYear ? '#00A3DA' : '#555', textAlign: 'right', flexShrink: 0 }}>
-                    {y.year}
-                  </div>
-                  <div style={{ flex: 1, height: '20px', background: '#EBEBEB', borderRadius: '4px', overflow: 'hidden' }}>
-                    <div style={{
-                      height: '100%', width: `${pct}%`,
-                      background: isLatestYear ? 'linear-gradient(90deg, #00A3DA, #00C3FF)' : 'linear-gradient(90deg, #B0C4D8, #8FADC4)',
-                      borderRadius: '4px', transition: 'width 1s cubic-bezier(0.22, 1, 0.36, 1)',
-                    }} />
-                  </div>
-                  <div style={{ width: '48px', fontSize: '11px', fontWeight: 500, color: isLatestYear ? '#0D0D0D' : '#999', textAlign: 'right', flexShrink: 0 }}>
-                    {y.total >= 10000 ? `${(y.total / 10000).toFixed(1)}万` : y.total.toLocaleString()}
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </div>
       </div>
