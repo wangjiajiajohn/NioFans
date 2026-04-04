@@ -107,7 +107,19 @@ export default function PullEasterEgg() {
   }, [phase, dragY]);
 
 
-  if (phase === 'idle') return null;
+  if (phase === 'idle') {
+    // Still render but fully hidden above viewport — keeps it in DOM so transition works
+    return (
+      <div style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999,
+        height: `${PANEL_H}px`,
+        transform: `translateY(${-PANEL_H}px)`,
+        transition: 'none',
+        pointerEvents: 'none',
+        visibility: 'hidden',
+      }} />
+    );
+  }
 
   const contentOpacity = phase === 'shown' ? 1 : phase === 'dismissing' ? 0 : progress;
   const isFullyShown = phase === 'shown';
