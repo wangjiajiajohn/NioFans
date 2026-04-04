@@ -40,6 +40,23 @@ export default function PullEasterEgg() {
 
   const progress = Math.min(dragY / THRESHOLD, 1); // 0–1, used for opacity fade-in
 
+  // ── Auto-show on first page load ──────────────────────────────────
+  useEffect(() => {
+    const t1 = setTimeout(() => {
+      setPhase('shown');
+      timerRef.current = setTimeout(() => {
+        setPhase('dismissing');
+        setTimeout(() => {
+          setPhase('idle');
+          timerRef.current = null;
+        }, 400);
+      }, 2800);
+    }, 300); // slight delay so page renders first
+    return () => clearTimeout(t1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ── Pull-to-reveal gesture ─────────────────────────────────────────
   useEffect(() => {
     const onTouchStart = (e: TouchEvent) => {
       if (window.scrollY > 5) return;
@@ -88,6 +105,7 @@ export default function PullEasterEgg() {
       window.removeEventListener('touchend', onTouchEnd);
     };
   }, [phase, dragY]);
+
 
   if (phase === 'idle') return null;
 
