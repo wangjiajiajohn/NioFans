@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLang } from '@/contexts/LangContext';
 
-// Phase sequence: entering → shown → exiting → done
-type Phase = 'entering' | 'shown' | 'exiting' | 'done';
+// Phase: shown → exiting → done
+type Phase = 'shown' | 'exiting' | 'done';
 
 const PARTICLES = [
   { sym: '✦', size: 12, delay: 0,    dur: 2.2, x: '18%',  y: '22%' },
@@ -18,31 +18,39 @@ const PARTICLES = [
 ];
 
 export default function SplashScreen() {
-  const [phase, setPhase] = useState<Phase>('entering');
+  const [phase, setPhase] = useState<Phase>('shown');
   const { t } = useLang();
 
+  // Lock body scroll while splash is visible
   useEffect(() => {
-    // entering → shown after 500ms (fade-in completes)
-    const t1 = setTimeout(() => setPhase('shown'), 500);
-    // shown → exiting after 3.3s total
-    const t2 = setTimeout(() => setPhase('exiting'), 3300);
-    // exiting → done after 3.7s total (fade-out completes)
-    const t3 = setTimeout(() => setPhase('done'), 3800);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
   }, []);
 
-  const skip = () => setPhase(p => p === 'exiting' || p === 'done' ? p : 'exiting');
-
   useEffect(() => {
-    if (phase === 'exiting') {
-      const t = setTimeout(() => setPhase('done'), 500);
-      return () => clearTimeout(t);
+    // shown → exiting after 3s
+    const t1 = setTimeout(() => setPhase('exiting'), 3000);
+    // exiting → done after 3.5s (fade-out completes)
+    const t2 = setTimeout(() => {
+      setPhase('done');
+      document.body.style.overflow = '';
+    }, 3500);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
+
+  const skip = () => {
+    if (phase === 'shown') {
+      setPhase('exiting');
+      setTimeout(() => {
+        setPhase('done');
+        document.body.style.overflow = '';
+      }, 500);
     }
-  }, [phase]);
+  };
 
   if (phase === 'done') return null;
 
-  const opacity = phase === 'entering' ? 0 : phase === 'exiting' ? 0 : 1;
+  const opacity = phase === 'exiting' ? 0 : 1;
   const isVisible = phase === 'shown';
 
   return (
@@ -58,7 +66,7 @@ export default function SplashScreen() {
         alignItems: 'center',
         justifyContent: 'center',
         opacity,
-        transition: `opacity ${phase === 'entering' ? '0.5s' : '0.5s'} ease`,
+        transition: 'opacity 0.5s ease',
         cursor: 'pointer',
       }}
     >
