@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import { FLAT_DELIVERY_DATA } from '@/constants/nioData';
 
@@ -146,8 +146,12 @@ export default function DeliveryChart() {
 
   const maxVal = Math.max(...FLAT_DELIVERY_DATA.map(d => d.value));
 
-
-
+  useEffect(() => {
+    if (scrollRef.current) {
+      // Scroll to show latest data (the rightmost side) on load
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+    }
+  }, []);
 
   return (
     <div className="w-full" style={{ background: '#FFFFFF' }}>

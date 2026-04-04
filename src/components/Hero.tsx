@@ -1,14 +1,16 @@
 import React from 'react';
+import { getAssetPath } from '@/utils/paths';
 
 const Hero = () => {
   return (
     <section className="relative h-[85vh] w-full overflow-hidden">
       {/* Background Image */}
       <img
-        src="/hero.png"
+        src={getAssetPath("/hero.png")}
         alt="NIO ET9 Hero"
         className="absolute inset-0 h-full w-full object-cover"
       />
+
       
       {/* Content Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-white/60" />

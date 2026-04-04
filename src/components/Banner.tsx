@@ -2,6 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { ES9_BANNER } from '@/constants/nioData';
+import { getAssetPath } from '@/utils/paths';
 
 export default function Banner() {
   return (
@@ -16,12 +17,13 @@ export default function Banner() {
     >
       {/* Car image */}
       <Image
-        src={ES9_BANNER.image}
+        src={getAssetPath(ES9_BANNER.image)}
         alt={ES9_BANNER.title}
         fill
         priority
         style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
       />
+
 
       {/* Cinematic gradient — dark at top & bottom, transparent in middle */}
       <div
