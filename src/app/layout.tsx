@@ -1,6 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { LangProvider } from "@/contexts/LangContext";
+
+export const viewport: Viewport = {
+  viewportFit: 'cover',
+  themeColor: '#060608',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "NioFans · 蔚来数据",

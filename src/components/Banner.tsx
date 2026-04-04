@@ -42,7 +42,9 @@ export default function Banner() {
         style={{
           position: 'absolute',
           top: 0, left: 0, right: 0,
-          padding: '20px 20px 0',
+          paddingTop: 'max(20px, env(safe-area-inset-top))',
+          paddingLeft: '20px',
+          paddingRight: '20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-start',
