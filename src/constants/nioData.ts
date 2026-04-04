@@ -51,3 +51,22 @@ export const ES9_BANNER = {
   date: '2026.04.09',
   image: '/1.jpg'
 };
+
+export const EVENTS = [
+  { date: '2026.03', title: 'NIO ES9 极寒测试完成', desc: '在漠河完成 -45°C 极寒环境下的全系统稳定性测试。', tag: '技术' },
+  { date: '2025.12', title: '单月交付突破 4.8 万台', desc: '创下品牌历史新高，持续领跑高端纯电市场。', tag: '交付' },
+  { date: '2025.04', title: '第四代换电站大规模部署', desc: '支持多品牌共享，换电速度提升 22%。', tag: '补能' }
+];
+
+export const FINANCIAL_DATA = [
+  { quarter: '2025 Q4', revenue: 204.5, gap: 12.5, vehicleMargin: 18.2, cash: 520, rd: 36.8 }
+];
+
+export const SWAP_DATA = {
+  total: 2850,
+  target2025: 4000,
+  highway: 820,
+  ytd: 750,
+  partners: 8
+};
+
