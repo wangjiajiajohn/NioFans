@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
+import { useLang } from '@/contexts/LangContext';
 
 type Phase = 'idle' | 'pulling' | 'snap-back' | 'shown' | 'dismissing';
 
@@ -23,6 +24,7 @@ export default function PullEasterEgg() {
   const [dragY, setDragY] = useState(0);
   const startYRef = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { t } = useLang();
 
   // Compute translateY
   let ty: number;
@@ -206,7 +208,7 @@ export default function PullEasterEgg() {
           ? 'fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both, breathe 3s ease-in-out 1s infinite, glow-pulse-text 3s ease-in-out 1s infinite'
           : 'none',
       }}>
-        蔚来，为你而来！
+        {t.easterEggText}
       </h2>
 
       {/* ── Shimmer divider ── */}
@@ -242,7 +244,7 @@ export default function PullEasterEgg() {
           <span style={{ fontSize: '10px', display: 'inline-block', transform: `translateY(${progress >= 1 ? 0 : 2}px)`, transition: 'transform 0.2s' }}>
             {progress >= 1 ? '↑' : '↓'}
           </span>
-          {progress >= 1 ? '松手解锁' : '继续下拉'}
+          {progress >= 1 ? t.easterEggRelease : t.easterEggPullMore}
         </div>
       )}
 

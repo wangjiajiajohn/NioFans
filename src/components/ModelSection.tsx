@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { useLang } from '@/contexts/LangContext';
 
 type BrandId = 'ONVO' | 'Firefly' | 'NIO';
 
@@ -11,15 +12,23 @@ interface ModelConfig {
   color: string;
 }
 
+const MODEL_TAG_KEYS: Record<string, 'modelTagES8' | 'modelTagL90' | 'modelTagFirefly'> = {
+  es8: 'modelTagES8',
+  l90: 'modelTagL90',
+  firefly: 'modelTagFirefly',
+};
+
 const MODELS: ModelConfig[] = [
-  { id: 'es8',      name: 'ES8',    brand: 'NIO',     tag: '旗舰六七座 SUV · 经典战略车型',    color: '#E8940A' },
-  { id: 'l90',      name: 'L90',    brand: 'ONVO',    tag: '家庭智能 SUV · 首款热销车型',      color: '#4E7CF6' },
-  { id: 'firefly',  name: '萤火虫', brand: 'Firefly', tag: '城市微型纯电 · 品牌首款',          color: '#00A3DA' },
+  { id: 'es8',      name: 'ES8',    brand: 'NIO',     tag: '',  color: '#E8940A' },
+  { id: 'l90',      name: 'L90',    brand: 'ONVO',    tag: '',  color: '#4E7CF6' },
+  { id: 'firefly',  name: '萤火虫', brand: 'Firefly', tag: '',  color: '#00A3DA' },
 ];
 
 export default function ModelSection() {
   const [activeId, setActiveId] = useState('es8');
+  const { t } = useLang();
   const model = MODELS.find(m => m.id === activeId)!;
+  const modelTag = t[MODEL_TAG_KEYS[activeId]];
 
   return (
     <section style={{ background: '#0B0F14', padding: '0 0 48px' }}>
@@ -32,13 +41,13 @@ export default function ModelSection() {
           fontSize: '9px', fontWeight: 700, letterSpacing: '0.26em',
           textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: '8px',
         }}>
-          Vehicle Delivery · 车型月交付
+           {t.modelSectionEyebrow}
         </p>
         <h2 style={{
           fontSize: '24px', fontWeight: 200, letterSpacing: '-0.01em',
           color: '#FFFFFF', lineHeight: 1.15,
         }}>
-          特定车型<br />月度交付数据
+          {t.modelSectionTitle1}<br />{t.modelSectionTitle2}
         </h2>
       </div>
 
@@ -111,7 +120,7 @@ export default function ModelSection() {
               {model.name}
             </span>
             <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', marginTop: '4px', letterSpacing: '0.03em' }}>
-              {model.tag}
+              {modelTag}
             </p>
           </div>
 
@@ -148,15 +157,15 @@ export default function ModelSection() {
                 borderRadius: '50%', display: 'inline-block',
                 animation: 'pulse 2s infinite',
               }} />
-              数据建设中
+               {t.modelComingSoon}
             </div>
 
             <p style={{
               fontSize: '11px', fontWeight: 300, color: 'rgba(255,255,255,0.6)',
               lineHeight: 1.7, maxWidth: '220px', letterSpacing: '0.02em',
             }}>
-              {model.brand} {model.name} 车型级<br />
-              月度交付数据即将上线
+              {model.brand} {model.name} {t.modelDataComingSoonDesc1 ?? ''}<br />
+              {t.modelComingDesc}
             </p>
           </div>
         </div>

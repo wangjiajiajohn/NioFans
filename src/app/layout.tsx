@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { LangProvider } from "@/contexts/LangContext";
 
 export const metadata: Metadata = {
   title: "NioFans · 蔚来数据",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh" suppressHydrationWarning style={{ background: '#ffffff' }}>
-      <body style={{ background: '#ffffff', margin: 0, padding: 0 }}>{children}</body>
+      <body style={{ background: '#ffffff', margin: 0, padding: 0 }}>
+        <LangProvider>{children}</LangProvider>
+      </body>
     </html>
   );
 }

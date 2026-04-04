@@ -3,8 +3,10 @@ import React from 'react';
 import Image from 'next/image';
 import { ES9_BANNER } from '@/constants/nioData';
 import { getAssetPath } from '@/utils/paths';
+import { useLang } from '@/contexts/LangContext';
 
 export default function Banner() {
+  const { lang, t, toggleLang } = useLang();
   return (
     <section
       style={{
@@ -71,6 +73,24 @@ export default function Banner() {
             DATA PORTAL
           </p>
         </div>
+
+        {/* Lang toggle */}
+        <button
+          onClick={toggleLang}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '3px',
+            background: 'rgba(255,255,255,0.08)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            backdropFilter: 'blur(6px)',
+            borderRadius: '100px', padding: '5px 10px',
+            cursor: 'pointer', fontSize: '8px', fontWeight: 700,
+            letterSpacing: '0.12em',
+          }}
+        >
+          <span style={{ color: lang === 'zh' ? '#FFFFFF' : 'rgba(255,255,255,0.35)' }}>ZH</span>
+          <span style={{ color: 'rgba(255,255,255,0.25)', margin: '0 2px' }}>·</span>
+          <span style={{ color: lang === 'en' ? '#FFFFFF' : 'rgba(255,255,255,0.35)' }}>EN</span>
+        </button>
 
         {/* Live badge */}
         <div
@@ -152,7 +172,7 @@ export default function Banner() {
             animation: 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.5s both',
           }}
         >
-          {ES9_BANNER.subtitle}
+          {ES9_BANNER.subtitle || t.bannerCarSubtitle}
         </p>
 
         {/* Event pill */}
@@ -183,7 +203,7 @@ export default function Banner() {
               boxShadow: '0 0 8px rgba(0,163,218,0.8)',
             }}
           />
-          发布会倒计时 · 即将揭晓
+          {t.bannerEventPill}
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useState, useEffect } from 'react';
 import { FLAT_DELIVERY_DATA } from '@/constants/nioData';
+import { useLang } from '@/contexts/LangContext';
 
 type ViewMode = 'monthly' | 'quarterly' | 'yearly';
 
@@ -81,6 +82,7 @@ const trendArrow = (v: number) => v >= 0 ? '▲' : '▼';
 
 // ── Main Component ─────────────────────────────────────────────────
 export default function DeliveryChart() {
+  const { t } = useLang();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('monthly');
   const [selectedIndexOverride, setSelectedIndexOverride] = useState<number | 'latest' | null>('latest');
@@ -121,43 +123,43 @@ export default function DeliveryChart() {
 
       {/* ── KPI Row ── */}
       <div style={{ padding: '28px 16px 0' }}>
-        <p className="section-label anim-fade-up delay-1" style={{ marginBottom: '14px' }}>交付数据概览</p>
+        <p className="section-label anim-fade-up delay-1" style={{ marginBottom: '14px' }}>{t.sectionLabel}</p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }} className="anim-fade-up delay-2">
           <div className="kpi-card">
-            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>本月交付</div>
+            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>{t.kpiThisMonth}</div>
             <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
               {(latestEntry.value / 10000).toFixed(2)}
-              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>万台</span>
+              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
             </div>
             {latestYoY && (
               <div style={{ marginTop: '6px' }}>
                 <span className={+latestYoY >= 0 ? 'badge-green' : 'badge-red'}>
-                  {+latestYoY >= 0 ? '▲' : '▼'} 同比 {latestYoY}%
+                  {+latestYoY >= 0 ? '▲' : '▼'} {t.yoyLabel} {latestYoY}%
                 </span>
               </div>
             )}
           </div>
           <div className="kpi-card">
-            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>历史累计</div>
+            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>{t.kpiAllTime}</div>
             <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
               {(allTime / 10000).toFixed(1)}
-              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>万台</span>
+              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
             </div>
-            <div style={{ marginTop: '6px' }}><span className="badge-blue">2021—2026</span></div>
+            <div style={{ marginTop: '6px' }}><span className="badge-blue">{t.kpiAllYears}</span></div>
           </div>
           <div className="kpi-card">
-            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>单月记录</div>
+            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>{t.kpiRecord}</div>
             <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
               {(bestMonth.value / 10000).toFixed(1)}
-              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>万台</span>
+              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
             </div>
             <div style={{ marginTop: '6px' }}><span className="badge-blue">20{bestMonth.month.replace('-', '.')}</span></div>
           </div>
           <div className="kpi-card">
-            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>2025 全年</div>
+            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>{t.kpi2025}</div>
             <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
               {(total2025 / 10000).toFixed(1)}
-              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>万台</span>
+              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
             </div>
             <div style={{ marginTop: '6px' }}><span className="badge-green">▲ YoY +{yoy2025}%</span></div>
           </div>
@@ -173,7 +175,7 @@ export default function DeliveryChart() {
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px' }}>
             <div>
               <p style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#00A3DA', marginBottom: '4px' }}>
-                全周期{viewMode === 'monthly' ? '月度' : viewMode === 'quarterly' ? '季度' : '年度'}交付
+                {t.chartCyclePrefix}{viewMode === 'monthly' ? t.chartTitleMonthly : viewMode === 'quarterly' ? t.chartTitleQuarterly : t.chartTitleYearly}
 
               </p>
               <p style={{ fontSize: '18px', fontWeight: 300, color: '#FFFFFF', letterSpacing: '-0.02em', lineHeight: 1 }}>
@@ -196,12 +198,12 @@ export default function DeliveryChart() {
                       color: viewMode === mode ? '#0D0D0D' : 'rgba(255,255,255,0.35)',
                     }}
                   >
-                    {mode === 'monthly' ? '月度' : mode === 'quarterly' ? '季度' : '年度'}
+                    {mode === 'monthly' ? t.viewMonthly : mode === 'quarterly' ? t.viewQuarterly : t.viewYearly}
                   </button>
                 ))}
               </div>
               <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.06em' }}>
-                ← 左右滑动
+                {t.chartScroll}
               </div>
             </div>
           </div>
@@ -355,7 +357,7 @@ export default function DeliveryChart() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
                   <div style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: '4px' }}>
-                    {viewMode === 'monthly' ? '月度交付' : viewMode === 'quarterly' ? '季度交付' : '年度交付'}
+                    {viewMode === 'monthly' ? t.chartTitleMonthly : viewMode === 'quarterly' ? t.chartTitleQuarterly : t.chartTitleYearly}
                   </div>
                   <div style={{ fontSize: '12px', fontWeight: 600, color: '#00A3DA' }}>{detail.cur.fullLabel}</div>
                 </div>
@@ -363,21 +365,21 @@ export default function DeliveryChart() {
                   <div style={{ fontSize: '24px', fontWeight: 200, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>
                     {(detail.cur.value / 10000).toFixed(viewMode === 'monthly' ? 2 : 1)}
                   </div>
-                  <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.3)' }}>万台</div>
+                  <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.3)' }}>{t.kpiUnit}</div>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
                 {/* YoY */}
                 <div style={{ flex: 1, background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px' }}>
-                  <div style={{ fontSize: '7px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '6px' }}>同比 YoY</div>
+                  <div style={{ fontSize: '7px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '6px' }}>{t.yoyLabel} YoY</div>
                   {detail.yoy !== null ? (
                     <>
                       <div style={{ fontSize: '16px', fontWeight: 700, color: trendColor(detail.yoy), lineHeight: 1, marginBottom: '4px' }}>
                         {trendArrow(detail.yoy)} {signStr(detail.yoy)}{detail.yoy.toFixed(1)}%
                       </div>
-                      <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.22)' }}>去年同期 {fmtK(detail.yoyPrev!.value)}</div>
+                      <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.22)' }}>{t.prevYear} {fmtK(detail.yoyPrev!.value)}</div>
                     </>
-                  ) : <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)' }}>暂无数据</div>}
+                  ) : <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)' }}>{t.noComparison}</div>}
                 </div>
                 {/* MoM */}
                 <div style={{ flex: 1, background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '10px' }}>
@@ -387,9 +389,9 @@ export default function DeliveryChart() {
                       <div style={{ fontSize: '16px', fontWeight: 700, color: trendColor(detail.mom), lineHeight: 1, marginBottom: '4px' }}>
                         {trendArrow(detail.mom)} {signStr(detail.mom)}{detail.mom.toFixed(1)}%
                       </div>
-                      <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.22)' }}>上期 {fmtK(detail.momPrev!.value)}</div>
+                      <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.22)' }}>{t.prevPeriod} {fmtK(detail.momPrev!.value)}</div>
                     </>
-                  ) : <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)' }}>暂无数据</div>}
+                  ) : <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)' }}>{t.noComparison}</div>}
                 </div>
               </div>
             </div>
@@ -403,15 +405,15 @@ export default function DeliveryChart() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <div style={{ width: '8px', height: '8px', borderRadius: '2px', background: 'linear-gradient(180deg, #00C3FF, #00A3DA)', boxShadow: '0 0 6px rgba(0,163,218,0.5)' }} />
-              <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>最新</span>
+              <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>{t.legendLatest}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <div style={{ width: '8px', height: '8px', borderRadius: '2px', background: 'linear-gradient(180deg, #2A5F8A, #1A3D5C)' }} />
-              <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>≥3万台</span>
+              <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>{t.legend30k}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <div style={{ width: '8px', height: '8px', borderRadius: '2px', background: '#1A2535' }} />
-              <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>常规</span>
+              <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>{t.legendNormal}</span>
             </div>
             {/* Trend toggle */}
             <button
@@ -430,7 +432,7 @@ export default function DeliveryChart() {
                 />
               </svg>
               <span style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '0.08em', color: showTrend ? '#00C3FF' : 'rgba(255,255,255,0.3)' }}>
-                趋势线
+                {t.trendLine}
               </span>
             </button>
           </div>
