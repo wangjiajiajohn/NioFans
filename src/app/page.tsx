@@ -3,10 +3,12 @@ import React from 'react';
 import Banner from '@/components/Banner';
 import DeliveryChart from '@/components/DeliveryChart';
 import ModelSection from '@/components/ModelSection';
+import PullEasterEgg from '@/components/PullEasterEgg';
 
 export default function AppShell() {
   return (
     <main className="page-shell">
+      <PullEasterEgg />
       <Banner />
       <DeliveryChart />
       <ModelSection />
