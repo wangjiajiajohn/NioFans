@@ -49,7 +49,7 @@ export const ES9_BANNER = {
   title: 'NIO ES9',
   subtitle: '科技行政旗舰SUV · 重磅技术发布会',
   date: '2026.04.09',
-  image: '/1.jpg'
+  image: '/1.png'
 };
 
 export const EVENTS = [
