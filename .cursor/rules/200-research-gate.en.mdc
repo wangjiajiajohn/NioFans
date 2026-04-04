@@ -1,0 +1,46 @@
+---
+description: Research phase gate and requirements analysis protocol.
+globs: research_summary.md
+alwaysApply: false
+---
+
+# 🔍 Phase 0: Research & Boundary Identification (Research Gate)
+
+## 📜 Research Mission
+- Use **Browser/Web Search** to find best practices and technical documentation.
+- Use **list_dir/view_file** to map existing code dependencies.
+- **Source code is READ-ONLY** during this phase. No modifications permitted.
+
+## 🏛️ 1. Output Standard (`research_summary.md`)
+
+Your output MUST follow this exact structure:
+
+```markdown
+## Problem Definition
+[Identify the core engineering challenge. What is broken or missing?]
+
+## Dependency Audit
+[List ALL files, modules, and third-party packages that will be affected.]
+
+## Option Comparison
+
+| Option | Approach | Pros | Cons | Recommendation |
+|--------|----------|------|------|----------------|
+| A | ... | ... | ... | |
+| B | ... | ... | ... | ✅ Recommended |
+| C | ... | ... | ... | |
+
+## Risks & Boundary Conditions
+[What could go wrong? What edge cases exist?]
+
+## Recommended Next Step
+[Summarize which option to proceed with and why.]
+```
+
+## 🛡️ 2. Interaction Lock (Physical Stop)
+- **Hard stop**: After producing or updating `research_summary.md`, you MUST STOP.
+- **No inference**: Even with complete chat context, never proceed to `/p` without receiving `1`.
+- **Chat as metadata only**: Chat details are only for updating `research_summary.md` — never as a phase-advance trigger.
+
+## ⌨️ Command: `/r`
+- **Action**: Initialize or update `research_summary.md`. Map boundaries and risks.

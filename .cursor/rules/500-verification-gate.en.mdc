@@ -1,0 +1,70 @@
+---
+description: Verification phase gate — quality assurance before merge/deployment.
+globs: **/*.test.ts, **/*.spec.ts, **/*.test.js, **/*.spec.js
+alwaysApply: false
+---
+
+# ✅ Phase 3: Verification Gate (Quality Assurance)
+
+## 📜 Verification Mission
+- Ensure all atomic commits from the execution phase meet quality standards before merging.
+- Produce a human-auditable verification report.
+
+## 🧪 1. Automated Checks (Run in sequence)
+
+```bash
+# Step V.1 — Type Safety
+npx tsc --noEmit
+
+# Step V.2 — Code Quality  
+npm run lint
+
+# Step V.3 — Unit Tests (if applicable)
+npm test -- --passWithNoTests
+
+# Step V.4 — Build Validation (catch runtime issues)
+npm run build
+```
+
+For each check, you MUST report:
+- ✅ `PASS` with zero warnings, or
+- ❌ `FAIL` with the exact error message
+
+**If any check fails:** Stop verification. Fix the failure as a new atomic step under `/e`. Do NOT proceed to deployment.
+
+## 📋 2. Verification Report Format
+
+After all checks pass, produce this summary:
+
+```markdown
+## Verification Report — [Task Name]
+
+### Automated Checks
+| Check | Result | Details |
+|-------|--------|---------|
+| TypeScript (tsc) | ✅ PASS | 0 errors |
+| Linter (eslint) | ✅ PASS | 0 warnings |
+| Unit Tests | ✅ PASS | 12/12 passed |
+| Build | ✅ PASS | 1.2MB bundle |
+
+### Changes Summary
+- Files modified: [list]
+- Total lines changed: [N logic + N UI]
+- Commits in this task: [N]
+
+### Manual Verification Required
+- [ ] [Describe any UI change the human needs to visually confirm]
+- [ ] [Describe any integration point that needs manual testing]
+
+### Ready for merge: ✅ YES / ❌ NO
+```
+
+## 🧹 3. Post-Verification Cleanup
+
+When verification passes and human replies `1`:
+1. Run the cleanup protocol: `rm research_summary.md implementation_plan.md task.md`
+2. Final commit: `chore(cleanup): remove task artifacts from [task-name]`
+3. Merge or push to target branch.
+
+## ⌨️ Command: `/v`
+- **Action**: Run all verification checks and produce the verification report.

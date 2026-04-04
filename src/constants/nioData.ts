@@ -1,0 +1,43 @@
+// Focused Data Model for NIO Fans - Official ES9 Edition
+
+export interface DeliveryPoint {
+  month: string;
+  value: number;
+}
+
+export const FLAT_DELIVERY_DATA: DeliveryPoint[] = [
+  // 2021
+  { month: '21-01', value: 7225 }, { month: '21-02', value: 5578 }, { month: '21-03', value: 7257 },
+  { month: '21-04', value: 7102 }, { month: '21-05', value: 6711 }, { month: '21-06', value: 8083 },
+  { month: '21-07', value: 7931 }, { month: '21-08', value: 5880 }, { month: '21-09', value: 10600 },
+  { month: '21-10', value: 3667 }, { month: '21-11', value: 10900 }, { month: '21-12', value: 10500 },
+  // 2022
+  { month: '22-01', value: 9652 }, { month: '22-02', value: 6131 }, { month: '22-03', value: 9985 },
+  { month: '22-04', value: 5074 }, { month: '22-05', value: 7024 }, { month: '22-06', value: 13000 },
+  { month: '22-07', value: 10100 }, { month: '22-08', value: 10700 }, { month: '22-09', value: 10900 },
+  { month: '22-10', value: 10100 }, { month: '22-11', value: 14200 }, { month: '22-12', value: 15800 },
+  // 2023
+  { month: '23-01', value: 8506 }, { month: '23-02', value: 12200 }, { month: '23-03', value: 10400 },
+  { month: '23-04', value: 6658 }, { month: '23-05', value: 6155 }, { month: '23-06', value: 10700 },
+  { month: '23-07', value: 20500 }, { month: '23-08', value: 19300 }, { month: '23-09', value: 15600 },
+  { month: '23-10', value: 16100 }, { month: '23-11', value: 16000 }, { month: '23-12', value: 18000 },
+  // 2024
+  { month: '24-01', value: 10100 }, { month: '24-02', value: 8132 }, { month: '24-03', value: 11900 },
+  { month: '24-04', value: 15600 }, { month: '24-05', value: 20500 }, { month: '24-06', value: 21200 },
+  { month: '24-07', value: 20500 }, { month: '24-08', value: 20200 }, { month: '24-09', value: 21200 },
+  { month: '24-10', value: 21000 }, { month: '24-11', value: 20600 }, { month: '24-12', value: 31100 },
+  // 2025
+  { month: '25-01', value: 13900 }, { month: '25-02', value: 13200 }, { month: '25-03', value: 15000 },
+  { month: '25-04', value: 23900 }, { month: '25-05', value: 23200 }, { month: '25-06', value: 23900 },
+  { month: '25-07', value: 21000 }, { month: '25-08', value: 31300 }, { month: '25-09', value: 34700 },
+  { month: '25-10', value: 40400 }, { month: '25-11', value: 36300 }, { month: '25-12', value: 48100 },
+  // 2026
+  { month: '26-01', value: 27200 }, { month: '26-02', value: 20800 }, { month: '26-03', value: 35500 },
+];
+
+export const ES9_BANNER = {
+  title: 'NIO ES9',
+  subtitle: '科技行政旗舰SUV · 重磅技术发布会',
+  date: '2026.04.09',
+  image: '/1.jpg'
+};

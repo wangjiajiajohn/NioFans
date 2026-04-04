@@ -1,0 +1,45 @@
+---
+description: Zero-deviation execution and atomic audit loop protocol.
+globs: src/**/*, **/*.md, **/*.(ts|js|vue|css|html)
+alwaysApply: false
+---
+
+# 🔩 Phase 2: Atomic Execution Iron Lock
+
+## 📜 Execution Mission
+- Advance through the approved `implementation_plan.md` **one atomic step at a time**.
+- **Human Audit Loop**: Never commit changes that have not passed the audit gate.
+
+## 🛡️ 1. Atomic Audit Loop (Non-skippable)
+
+For every atomic step:
+
+1. **Read Plan**: `view_file implementation_plan.md` to confirm current step before starting.
+2. **Atomic Increment** — Dual-Track Model:
+   - **Logic changes (JS/TS/Logic)**: Strictly ≤ **20 lines**; **OR** one complete semantic unit (must state the rationale in a comment before the diff).
+   - **UI/Template (HTML/JSX/Vue)**: ≤ **100 lines** **AND** ≤ 1 functional block (both conditions must be met).
+   - **Pure refactor** (no behavior change): Logic may be relaxed to ≤ **50 lines**; must use `refactor:` commit prefix.
+   - **Type definitions / Interfaces / Config files**: Exempt from line count limits, but **must be committed separately** — never mixed with implementation code.
+3. **Show Diffs (Review)**: Proactively display `git diff` or code snapshot for human review.
+4. **Atomic Verification**: Run `tsc`, `lint`, or `npm test`. Show pass result.
+5. **Wait for `1`**: **Never** call `git commit` or advance to the next atomic step without receiving `1`.
+
+## 🏗️ 2. Coding Standards (SOLID/DRY)
+- **Frontend**: Premium design aesthetics (dynamic effects, harmonious palettes).
+- **Logic isolation**: Business logic MUST be extracted to service layer / custom hooks. Never stack algorithms in the render layer.
+- **Zero Placeholders**: No `TODO`, `FIXME`, `...`, or pseudocode in any committed file.
+
+## 🔱 3. Commit Protocol
+- **Format**: Strict Conventional Commits (`feat/fix/refactor/docs/chore/test`).
+- **Scope**: One atomic unit → one commit. Never mix UI changes with business logic in the same commit.
+- **Conflict Circuit Breaker**: If a Git conflict is detected, STOP immediately. Do not attempt to resolve it. Hand over to human.
+
+## 🔴 4. Two-Strike Rule
+If an atomic task fails verification **twice in a row**:
+1. `git reset --hard` — revert to last clean state
+2. Return to `/r` phase
+3. Update `research_summary.md` with the failure analysis
+
+## ⌨️ Commands
+- `/e [step]` (Execute step) | `/v` (Verify) | `/gc` (Physical commit) | `/g` (Full sync)
+- `/cp` (Progress summary)

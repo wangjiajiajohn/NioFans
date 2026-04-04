@@ -1,0 +1,56 @@
+---
+description: Planning phase protocol — technical architecture and atomic execution strategy.
+globs: implementation_plan.md
+alwaysApply: false
+---
+
+# 📐 Phase 1: Planning & Atomic Design (Planning Gate)
+
+## 📜 Planning Mission
+- Complete full technical architecture design BEFORE writing a single line of code.
+- Decompose work into **atomic execution units**.
+
+## 🏛️ 1. Contract-First (Technical Prerequisites)
+
+Your plan MUST include:
+- **Types & Schemas**: All interfaces, Props, and data structures defined upfront.
+- **API Contracts**: REST/GraphQL endpoints or shared state schema described in detail.
+- **Exception Handling**: Defined fallback/degradation logic for boundary conditions.
+
+## 🧱 2. Atomic Task Decomposition
+
+Your `implementation_plan.md` MUST follow this structure:
+
+```markdown
+## Contracts (Lock before implementing)
+
+\`\`\`typescript
+// All interfaces/types defined here
+interface MyEntity { ... }
+\`\`\`
+
+## Atomic Task List
+
+- [ ] 1.1 [Layer] [File] — [What changes, ≤20 lines logic / ≤100 lines UI]
+- [ ] 1.2 [Layer] [File] — [What changes]
+- [ ] 2.1 [Layer] [File] — [What changes]
+
+## Affected Files
+- [List every file that will be modified]
+
+## Risk Flags
+- [Any potential conflicts or side effects]
+```
+
+**Task granularity rules:**
+- Maximum logic change: **20 lines** per atomic unit
+- Maximum UI change: **100 lines** or 1 complete UI component
+- Each atomic unit (1.1, 1.2...) MUST be independently committable and auditable
+
+## 🛡️ 3. Strict Gate (Wait for 1)
+- **Physical lock**: Before receiving `1`, the execution rules (`400-execution`) are physically inactive.
+- **Cold-start sync**: Upon receiving `1`, you MUST first `view_file` the plan to sync any offline edits the human may have made.
+- **No speculative execution**: Even if source code is shown in chat, never proceed to `/e` without `1`.
+
+## ⌨️ Command: `/p`
+- **Action**: Produce or update `implementation_plan.md`.
