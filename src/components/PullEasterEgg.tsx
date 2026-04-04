@@ -110,6 +110,7 @@ export default function PullEasterEgg() {
   if (phase === 'idle') return null;
 
   const contentOpacity = phase === 'shown' ? 1 : phase === 'dismissing' ? 0 : progress;
+  const isFullyShown = phase === 'shown';
 
   return (
     <div
@@ -120,7 +121,7 @@ export default function PullEasterEgg() {
         height: `${PANEL_H}px`,
         transform: `translateY(${ty}px)`,
         transition,
-        background: 'radial-gradient(ellipse 80% 120% at 50% 80%, rgba(0,163,218,0.18) 0%, #060608 70%)',
+        background: '#060608',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -130,66 +131,101 @@ export default function PullEasterEgg() {
         pointerEvents: 'none',
       }}
     >
-      {/* Top particles */}
-      <div style={{ display: 'flex', gap: '14px', marginBottom: '14px', opacity: contentOpacity, transition: 'opacity 0.3s' }}>
-        {PARTICLES.map((p, i) => (
-          <span
-            key={i}
-            style={{
+      {/* ── Animated nebula background ── */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'radial-gradient(ellipse 70% 130% at 50% 85%, rgba(0,163,218,1) 0%, transparent 70%)',
+        animation: 'bg-breathe 3s ease-in-out infinite',
+        pointerEvents: 'none',
+      }} />
+
+      {/* ── Ripple rings ── */}
+      {isFullyShown && [0, 0.8, 1.6].map((delay, i) => (
+        <div key={i} style={{
+          position: 'absolute',
+          width: '80px', height: '80px',
+          border: '1px solid rgba(0,195,255,0.5)',
+          borderRadius: '50%',
+          animation: `ring-expand 3s cubic-bezier(0.2,0.6,0.4,1) ${delay}s infinite`,
+          pointerEvents: 'none',
+        }} />
+      ))}
+
+      {/* ── Top particles ── */}
+      <div style={{ display: 'flex', gap: '12px', marginBottom: '12px', opacity: contentOpacity, transition: 'opacity 0.3s', position: 'relative', zIndex: 1 }}>
+        {PARTICLES.map((p, i) => {
+          const anim = i % 3 === 0
+            ? `float-y ${p.dur}s ease-in-out ${p.delay}s infinite`
+            : i % 3 === 1
+            ? `drift-x ${p.dur * 1.3}s ease-in-out ${p.delay}s infinite`
+            : `spin-slow ${p.dur * 4}s linear ${p.delay}s infinite`;
+          return (
+            <span key={i} style={{
               fontSize: `${p.size}px`,
-              color: p.sym === '✦' ? '#00C3FF' : 'rgba(255,255,255,0.25)',
+              color: p.sym === '✦' ? '#00C3FF' : 'rgba(255,255,255,0.22)',
               display: 'inline-block',
-              animation: `float-y ${p.dur}s ease-in-out ${p.delay}s infinite`,
-              textShadow: p.sym === '✦' ? '0 0 8px rgba(0,195,255,0.8)' : 'none',
-            }}
-          >
-            {p.sym}
-          </span>
-        ))}
+              animation: anim,
+              textShadow: p.sym === '✦' ? '0 0 10px rgba(0,195,255,0.9)' : 'none',
+            }}>
+              {p.sym}
+            </span>
+          );
+        })}
       </div>
 
-      {/* NIO wordmark */}
+      {/* ── NIO wordmark ── */}
       <p style={{
         fontSize: '8px', fontWeight: 700, letterSpacing: '0.36em',
         color: '#00A3DA', marginBottom: '10px',
         opacity: contentOpacity, transition: 'opacity 0.3s',
+        position: 'relative', zIndex: 1,
+        animation: isFullyShown ? 'fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both' : 'none',
       }}>
         N I O
       </p>
 
-      {/* Main Easter egg text */}
+      {/* ── Main text ── */}
       <h2 style={{
         fontSize: '22px', fontWeight: 200, letterSpacing: '0.12em',
-        color: '#FFFFFF', margin: '0 0 12px',
-        textShadow: `0 0 ${20 + contentOpacity * 20}px rgba(0,163,218,${0.4 + contentOpacity * 0.4})`,
-        opacity: contentOpacity, transition: 'opacity 0.3s, text-shadow 0.5s',
-        animation: phase === 'shown' ? 'fade-up 0.6s cubic-bezier(0.22,1,0.36,1) both' : 'none',
+        color: '#FFFFFF', margin: '0 0 14px',
+        opacity: contentOpacity, transition: 'opacity 0.3s',
+        position: 'relative', zIndex: 1,
+        animation: isFullyShown
+          ? 'fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both, breathe 3s ease-in-out 1s infinite, glow-pulse-text 3s ease-in-out 1s infinite'
+          : 'none',
       }}>
         蔚来，为你而来！
       </h2>
 
-      {/* Divider line */}
+      {/* ── Shimmer divider ── */}
       <div style={{
         width: `${160 * contentOpacity}px`, height: '1px',
-        background: 'linear-gradient(90deg, transparent, #00A3DA, transparent)',
-        marginBottom: '10px', transition: 'width 0.4s ease',
+        background: 'linear-gradient(90deg, transparent 0%, #00C3FF 25%, rgba(255,255,255,0.8) 50%, #00C3FF 75%, transparent 100%)',
+        backgroundSize: '200% 100%',
+        animation: isFullyShown ? 'shimmer-sweep 2s linear 0.5s infinite' : 'none',
+        marginBottom: '10px',
+        transition: 'width 0.4s ease',
+        position: 'relative', zIndex: 1,
       }} />
 
-      {/* Brand tagline */}
+      {/* ── Brand tagline ── */}
       <p style={{
         fontSize: '8px', fontWeight: 600, letterSpacing: '0.26em',
         color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase',
         opacity: contentOpacity, transition: 'opacity 0.3s',
+        position: 'relative', zIndex: 1,
+        animation: isFullyShown ? 'fade-up 0.5s cubic-bezier(0.22,1,0.36,1) 0.35s both' : 'none',
       }}>
         Blue Sky Coming
       </p>
 
-      {/* Pull progress indicator (only while pulling, not shown) */}
+      {/* ── Pull indicator ── */}
       {phase === 'pulling' && (
         <div style={{
           position: 'absolute', bottom: 10,
           fontSize: '9px', color: 'rgba(255,255,255,0.3)',
           letterSpacing: '0.12em', display: 'flex', alignItems: 'center', gap: '6px',
+          zIndex: 1,
         }}>
           <span style={{ fontSize: '10px', display: 'inline-block', transform: `translateY(${progress >= 1 ? 0 : 2}px)`, transition: 'transform 0.2s' }}>
             {progress >= 1 ? '↑' : '↓'}
@@ -198,18 +234,15 @@ export default function PullEasterEgg() {
         </div>
       )}
 
-      {/* Bottom particles */}
-      <div style={{ display: 'flex', gap: '14px', marginTop: '14px', opacity: contentOpacity * 0.6, transition: 'opacity 0.3s' }}>
+      {/* ── Bottom particles (mirror, dimmer) ── */}
+      <div style={{ display: 'flex', gap: '12px', marginTop: '12px', opacity: contentOpacity * 0.5, transition: 'opacity 0.3s', position: 'relative', zIndex: 1 }}>
         {[...PARTICLES].reverse().map((p, i) => (
-          <span
-            key={i}
-            style={{
-              fontSize: `${p.size * 0.7}px`,
-              color: p.sym === '✦' ? 'rgba(0,195,255,0.5)' : 'rgba(255,255,255,0.15)',
-              display: 'inline-block',
-              animation: `float-y ${p.dur}s ease-in-out ${p.delay + 0.5}s infinite`,
-            }}
-          >
+          <span key={i} style={{
+            fontSize: `${p.size * 0.65}px`,
+            color: p.sym === '✦' ? 'rgba(0,195,255,0.45)' : 'rgba(255,255,255,0.12)',
+            display: 'inline-block',
+            animation: `float-y ${p.dur * 1.2}s ease-in-out ${p.delay + 0.4}s infinite`,
+          }}>
             {p.sym}
           </span>
         ))}
@@ -217,3 +250,4 @@ export default function PullEasterEgg() {
     </div>
   );
 }
+
