@@ -87,14 +87,14 @@ html, body {
 /* ── KPI Card ── */
 .kpi-card {
   background: var(--white);
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
+  border: none;
+  border-radius: 14px;
   padding: 16px 14px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s;
 }
 .kpi-card:hover {
-  border-color: var(--nio-blue);
-  box-shadow: 0 0 0 3px var(--nio-blue-glow);
+  box-shadow: 0 1px 0 rgba(0,163,218,0.12), 0 6px 20px rgba(0,163,218,0.1);
 }
 
 /* ── Chip / Badge ── */

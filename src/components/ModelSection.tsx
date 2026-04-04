@@ -116,13 +116,14 @@ export default function ModelSection() {
             padding: '44px 24px 40px',
             display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
           }}>
-            {/* Subtle waveform placeholder */}
+            {/* Outline-only waveform placeholder */}
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '56px', marginBottom: '28px' }}>
               {[22, 38, 28, 52, 35, 66, 44, 72, 50, 80, 58, 68].map((h, i) => (
                 <div key={i} style={{
                   width: '12px', height: `${h}%`, borderRadius: '2px 2px 1px 1px',
-                  background: `${model.color}`,
-                  opacity: 0.15 + (i / 12) * 0.2,
+                  background: 'transparent',
+                  border: `1.5px solid ${model.color}`,
+                  opacity: 0.18 + (i / 12) * 0.28,
                 }} />
               ))}
             </div>
@@ -158,13 +159,19 @@ export default function ModelSection() {
       </div>
 
       {/* More models hint */}
-      <div style={{ marginTop: '20px', textAlign: 'center' }}>
-        <p style={{
-          fontSize: '8px', color: 'rgba(255,255,255,0.4)',
-          letterSpacing: '0.2em', textTransform: 'uppercase',
-        }}>
-          ET9 · ES6 · EC7 · ET5T · More Coming
-        </p>
+      <div style={{ marginTop: '20px', padding: '0 16px', display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
+        {['ET9', 'ES6', 'EC7', 'ET5T', 'ET9 Ultra'].map(name => (
+          <span key={name} style={{
+            fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em',
+            color: 'rgba(255,255,255,0.35)',
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '100px',
+            padding: '4px 10px',
+          }}>
+            {name}
+          </span>
+        ))}
       </div>
     </section>
   );

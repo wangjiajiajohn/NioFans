@@ -349,8 +349,8 @@ export default function DeliveryChart() {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
-                  <div style={{ fontSize: '7px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '4px' }}>
-                    {viewMode === 'monthly' ? '月度交付' : '季度交付'}
+                  <div style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: '4px' }}>
+                    {viewMode === 'monthly' ? '月度交付' : viewMode === 'quarterly' ? '季度交付' : '年度交付'}
                   </div>
                   <div style={{ fontSize: '12px', fontWeight: 600, color: '#00A3DA' }}>{detail.cur.fullLabel}</div>
                 </div>

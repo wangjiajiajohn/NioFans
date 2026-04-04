@@ -108,7 +108,7 @@ export default function Banner() {
         style={{
           position: 'absolute',
           bottom: 0, left: 0, right: 0,
-          padding: '0 22px 26px',
+          padding: '0 22px 32px',
         }}
       >
         {/* Eyebrow */}
@@ -125,13 +125,12 @@ export default function Banner() {
           NIO TECHNOLOGY · {ES9_BANNER.date}
         </p>
 
-        {/* Model name */}
         <h1
           style={{
-            fontSize: '44px',
+            fontSize: '36px',
             fontWeight: 200,
-            letterSpacing: '-0.025em',
-            lineHeight: 0.92,
+            letterSpacing: '0.04em',
+            lineHeight: 1.0,
             color: '#FFFFFF',
             marginBottom: '10px',
           }}
