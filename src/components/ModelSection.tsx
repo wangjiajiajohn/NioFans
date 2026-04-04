@@ -28,7 +28,7 @@ export default function ModelSection() {
       <div style={{ padding: '0 16px', marginBottom: '24px' }}>
         <p style={{
           fontSize: '9px', fontWeight: 700, letterSpacing: '0.26em',
-          textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '8px',
+          textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: '8px',
         }}>
           Vehicle Delivery · 车型月交付
         </p>
@@ -54,22 +54,22 @@ export default function ModelSection() {
               style={{
                 display: 'flex', flexDirection: 'column', alignItems: 'flex-start',
                 padding: '11px 16px', borderRadius: '12px', border: '1px solid',
-                borderColor: isActive ? m.color : 'rgba(255,255,255,0.08)',
-                background: isActive ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
+                borderColor: isActive ? m.color : 'rgba(255,255,255,0.15)',
+                background: isActive ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.03)',
                 cursor: 'pointer', transition: 'all 0.2s', flexShrink: 0, minWidth: '88px',
               }}
             >
               <span style={{
                 fontSize: '7px', fontWeight: 700, letterSpacing: '0.18em',
                 textTransform: 'uppercase',
-                color: isActive ? m.color : 'rgba(255,255,255,0.2)',
+                color: isActive ? m.color : 'rgba(255,255,255,0.5)',
                 marginBottom: '4px',
               }}>
                 {m.brand}
               </span>
               <span style={{
                 fontSize: '16px', fontWeight: 300, letterSpacing: '-0.01em',
-                color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.35)',
+                color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.7)',
               }}>
                 {m.name}
               </span>
@@ -82,8 +82,8 @@ export default function ModelSection() {
       <div style={{ padding: '0 16px' }}>
         <div style={{
           borderRadius: '16px', overflow: 'hidden',
-          border: `1px solid rgba(255,255,255,0.07)`,
-          background: 'rgba(255,255,255,0.03)',
+          border: `1px solid rgba(255,255,255,0.12)`,
+          background: 'rgba(255,255,255,0.04)',
         }}>
 
           {/* Card top stripe */}
@@ -93,7 +93,7 @@ export default function ModelSection() {
           }} />
 
           {/* Card header */}
-          <div style={{ padding: '18px 18px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ padding: '18px 18px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
             <span style={{
               fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em',
               textTransform: 'uppercase', color: model.color,
@@ -104,7 +104,7 @@ export default function ModelSection() {
             <span style={{ fontSize: '16px', fontWeight: 400, color: '#FFFFFF', marginLeft: '4px' }}>
               {model.name}
             </span>
-            <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', marginTop: '4px', letterSpacing: '0.03em' }}>
+            <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', marginTop: '4px', letterSpacing: '0.03em' }}>
               {model.tag}
             </p>
           </div>
@@ -120,7 +120,7 @@ export default function ModelSection() {
                 <div key={i} style={{
                   width: '12px', height: `${h}%`, borderRadius: '2px 2px 1px 1px',
                   background: `${model.color}`,
-                  opacity: 0.08 + (i / 12) * 0.08,
+                  opacity: 0.15 + (i / 12) * 0.2,
                 }} />
               ))}
             </div>
@@ -145,7 +145,7 @@ export default function ModelSection() {
             </div>
 
             <p style={{
-              fontSize: '11px', fontWeight: 300, color: 'rgba(255,255,255,0.25)',
+              fontSize: '11px', fontWeight: 300, color: 'rgba(255,255,255,0.6)',
               lineHeight: 1.7, maxWidth: '220px', letterSpacing: '0.02em',
             }}>
               {model.brand} {model.name} 车型级<br />
@@ -158,7 +158,7 @@ export default function ModelSection() {
       {/* More models hint */}
       <div style={{ marginTop: '20px', textAlign: 'center' }}>
         <p style={{
-          fontSize: '8px', color: 'rgba(255,255,255,0.12)',
+          fontSize: '8px', color: 'rgba(255,255,255,0.4)',
           letterSpacing: '0.2em', textTransform: 'uppercase',
         }}>
           ET9 · ES6 · EC7 · ET5T · More Coming
