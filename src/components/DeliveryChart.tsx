@@ -85,6 +85,7 @@ export default function DeliveryChart() {
   const [viewMode, setViewMode] = useState<ViewMode>('monthly');
   const [selectedIndexOverride, setSelectedIndexOverride] = useState<number | 'latest' | null>('latest');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [showTrend, setShowTrend] = useState(false);
 
   const bars = viewMode === 'monthly' ? MONTHLY_BARS : viewMode === 'quarterly' ? QUARTERLY_BARS : YEARLY_BARS;
   const maxVal = Math.max(...bars.map(b => b.value));
@@ -228,7 +229,9 @@ export default function DeliveryChart() {
             <div style={{
               display: 'flex', alignItems: 'flex-end', gap: '3px',
               height: '210px', width: `${bars.length * (containerW + 3)}px`, paddingTop: '20px',
+              position: 'relative',
             }}>
+
               {bars.map((bar, i) => {
                 const isLatest = i === bars.length - 1;
                 const isBig = bar.value >= 30000;
@@ -294,6 +297,45 @@ export default function DeliveryChart() {
                   </div>
                 );
               })}
+
+              {/* ── Trend Line SVG overlay ── */}
+              {showTrend && (() => {
+                const BAR_AREA_H = 172; // 210 - 20(top) - 18(bottom)
+                const TOP_OFFSET = 20;
+                const pts = bars.map((bar, i) => ({
+                  x: i * (containerW + 3) + containerW / 2,
+                  y: TOP_OFFSET + BAR_AREA_H * (1 - bar.value / maxVal),
+                }));
+                // Smooth Catmull-Rom to cubic bezier path
+                let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+                for (let i = 0; i < pts.length - 1; i++) {
+                  const p0 = pts[Math.max(0, i - 1)];
+                  const p1 = pts[i];
+                  const p2 = pts[i + 1];
+                  const p3 = pts[Math.min(pts.length - 1, i + 2)];
+                  const cp1x = p1.x + (p2.x - p0.x) / 6;
+                  const cp1y = p1.y + (p2.y - p0.y) / 6;
+                  const cp2x = p2.x - (p3.x - p1.x) / 6;
+                  const cp2y = p2.y - (p3.y - p1.y) / 6;
+                  d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+                }
+                return (
+                  <svg
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
+                    viewBox={`0 0 ${bars.length * (containerW + 3)} 210`}
+                    preserveAspectRatio="none"
+                  >
+                    {/* Glow layer */}
+                    <path d={d} stroke="rgba(0,195,255,0.25)" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                    {/* Main line */}
+                    <path d={d} stroke="#00C3FF" strokeWidth="1.5" fill="none" strokeDasharray="5 3" strokeLinecap="round" strokeLinejoin="round" />
+                    {/* Dots at each point */}
+                    {pts.map((p, i) => (
+                      <circle key={i} cx={p.x} cy={p.y} r="2" fill="#00C3FF" opacity="0.7" />
+                    ))}
+                  </svg>
+                );
+              })()}
             </div>
           </div>
 
@@ -353,7 +395,7 @@ export default function DeliveryChart() {
           )}
 
           {/* Legend */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <div style={{ width: '8px', height: '8px', borderRadius: '2px', background: 'linear-gradient(180deg, #00C3FF, #00A3DA)', boxShadow: '0 0 6px rgba(0,163,218,0.5)' }} />
               <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>最新</span>
@@ -366,6 +408,26 @@ export default function DeliveryChart() {
               <div style={{ width: '8px', height: '8px', borderRadius: '2px', background: '#1A2535' }} />
               <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>常规</span>
             </div>
+            {/* Trend toggle */}
+            <button
+              onClick={() => setShowTrend(!showTrend)}
+              style={{
+                marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px',
+                background: showTrend ? 'rgba(0,195,255,0.12)' : 'rgba(255,255,255,0.05)',
+                border: `1px solid ${showTrend ? 'rgba(0,195,255,0.4)' : 'rgba(255,255,255,0.12)'}`,
+                borderRadius: '100px', padding: '4px 10px', cursor: 'pointer', transition: 'all 0.2s',
+              }}
+            >
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none">
+                <path d="M0 7 C2 7, 2 2, 4 2 C6 2, 6 5, 8 3.5 C10 2, 11 5, 14 1"
+                  stroke={showTrend ? '#00C3FF' : 'rgba(255,255,255,0.3)'}
+                  strokeWidth="1.5" fill="none" strokeLinecap="round" strokeDasharray="3 2"
+                />
+              </svg>
+              <span style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '0.08em', color: showTrend ? '#00C3FF' : 'rgba(255,255,255,0.3)' }}>
+                趋势线
+              </span>
+            </button>
           </div>
         </div>
       </div>
