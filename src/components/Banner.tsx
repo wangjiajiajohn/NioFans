@@ -97,6 +97,7 @@ export default function Banner() {
               borderRadius: '50%',
               display: 'inline-block',
               boxShadow: '0 0 6px #00C3FF',
+              animation: 'live-pulse 2s ease-in-out infinite',
             }}
           />
           LIVE
@@ -120,6 +121,7 @@ export default function Banner() {
             textTransform: 'uppercase',
             color: 'rgba(255,255,255,0.4)',
             marginBottom: '7px',
+            animation: 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s both',
           }}
         >
           NIO TECHNOLOGY · {ES9_BANNER.date}
@@ -133,6 +135,7 @@ export default function Banner() {
             lineHeight: 1.0,
             color: '#FFFFFF',
             marginBottom: '10px',
+            animation: 'fade-up 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s both',
           }}
         >
           {ES9_BANNER.title}
@@ -146,6 +149,7 @@ export default function Banner() {
             color: 'rgba(255,255,255,0.55)',
             letterSpacing: '0.03em',
             marginBottom: '18px',
+            animation: 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.5s both',
           }}
         >
           {ES9_BANNER.subtitle}
@@ -166,6 +170,7 @@ export default function Banner() {
             letterSpacing: '0.05em',
             padding: '7px 15px',
             borderRadius: '100px',
+            animation: 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.65s both',
           }}
         >
           <span

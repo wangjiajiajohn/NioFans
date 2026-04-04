@@ -82,11 +82,15 @@ export default function ModelSection() {
 
       {/* ── Content card ── */}
       <div style={{ padding: '0 16px' }}>
-        <div style={{
+        <div
+          key={activeId}
+          style={{
           borderRadius: '16px', overflow: 'hidden',
           border: `1px solid rgba(255,255,255,0.12)`,
           background: 'rgba(255,255,255,0.04)',
+          animation: 'slide-up 0.35s cubic-bezier(0.22,1,0.36,1) both',
         }}>
+
 
           {/* Card top stripe */}
           <div style={{

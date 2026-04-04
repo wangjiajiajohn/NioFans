@@ -226,7 +226,9 @@ export default function DeliveryChart() {
               document.addEventListener('mouseup', onUp);
             }}
           >
-            <div style={{
+            <div
+              key={viewMode}
+              style={{
               display: 'flex', alignItems: 'flex-end', gap: '3px',
               height: '210px', width: `${bars.length * (containerW + 3)}px`, paddingTop: '20px',
               position: 'relative',
@@ -278,6 +280,8 @@ export default function DeliveryChart() {
                       boxShadow: isLatest ? '0 0 12px rgba(0,163,218,0.6)' : isSelected ? '0 0 8px rgba(0,163,218,0.4)' : 'none',
                       outline: isSelected ? '1.5px solid rgba(0,163,218,0.65)' : 'none',
                       outlineOffset: '1px',
+                      transformOrigin: 'bottom center',
+                      animation: `bar-grow 0.45s cubic-bezier(0.34,1.56,0.64,1) ${Math.min(i * 0.012, 0.5)}s both`,
                     }} />
 
                     {/* Bottom labels */}
@@ -321,7 +325,7 @@ export default function DeliveryChart() {
                 }
                 return (
                   <svg
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', animation: 'trend-draw 0.8s cubic-bezier(0.22,1,0.36,1) 0.3s both' }}
                     viewBox={`0 0 ${bars.length * (containerW + 3)} 210`}
                     preserveAspectRatio="none"
                   >
@@ -346,6 +350,7 @@ export default function DeliveryChart() {
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(0,163,218,0.25)',
               borderRadius: '12px', padding: '14px',
+              animation: 'slide-up 0.3s cubic-bezier(0.22,1,0.36,1) both',
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
