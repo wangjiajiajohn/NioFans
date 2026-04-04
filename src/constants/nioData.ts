@@ -35,6 +35,16 @@ export const FLAT_DELIVERY_DATA: DeliveryPoint[] = [
   { month: '26-01', value: 27200 }, { month: '26-02', value: 20800 }, { month: '26-03', value: 35500 },
 ];
 
+// Year-keyed delivery data for DeliverySection (e.g. DELIVERY_DATA[2025])
+export const DELIVERY_DATA: Record<number, DeliveryPoint[]> = [2021, 2022, 2023, 2024, 2025, 2026].reduce(
+  (acc, year) => {
+    const prefix = String(year).slice(2);
+    acc[year] = FLAT_DELIVERY_DATA.filter(d => d.month.startsWith(prefix));
+    return acc;
+  },
+  {} as Record<number, DeliveryPoint[]>
+);
+
 export const ES9_BANNER = {
   title: 'NIO ES9',
   subtitle: '科技行政旗舰SUV · 重磅技术发布会',

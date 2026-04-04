@@ -3,14 +3,11 @@ import React, { useState, useMemo } from 'react';
 import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { DELIVERY_DATA } from '@/constants/nioData';
 
-const formatWan = (v: number) => n >= 10000 
-  ? `${(n / 10000).toFixed(1)}万` 
-  : n.toLocaleString('zh-CN');
-
 export default function DeliverySection() {
   const [selectedYear, setSelectedYear] = useState<number>(2025);
-  const data = DELIVERY_DATA[selectedYear] || [];
-  const prevYearData = DELIVERY_DATA[selectedYear - 1] || [];
+
+  const data = useMemo(() => DELIVERY_DATA[selectedYear] ?? [], [selectedYear]);
+  const prevYearData = useMemo(() => DELIVERY_DATA[selectedYear - 1] ?? [], [selectedYear]);
 
   const latest = data[data.length - 1];
   const total = useMemo(() => data.reduce((s, d) => s + d.value, 0), [data]);
@@ -91,7 +88,9 @@ export default function DeliverySection() {
           return (
             <div key={i} className="text-center group">
               <div className="t-pure-label text-[9px] mb-2 opacity-50">{i + 1}月</div>
-              <div className="text-lg font-extralight group-hover:text-[#00A3DA] transition-colors">{val ? (val/10000).toFixed(1)+'万' : '--'}</div>
+              <div className="text-lg font-extralight group-hover:text-[#00A3DA] transition-colors">
+                {val ? `${(val / 10000).toFixed(1)}万` : '--'}
+              </div>
               <div className="w-4 h-[0.5px] bg-zinc-100 mx-auto mt-2" />
             </div>
           );
@@ -100,4 +99,3 @@ export default function DeliverySection() {
     </div>
   );
 }
-const n = 0; // Reference to fix usage check
