@@ -85,7 +85,7 @@ export default function DeliveryChart() {
   const [viewMode, setViewMode] = useState<ViewMode>('monthly');
   const [selectedIndexOverride, setSelectedIndexOverride] = useState<number | 'latest' | null>('latest');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [showTrend, setShowTrend] = useState(false);
+  const [showTrend, setShowTrend] = useState(true);
 
   const bars = viewMode === 'monthly' ? MONTHLY_BARS : viewMode === 'quarterly' ? QUARTERLY_BARS : YEARLY_BARS;
   const maxVal = Math.max(...bars.map(b => b.value));
