@@ -12,9 +12,9 @@ interface ModelConfig {
 }
 
 const MODELS: ModelConfig[] = [
-  { id: 'es8',      name: 'ES8',    brand: 'NIO',     tag: '旗舰六七座 SUV · 经典战略车型',    color: '#00A3DA' },
+  { id: 'es8',      name: 'ES8',    brand: 'NIO',     tag: '旗舰六七座 SUV · 经典战略车型',    color: '#E8940A' },
   { id: 'l90',      name: 'L90',    brand: 'ONVO',    tag: '家庭智能 SUV · 首款热销车型',      color: '#4E7CF6' },
-  { id: 'firefly',  name: '萤火虫', brand: 'Firefly', tag: '城市微型纯电 · 品牌首款',          color: '#E8940A' },
+  { id: 'firefly',  name: '萤火虫', brand: 'Firefly', tag: '城市微型纯电 · 品牌首款',          color: '#00A3DA' },
 ];
 
 export default function ModelSection() {
