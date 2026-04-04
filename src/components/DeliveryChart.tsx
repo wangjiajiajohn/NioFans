@@ -77,7 +77,7 @@ const trendArrow = (v: number) => v >= 0 ? '▲' : '▼';
 export default function DeliveryChart() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('monthly');
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndexOverride, setSelectedIndexOverride] = useState<number | 'latest' | null>('latest');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const bars = viewMode === 'monthly' ? MONTHLY_BARS : QUARTERLY_BARS;
@@ -86,12 +86,17 @@ export default function DeliveryChart() {
   const containerW = viewMode === 'monthly' ? 24 : 44;
   const barW = viewMode === 'monthly' ? 14 : 28;
 
-  // Scroll to latest, reset selection on view change
+  // Resolve selected index: 'latest' means always point at last bar
+  const selectedIndex: number | null =
+    selectedIndexOverride === 'latest'
+      ? bars.length - 1
+      : selectedIndexOverride;
+
+  // Scroll to latest when view changes
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
     }
-    setSelectedIndex(null);
   }, [viewMode]);
 
   // Compute detail card data
@@ -233,7 +238,7 @@ export default function DeliveryChart() {
                 return (
                   <div
                     key={bar.id}
-                    onClick={() => setSelectedIndex(isSelected ? null : i)}
+                    onClick={() => setSelectedIndexOverride(selectedIndex === i ? 'latest' : i)}
                     onMouseEnter={() => setHoveredIndex(i)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     style={{
