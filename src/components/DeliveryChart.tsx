@@ -62,6 +62,11 @@ const latestYoY = prevYearLatest
   ? ((latestEntry.value - prevYearLatest.value) / prevYearLatest.value * 100).toFixed(1)
   : null;
 
+// 2026 annual target = 2025 full year × 1.45
+const total2026   = FLAT_DELIVERY_DATA.filter(d => d.month.startsWith('26')).reduce((s, d) => s + d.value, 0);
+const target2026  = Math.round(total2025 * 1.45);
+const progress2026Pct = Math.min(total2026 / target2026, 1);  // cap at 100%
+
 const YEARLY_BARS: BarData[] = ['21','22','23','24','25','26'].map(y => {
   const total = FLAT_DELIVERY_DATA.filter(d => d.month.startsWith(y)).reduce((s, d) => s + d.value, 0);
   return {
@@ -162,6 +167,76 @@ export default function DeliveryChart() {
               <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
             </div>
             <div style={{ marginTop: '6px' }}><span className="badge-green">▲ YoY +{yoy2025}%</span></div>
+          </div>
+        </div>
+
+        {/* ── 2026 Annual Target Progress ── */}
+        <div
+          className="anim-fade-up delay-3"
+          style={{
+            marginTop: '12px',
+            padding: '16px 18px',
+            borderRadius: '14px',
+            background: '#F7F9FF',
+            border: '1px solid #E5E9F5',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+            <div>
+              <p style={{ fontSize: '10px', fontWeight: 700, color: '#0D0D0D', letterSpacing: '0.04em', marginBottom: '2px' }}>
+                {t.target2026Label}
+              </p>
+              <p style={{ fontSize: '9px', color: '#999', letterSpacing: '0.02em' }}>
+                {t.target2026SubLabel}
+              </p>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <p style={{ fontSize: '20px', fontWeight: 300, color: '#0D0D0D', letterSpacing: '-0.02em', lineHeight: 1 }}>
+                {(target2026 / 10000).toFixed(1)}
+                <span style={{ fontSize: '10px', fontWeight: 400, color: '#999', marginLeft: '2px' }}>{t.kpiUnit}</span>
+              </p>
+              <p style={{ fontSize: '8px', color: '#999', marginTop: '2px' }}>TARGET</p>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div style={{ background: '#E5E9F5', borderRadius: '100px', height: '6px', overflow: 'hidden', marginBottom: '10px' }}>
+            <div style={{
+              width: `${progress2026Pct * 100}%`,
+              height: '100%',
+              borderRadius: '100px',
+              background: 'linear-gradient(90deg, #00A3DA, #00C3FF)',
+              transition: 'width 1s cubic-bezier(0.22,1,0.36,1)',
+            }} />
+          </div>
+
+          {/* Stats row */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div>
+                <p style={{ fontSize: '8px', color: '#999', marginBottom: '2px' }}>{t.target2026Current}</p>
+                <p style={{ fontSize: '13px', fontWeight: 600, color: '#00A3DA', letterSpacing: '-0.01em' }}>
+                  {(total2026 / 10000).toFixed(1)}{t.kpiUnit}
+                </p>
+              </div>
+              <div>
+                <p style={{ fontSize: '8px', color: '#999', marginBottom: '2px' }}>{t.target2026Gap}</p>
+                <p style={{ fontSize: '13px', fontWeight: 600, color: '#666', letterSpacing: '-0.01em' }}>
+                  {((target2026 - total2026) / 10000).toFixed(1)}{t.kpiUnit}
+                </p>
+              </div>
+            </div>
+            <div style={{
+              background: progress2026Pct >= 1 ? '#34C75920' : '#00A3DA15',
+              border: `1px solid ${progress2026Pct >= 1 ? '#34C75950' : '#00A3DA40'}`,
+              borderRadius: '100px',
+              padding: '4px 10px',
+              fontSize: '10px', fontWeight: 700,
+              color: progress2026Pct >= 1 ? '#34C759' : '#00A3DA',
+              letterSpacing: '0.04em',
+            }}>
+              {(progress2026Pct * 100).toFixed(1)}%
+            </div>
           </div>
         </div>
       </div>

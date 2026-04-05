@@ -44,6 +44,13 @@ export const strings = {
     modelTagFirefly: '城市微型纯电 · 品牌首款',
     modelComingSoon: '数据建设中',
     modelComingDesc: '月度交付数据即将上线',
+    modelTrendLine: '趋势线',
+
+    // 2026 annual target
+    target2026Label: '2026 年度目标',
+    target2026SubLabel: '基于 2025 全年 × 1.45 估算',
+    target2026Current: '当前进度',
+    target2026Gap: '还差',
 
     // Footer
     footerTagline: 'Blue Sky Coming',
@@ -101,6 +108,13 @@ export const strings = {
     modelTagFirefly: 'Urban Mini EV · Brand\'s First',
     modelComingSoon: 'Coming Soon',
     modelComingDesc: 'Monthly delivery data coming soon',
+    modelTrendLine: 'Trend',
+
+    // 2026 annual target
+    target2026Label: '2026 Annual Target',
+    target2026SubLabel: 'Est. 2025 Full Year × 1.45',
+    target2026Current: 'Progress',
+    target2026Gap: 'Remaining',
 
     // Footer
     footerTagline: 'Blue Sky Coming',

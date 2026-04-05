@@ -63,6 +63,7 @@ function fmtK(v: number) {
 
 export default function ModelSection() {
   const [activeId, setActiveId] = useState('es8');
+  const [showTrend, setShowTrend] = useState(true);
   const { t } = useLang();
 
   const model = MODELS.find(m => m.id === activeId)!;
@@ -208,23 +209,45 @@ export default function ModelSection() {
                 </div>
               </div>
 
-              {/* Bar chart */}
+              {/* Chart header: title + trend toggle */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <p style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>
+                  {t.chartTitleMonthly}
+                </p>
+                <button
+                  onClick={() => setShowTrend(v => !v)}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '4px',
+                    background: showTrend ? 'rgba(0,195,255,0.12)' : 'rgba(255,255,255,0.05)',
+                    border: `1px solid ${showTrend ? 'rgba(0,195,255,0.4)' : 'rgba(255,255,255,0.12)'}`,
+                    borderRadius: '100px', padding: '3px 8px', cursor: 'pointer', transition: 'all 0.2s',
+                  }}
+                >
+                  <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
+                    <path d="M0 6 C1.5 6, 2 1.5, 3.5 1.5 C5 1.5, 5 4, 6.5 3 C8 2, 9 4, 12 0.5"
+                      stroke={showTrend ? '#00C3FF' : 'rgba(255,255,255,0.25)'}
+                      strokeWidth="1.4" fill="none" strokeLinecap="round" strokeDasharray="3 2" />
+                  </svg>
+                  <span style={{ fontSize: '8px', fontWeight: 600, color: showTrend ? '#00C3FF' : 'rgba(255,255,255,0.25)', letterSpacing: '0.06em' }}>
+                    {t.modelTrendLine}
+                  </span>
+                </button>
+              </div>
+
+              {/* Bar chart with optional trend overlay */}
               <div style={{ position: 'relative' }}>
-                {/* Y-axis grid lines */}
-                {[1, 0.5].map(pct => (
+                {/* Grid lines */}
+                {[0.5].map(pct => (
                   <div key={pct} style={{
                     position: 'absolute', left: 0, right: 0,
-                    bottom: `calc(26px + ${pct * 100}% - ${pct * 100}px)`,
+                    bottom: `calc(26px + ${pct * 100}px - ${pct * 100}px + ${pct * 100}%)`,
                     borderTop: '1px dashed rgba(255,255,255,0.06)',
                     pointerEvents: 'none',
                   }} />
                 ))}
 
                 {/* Bars */}
-                <div style={{
-                  display: 'flex', alignItems: 'flex-end', gap: '4px',
-                  height: '100px',
-                }}>
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '100px' }}>
                   {chartData.map((d, i) => {
                     const pct = (d.value / maxVal) * 100;
                     const isLatest = i === chartData.length - 1;
@@ -269,6 +292,41 @@ export default function ModelSection() {
                     );
                   })}
                 </div>
+
+                {/* SVG Catmull-Rom trend line */}
+                {showTrend && chartData.length >= 2 && (() => {
+                  const n = chartData.length;
+                  const pts = chartData.map((d, i) => ({
+                    x: (i + 0.5) / n * 100,
+                    y: 100 - (d.value / maxVal) * 100,
+                  }));
+                  let path = `M ${pts[0].x.toFixed(2)} ${pts[0].y.toFixed(2)}`;
+                  for (let i = 0; i < pts.length - 1; i++) {
+                    const p0 = pts[Math.max(0, i - 1)];
+                    const p1 = pts[i];
+                    const p2 = pts[i + 1];
+                    const p3 = pts[Math.min(pts.length - 1, i + 2)];
+                    const cp1x = p1.x + (p2.x - p0.x) / 6;
+                    const cp1y = p1.y + (p2.y - p0.y) / 6;
+                    const cp2x = p2.x - (p3.x - p1.x) / 6;
+                    const cp2y = p2.y - (p3.y - p1.y) / 6;
+                    path += ` C ${cp1x.toFixed(2)} ${cp1y.toFixed(2)}, ${cp2x.toFixed(2)} ${cp2y.toFixed(2)}, ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`;
+                  }
+                  return (
+                    <svg key="trend" viewBox="0 0 100 100" preserveAspectRatio="none"
+                      style={{
+                        position: 'absolute', left: 0, top: 0,
+                        width: '100%', height: '100px',
+                        pointerEvents: 'none',
+                        animation: 'trend-draw 0.8s cubic-bezier(0.22,1,0.36,1) 0.3s both',
+                      }}>
+                      <path d={path} stroke="rgba(0,195,255,0.2)" strokeWidth="3" fill="none" vectorEffect="non-scaling-stroke" />
+                      <path d={path} stroke="#00C3FF" strokeWidth="1" fill="none"
+                        strokeDasharray="4 2" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                      {pts.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="1.5" fill="#00C3FF" opacity="0.8" vectorEffect="non-scaling-stroke" />)}
+                    </svg>
+                  );
+                })()}
               </div>
 
               {/* Data source note */}
