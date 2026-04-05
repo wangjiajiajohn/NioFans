@@ -11,7 +11,14 @@ import CountUp from './CountUp';
 type MetricType = 'revenue' | 'grossMargin' | 'vehicleMargin';
 type PeriodType = 'quarterly' | 'annual';
 
-const CustomTooltip = ({ active, payload, label, metric }: any) => {
+interface TooltipProps {
+  active?: boolean;
+  payload?: any[];
+  label?: string;
+  metric: MetricType;
+}
+
+const CustomTooltip = ({ active, payload, label, metric }: TooltipProps) => {
   if (active && payload && payload.length) {
     const val = payload[0].value;
     return (
@@ -46,14 +53,19 @@ interface SubChartProps {
 }
 
 function FinancialSubChart({ title, metric, period, data }: SubChartProps) {
-  const mainColor = metric === 'revenue' ? '#00A3DA' : metric === 'grossMargin' ? '#00C3FF' : '#5CD6FF';
+  const colors: Record<MetricType, string> = {
+    revenue: '#00A3DA',
+    grossMargin: '#8E5AFF',
+    vehicleMargin: '#00E5FF'
+  };
+  const mainColor = colors[metric];
   const unit = metric === 'revenue' ? 'RMB Billions' : 'Percentage (%)';
 
   return (
     <div style={{ padding: '0 0 40px', position: 'relative' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px', paddingLeft: '4px' }}>
         <div>
-          <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#00A3DA', marginBottom: '2px' }}>
+          <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: mainColor, marginBottom: '2px' }}>
             {title}
           </p>
           <p style={{ fontSize: '16px', fontWeight: 300, color: '#FFFFFF', letterSpacing: '-0.02em', lineHeight: 1, opacity: 0.9 }}>
@@ -136,6 +148,12 @@ export default function FinancialChart() {
     return period === 'quarterly' ? FINANCIAL_QUARTERLY : FINANCIAL_ANNUAL;
   }, [period]);
 
+  const colors: Record<string, string> = {
+    revenue: '#00A3DA',
+    grossMargin: '#8E5AFF',
+    vehicleMargin: '#00E5FF'
+  };
+
   return (
     <div style={{ marginTop: '0px' }}>
       {/* Unified Seamless Dark Container (Single Shell) */}
@@ -161,7 +179,7 @@ export default function FinancialChart() {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
               <div>
-                <p style={{ fontSize: '9px', fontWeight: 700, color: '#00A3DA', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '4px' }}>
+                <p style={{ fontSize: '9px', fontWeight: 700, color: colors.revenue, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '4px' }}>
                   {latestData.quarter} Performance
                 </p>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
@@ -194,16 +212,16 @@ export default function FinancialChart() {
 
             {/* Secondary KPIs Grid inside Summary Card */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-              <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '12px', padding: '12px' }}>
+              <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '12px', padding: '12px', borderLeft: `2px solid ${colors.grossMargin}` }}>
+                <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.3)', marginBottom: '4px' }}>{t.grossMargin}</p>
+                <p style={{ fontSize: '18px', fontWeight: 500, color: '#FFF' }}>
+                  <CountUp end={latestData.grossMargin} decimals={1} />%
+                </p>
+              </div>
+              <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '12px', padding: '12px', borderLeft: `2px solid ${colors.vehicleMargin}` }}>
                 <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.3)', marginBottom: '4px' }}>{t.vehicleMargin}</p>
                 <p style={{ fontSize: '18px', fontWeight: 500, color: '#FFF' }}>
                   <CountUp end={latestData.vehicleMargin} decimals={1} />%
-                </p>
-              </div>
-              <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '12px', padding: '12px' }}>
-                <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.3)', marginBottom: '4px' }}>Cash Reserve</p>
-                <p style={{ fontSize: '18px', fontWeight: 500, color: '#FFF' }}>
-                  <CountUp end={latestData.cash / 10} decimals={1} />B
                 </p>
               </div>
             </div>

@@ -135,7 +135,7 @@ export const FINANCIAL_DATA = [
   {
     quarter: "2024 Q4",
     revenue: 204.5,
-    gap: 12.5,
+    grossMargin: 12.5,
     vehicleMargin: 18.2,
     cash: 520,
     rd: 36.8,
