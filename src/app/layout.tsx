@@ -11,7 +11,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "NioFans · 蔚来数据",
+  title: "NioFans",
   description: "蔚来汽车交付数据、财务数据、换电站建设数据实时追踪",
 };
 
