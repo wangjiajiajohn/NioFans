@@ -140,16 +140,13 @@ export default function FinancialChart() {
     <div style={{ marginTop: '0px' }}>
       {/* Unified Seamless Dark Container (Single Shell) */}
       <div style={{ 
-        background: 'linear-gradient(to bottom, #FFFFFF 0%, #0B0F14 44px)',
-        paddingTop: '0px',
-        paddingBottom: '32px'
+        background: 'linear-gradient(to bottom, #FFFFFF 0%, #0B0F14 28px)',
+        padding: '0 16px 32px'
       }}>
         <div className="chart-shell" style={{ 
           padding: '24px 20px', 
           background: '#0B0F14', 
-          borderRadius: '0', 
-          borderTopLeftRadius: '24px',
-          borderTopRightRadius: '24px',
+          borderRadius: '24px', 
           boxShadow: 'none'
         }}>
           
