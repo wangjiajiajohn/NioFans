@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
 import { BANNERS } from '@/constants/nioData';
 import { useLang } from '@/contexts/LangContext';
 import { getAssetPath } from '@/utils/paths';
@@ -144,13 +143,18 @@ export default function Banner() {
               height: '100%',
             }}
           >
-            {/* Car image */}
-            <Image
+            {/* Standard img tag for superior WeChat QR scanning compatibility */}
+            <img
               src={getAssetPath(banner.image)}
               alt={banner.title}
-              fill
-              priority
-              style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover', 
+                objectPosition: 'center 40%',
+                WebkitTouchCallout: 'default',
+              }}
+              draggable={false}
             />
 
             {/* Cinematic gradient — dark at top & bottom, transparent in middle */}
@@ -260,8 +264,9 @@ export default function Banner() {
               letterSpacing: '0.05em',
               padding: '7px 15px',
               borderRadius: '100px',
-              animation: 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.65s both',
+              animation: 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.5s both, breathe 2.2s ease-in-out 1.2s infinite',
               pointerEvents: 'auto',
+              boxShadow: '0 0 15px rgba(255,255,255,0.03)',
             }}
           >
             <span
