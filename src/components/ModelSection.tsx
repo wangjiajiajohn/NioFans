@@ -522,9 +522,54 @@ export default function ModelSection() {
                 </button>
               </div>
 
+              {/* ── AI Forecast Section (Firefly Only) ── */}
+              {model.id === 'firefly' && (
+                <div style={{
+                  marginTop: '24px', padding: '16px',
+                  background: 'linear-gradient(135deg, rgba(0,195,255,0.08) 0%, rgba(0,195,255,0.03) 100%)',
+                  border: '1px solid rgba(0,195,255,0.2)', borderRadius: '14px',
+                  animation: 'fade-in 0.6s ease-out both',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                    <div style={{
+                      padding: '4px 8px', borderRadius: '4px', background: '#00C3FF',
+                      color: '#000', fontSize: '9px', fontWeight: 900, textTransform: 'uppercase',
+                    }}>AI 推演</div>
+                    <h4 style={{ fontSize: '13px', fontWeight: 600, color: '#fff', margin: 0 }}>2026 年度销量预测</h4>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+                    <div style={{ flex: 1, padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', margin: '0 0 4px 0' }}>年度总预估</p>
+                      <p style={{ fontSize: '18px', fontWeight: 700, color: '#00C3FF', margin: 0 }}>~11.5 <span style={{ fontSize: '10px' }}>万台</span></p>
+                    </div>
+                    <div style={{ flex: 1, padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                      <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', margin: '0 0 4px 0' }}>峰值月度 (12月)</p>
+                      <p style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: 0 }}>~1.85 <span style={{ fontSize: '10px' }}>万台</span></p>
+                    </div>
+                  </div>
+
+                  <div style={{ padding: '10px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px' }}>
+                    <p style={{ fontSize: '9px', fontWeight: 600, color: 'rgba(0,195,255,0.8)', marginBottom: '6px', textTransform: 'uppercase' }}>推演过程 (SCM 模型)</p>
+                    <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      {[
+                        '以 2026.03 实际交付 (6,119台) 为基准锚点',
+                        '应用 NIO 品牌五年期“季节性修正指数”',
+                        '平滑 2025 首发爬坡期异常波动 (剔除异常 MoM)',
+                        '拟合 Q4 年底冲刺效应 (季节性权重系数 1.8x - 2.5x)'
+                      ].map((text, i) => (
+                        <li key={i} style={{ fontSize: '9px', color: 'rgba(255,255,255,0.5)', display: 'flex', gap: '6px' }}>
+                          <span style={{ color: '#00C3FF' }}>•</span> {text}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+
               {/* Data source note */}
               <p style={{
-                marginTop: '12px', fontSize: '8px',
+                marginTop: '16px', fontSize: '8px',
                 color: 'rgba(255,255,255,0.2)', letterSpacing: '0.04em', textAlign: 'center',
               }}>
                 Source · NIO Official Monthly Reports
