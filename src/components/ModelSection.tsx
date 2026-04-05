@@ -259,7 +259,7 @@ export default function ModelSection() {
                     fontSize: '7px', fontWeight: 700, letterSpacing: '0.14em',
                     textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '8px',
                   }}>
-                    {t.kpiThisMonth}
+                    {latest!.fullLabel}
                   </p>
                   <p style={{ fontSize: '22px', fontWeight: 200, color: '#FFFFFF', letterSpacing: '-0.02em', lineHeight: 1 }}>
                     {latest!.value.toLocaleString()}

@@ -169,7 +169,9 @@ export default function DeliveryChart() {
         <p className="section-label anim-fade-up delay-1" style={{ marginBottom: '14px' }}>{t.sectionLabel}</p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }} className="anim-fade-up delay-2">
           <div className="kpi-card">
-            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>{t.kpiThisMonth}</div>
+            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>
+              {`20${latestEntry.month.replace('-', '.')}`}
+            </div>
             <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
               {(latestEntry.value / 10000).toFixed(2)}
               <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
