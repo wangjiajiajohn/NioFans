@@ -7,42 +7,98 @@ import { getAssetPath } from '@/utils/paths';
 
 export default function Banner() {
   const { lang, t, toggleLang } = useLang();
-  const [currentBanner, setCurrentBanner] = useState(0);
+  const [visualIndex, setVisualIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const nextBanner = () => {
-    setCurrentBanner((prev) => (prev === BANNERS.length - 1 ? 0 : prev + 1));
-  };
+  // Clone last slide at start, first slide at end for seamless loop
+  const extendedBanners = [
+    BANNERS[BANNERS.length - 1],
+    ...BANNERS,
+    BANNERS[0]
+  ];
 
-  const prevBanner = () => {
-    setCurrentBanner((prev) => (prev === 0 ? BANNERS.length - 1 : prev - 1));
-  };
+  const nextBanner = React.useCallback(() => {
+    if (!isTransitioning) return;
+    setVisualIndex((prev) => prev + 1);
+  }, [isTransitioning]);
+
+  const prevBanner = React.useCallback(() => {
+    if (!isTransitioning) return;
+    setVisualIndex((prev) => prev - 1);
+  }, [isTransitioning]);
 
   useEffect(() => {
     const interval = setInterval(nextBanner, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [nextBanner]);
 
-  // Touch events for swipe functionality
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
+  const handleTransitionEnd = () => {
+    if (visualIndex === 0) {
+      setIsTransitioning(false);
+      setVisualIndex(BANNERS.length);
+    } else if (visualIndex === BANNERS.length + 1) {
+      setIsTransitioning(false);
+      setVisualIndex(1);
+    }
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+  // Re-enable transitions after jump
+  useEffect(() => {
+    if (!isTransitioning) {
+      // Small tick to ensure React applies the non-transitioning index jump first
+      const t = setTimeout(() => setIsTransitioning(true), 20);
+      return () => clearTimeout(t);
+    }
+  }, [isTransitioning]);
+
+  // Map visual index back to original BANNER index for content rendering
+  const currentBanner = (visualIndex - 1 + BANNERS.length) % BANNERS.length;
+
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleStart = (clientX: number) => {
+    setIsDragging(true);
+    setTouchStart(clientX);
   };
 
-  const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 50) {
-      // Swipe left
-      nextBanner();
+  const handleMove = (clientX: number) => {
+    if (!isDragging) return;
+    setTouchEnd(clientX);
+  };
+
+  const handleEnd = () => {
+    if (!isDragging) return;
+    const deltaX = touchStart - touchEnd;
+    if (Math.abs(deltaX) > 50 && touchEnd !== 0) {
+      if (deltaX > 0) nextBanner();
+      else prevBanner();
     }
-    if (touchEnd - touchStart > 50) {
-      // Swipe right
-      prevBanner();
-    }
+    setIsDragging(false);
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
+  // Touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => handleStart(e.touches[0].clientX);
+  const handleTouchMove = (e: React.TouchEvent) => handleMove(e.touches[0].clientX);
+  const handleTouchEnd = () => handleEnd();
+
+  // Mouse handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    handleStart(e.clientX);
+    if (containerRef.current) containerRef.current.style.cursor = 'grabbing';
+  };
+  const handleMouseMove = (e: React.MouseEvent) => handleMove(e.clientX);
+  const handleMouseUp = () => {
+    handleEnd();
+    if (containerRef.current) containerRef.current.style.cursor = 'grab';
+  };
+  const handleMouseLeave = () => {
+    if (isDragging) handleEnd();
+    if (containerRef.current) containerRef.current.style.cursor = 'grab';
   };
 
   return (
@@ -51,6 +107,10 @@ export default function Banner() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
       style={{
         position: 'relative',
         width: '100%',
@@ -59,19 +119,10 @@ export default function Banner() {
         overflow: 'hidden',
         cursor: 'grab',
       }}
-      onMouseDown={() => {
-        if (containerRef.current) {
-          containerRef.current.style.cursor = 'grabbing';
-        }
-      }}
-      onMouseUp={() => {
-        if (containerRef.current) {
-          containerRef.current.style.cursor = 'grab';
-        }
-      }}
     >
       {/* Banner slides */}
       <div
+        onTransitionEnd={handleTransitionEnd}
         style={{
           position: 'absolute',
           top: 0,
@@ -79,13 +130,13 @@ export default function Banner() {
           width: '100%',
           height: '100%',
           display: 'flex',
-          transition: 'transform 0.5s ease-in-out',
-          transform: `translateX(-${currentBanner * 100}%)`,
+          transition: isTransitioning ? 'transform 0.5s ease-in-out' : 'none',
+          transform: `translateX(-${visualIndex * 100}%)`,
         }}
       >
-        {BANNERS.map((banner) => (
+        {extendedBanners.map((banner, idx) => (
           <div
-            key={banner.id}
+            key={`${banner.id}-${idx}`}
             style={{
               flex: '0 0 100%',
               position: 'relative',
@@ -315,7 +366,10 @@ export default function Banner() {
           {BANNERS.map((_, index) => (
             <button
               key={index}
-              onClick={() => setCurrentBanner(index)}
+              onClick={() => {
+                if (!isTransitioning) return;
+                setVisualIndex(index + 1);
+              }}
               style={{
                 width: index === currentBanner ? '24px' : '8px',
                 height: '2px',
