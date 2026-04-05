@@ -47,15 +47,6 @@ export const DELIVERY_DATA: Record<number, DeliveryPoint[]> = [2021, 2022, 2023,
 
 export const BANNERS = [
   {
-    id: '1',
-    title: 'NIO ES9',
-    subtitle: '科技行政旗舰SUV · 重磅技术发布会',
-    date: '2026.04.09',
-    image: '/1.png',
-    inviteText: '预约发布会直播',
-    showLiveBadge: true
-  },
-  {
     id: '2',
     title: 'NIO 2026',
     subtitle: '全新车型 · 邀您体验',
@@ -63,6 +54,15 @@ export const BANNERS = [
     image: '/2.png',
     inviteText: '预约购车',
     showLiveBadge: false
+  },
+  {
+    id: '1',
+    title: 'NIO ES9',
+    subtitle: '科技行政旗舰SUV · 重磅技术发布会',
+    date: '2026.04.09',
+    image: '/1.png',
+    inviteText: '预约发布会直播',
+    showLiveBadge: true
   }
 ];
 
