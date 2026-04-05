@@ -182,15 +182,16 @@ export default function FinancialChart() {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
                   <p style={{ fontSize: '9px', fontWeight: 700, color: colors.revenue, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-                    {latestData.quarter} {t.finPerformance}
+                    {latestData.quarter} {latestData.status === 'ESTIMATED' ? t.finForecast : t.finPerformance}
                   </p>
-                  {latestData.status && (
+                  {latestData.status === 'ESTIMATED' && (
                     <span style={{ 
-                      fontSize: '7px', fontWeight: 800, padding: '2px 6px', 
-                      background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', 
-                      borderRadius: '4px', letterSpacing: '0.04em'
+                      fontSize: '7px', fontWeight: 800, padding: '2px 8px', 
+                      background: 'rgba(0, 163, 218, 0.2)', color: '#00A3DA', 
+                      borderRadius: '4px', letterSpacing: '0.04em',
+                      border: '1px solid rgba(0, 163, 218, 0.3)'
                     }}>
-                      {latestData.status === 'ESTIMATED' ? t.finEstimated : latestData.status}
+                      {t.finForecast}
                     </span>
                   )}
                 </div>
