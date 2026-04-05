@@ -1,11 +1,9 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
 import { BANNERS } from '@/constants/nioData';
-import { useLang } from '@/contexts/LangContext';
 import { getAssetPath } from '@/utils/paths';
 
 export default function Banner() {
-  const { lang, toggleLang } = useLang();
   const [visualIndex, setVisualIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
@@ -172,67 +170,6 @@ export default function Banner() {
       </div>
 
 
-
-      {/* ── Top bar ── */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0, left: 0, right: 0,
-          paddingTop: 'max(20px, env(safe-area-inset-top))',
-          paddingLeft: '20px',
-          paddingRight: '20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          zIndex: 10,
-          pointerEvents: 'none',
-        }}
-      >
-        <div>
-          <p
-            style={{
-              fontSize: '9px',
-              fontWeight: 700,
-              letterSpacing: '0.28em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.35)',
-              lineHeight: 1,
-            }}
-          >
-            NIO FANS
-          </p>
-          <p
-            style={{
-              fontSize: '8px',
-              fontWeight: 400,
-              letterSpacing: '0.14em',
-              color: 'rgba(255,255,255,0.2)',
-              marginTop: '3px',
-            }}
-          >
-            DATA PORTAL
-          </p>
-        </div>
-
-        {/* Lang toggle */}
-        <button
-          onClick={toggleLang}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: '3px',
-            background: 'rgba(255,255,255,0.08)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            backdropFilter: 'blur(6px)',
-            borderRadius: '100px', padding: '5px 10px',
-            cursor: 'pointer', fontSize: '8px', fontWeight: 700,
-            letterSpacing: '0.12em',
-            pointerEvents: 'auto',
-          }}
-        >
-          <span style={{ color: lang === 'zh' ? '#FFFFFF' : 'rgba(255,255,255,0.35)' }}>ZH</span>
-          <span style={{ color: 'rgba(255,255,255,0.25)', margin: '0 2px' }}>·</span>
-          <span style={{ color: lang === 'en' ? '#FFFFFF' : 'rgba(255,255,255,0.35)' }}>EN</span>
-        </button>
-      </div>
 
       {/* ── Bottom copy ── */}
       <div

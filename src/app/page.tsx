@@ -11,7 +11,7 @@ import { useLang } from '@/contexts/LangContext';
 type TabType = 'delivery' | 'financial' | 'power';
 
 export default function AppShell() {
-  const { t } = useLang();
+  const { lang, toggleLang, t } = useLang();
   const [activeTab, setActiveTab] = useState<TabType>('delivery');
   const tabs: TabType[] = ['delivery', 'financial', 'power'];
   const activeIndex = tabs.indexOf(activeTab);
@@ -21,21 +21,63 @@ export default function AppShell() {
       <PullEasterEgg />
       <Banner />
 
-      {/* ── Premium Segmented Control ── */}
+      {/* ── Brand Identity (Scrolls Away) ── */}
+      <div
+        style={{
+          padding: '24px 20px 12px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          background: '#FFF',
+        }}
+      >
+        <div style={{ flexShrink: 0 }}>
+          <p style={{ fontSize: '10px', fontWeight: 800, letterSpacing: '0.2em', color: '#000', opacity: 0.8 }}>
+            NIO FANS
+          </p>
+          <p style={{ fontSize: '7px', fontWeight: 500, letterSpacing: '0.1em', color: 'rgba(0,0,0,0.3)', textTransform: 'uppercase', marginTop: '2px' }}>
+            Data Visualization
+          </p>
+        </div>
+
+        {/* Lang toggle */}
+        <button
+          onClick={toggleLang}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '4px',
+            background: 'rgba(0,0,0,0.03)',
+            border: '1px solid rgba(0,0,0,0.08)',
+            borderRadius: '100px', padding: '6px 14px',
+            cursor: 'pointer', fontSize: '9px', fontWeight: 700,
+            letterSpacing: '0.05em',
+            color: '#0D0D0D'
+          }}
+        >
+          <span style={{ opacity: lang === 'zh' ? 1 : 0.3 }}>ZH</span>
+          <span style={{ opacity: 0.1 }}>·</span>
+          <span style={{ opacity: lang === 'en' ? 1 : 0.3 }}>EN</span>
+        </button>
+      </div>
+
+      {/* ── Sticky Segmented Control (Docks only Tabs) ── */}
       <div 
         style={{ 
           position: 'sticky',
           top: 0,
-          zIndex: 100,
-          background: 'rgba(255,255,255,0.85)',
+          zIndex: 1000,
+          width: '100%',
+          left: 0,
+          background: 'rgba(255,255,255,0.9)',
           backdropFilter: 'blur(20px) saturate(180%)',
           WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          paddingBottom: '2px',
-          borderBottom: '1px solid rgba(0,0,0,0.05)'
+          borderBottom: '1px solid rgba(0,0,0,0.05)',
+          padding: '10px 0',
+          display: 'flex',
+          justifyContent: 'center',
+          transform: 'translate3d(0,0,0)',
         }}
       >
-        <div className="nav-capsule">
-          {/* Sliding Indicator */}
+        <div className="nav-capsule" style={{ margin: 0 }}>
           <div 
             className="nav-indicator"
             style={{ 
@@ -44,13 +86,12 @@ export default function AppShell() {
               left: '4px'
             }}
           />
-          
           {tabs.map((tab) => (
             <button
               key={tab}
               className={`nav-pill ${activeTab === tab ? 'active' : ''}`}
               onClick={() => setActiveTab(tab)}
-              style={{ width: '90px', textAlign: 'center' }}
+              style={{ width: '100px', textAlign: 'center' }}
             >
               {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : t.tabPower}
             </button>

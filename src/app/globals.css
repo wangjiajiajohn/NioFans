@@ -31,7 +31,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* overflow-x: hidden removed to prevent breaking sticky items */
 }
 
 /* ── Container ── */
@@ -42,7 +42,7 @@ html, body {
   min-height: 100vh;
   background: var(--white);
   position: relative;
-  overflow: hidden;
+  overflow: visible !important;
 }
 
 /* ── Scrollbar Hide ── */
