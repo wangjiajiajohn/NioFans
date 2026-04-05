@@ -298,32 +298,6 @@ export default function DeliveryChart() {
                 ))}
               </div>
 
-              {/* Zoom toggle */}
-              <div style={{ display: 'flex', background: 'rgba(255,255,255,0.07)', borderRadius: '8px', padding: '3px', gap: '2px' }}>
-                {[
-                  { label: t.zoomDense, scale: 0.6 },
-                  { label: t.zoomStandard, scale: 1.0 },
-                  { label: t.zoomRoomy, scale: 1.8 },
-                ].map(z => {
-                  const isActive = Math.abs(barScale - z.scale) < 0.1;
-                  return (
-                    <button
-                      key={z.label}
-                      onClick={() => setBarScale(z.scale)}
-                      style={{
-                        padding: '4px 8px', borderRadius: '6px', border: 'none',
-                        fontSize: '9px', fontWeight: 600, letterSpacing: '0.04em', cursor: 'pointer',
-                        transition: 'all 0.2s',
-                        background: isActive ? 'rgba(0,163,218,0.8)' : 'transparent',
-                        color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.3)',
-                      }}
-                    >
-                      {z.label}
-                    </button>
-                  );
-                })}
-              </div>
-
               <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.06em' }}>
                 {t.chartScroll}
               </div>

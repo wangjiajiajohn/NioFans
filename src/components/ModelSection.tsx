@@ -68,14 +68,16 @@ export default function ModelSection() {
 
   // Zoom and scroll state
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [selectedIndexOverride, setSelectedIndexOverride] = useState<number | 'latest' | null>('latest');
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [barScale, setBarScale] = useState(1.8);
   const barScaleRef = useRef(1.8);
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
 
   // Constants for scaling
-  const BASE_CW = 22; // Base container width per bar
+  const BASE_CW = 22; // Base column width (spacing)
   const BASE_BW = 12; // Base bar width
-  const containerW = Math.max(8, Math.round(BASE_CW * barScale));
+  const colW = Math.max(12, Math.round(BASE_CW * barScale));
   const barW = Math.max(4, Math.round(BASE_BW * barScale));
 
   // Pinch-to-zoom logic
@@ -125,10 +127,29 @@ export default function ModelSection() {
   const chartData = parseModelData(activeId);
 
   const hasData = chartData.length > 0;
+  const selectedIndex: number | null =
+    selectedIndexOverride === 'latest' ? chartData.length - 1 : selectedIndexOverride;
   const latest = hasData ? chartData[chartData.length - 1] : null;
   const peak   = hasData ? chartData.reduce((a, b) => a.value > b.value ? a : b) : null;
   const cumulative = hasData ? chartData.reduce((sum, item) => sum + item.value, 0) : 0;
   const maxVal = peak?.value ?? 1;
+
+  // Detail panel computation
+  const detail = hasData && selectedIndex !== null ? (() => {
+    const cur = chartData[selectedIndex];
+    const momPrev = selectedIndex > 0 ? chartData[selectedIndex - 1] : null;
+    // YoY for model data might be sparse, so find the same month in the previous year
+    const curYear = +cur.fullLabel.split('.')[0];
+    const curMonth = +cur.fullLabel.split('.')[1];
+    const yoyPrev = chartData.find(d => {
+      const dYear = +d.fullLabel.split('.')[0];
+      const dMonth = +d.fullLabel.split('.')[1];
+      return dYear === curYear - 1 && dMonth === curMonth;
+    });
+    const yoy = yoyPrev ? (cur.value - yoyPrev.value) / yoyPrev.value * 100 : null;
+    const mom = momPrev ? (cur.value - momPrev.value) / momPrev.value * 100 : null;
+    return { cur, momPrev, yoyPrev, yoy, mom };
+  })() : null;
 
   return (
     <section style={{ background: '#0B0F14', padding: '0 0 48px' }}>
@@ -219,33 +240,7 @@ export default function ModelSection() {
               </p>
             </div>
 
-            {/* Zoom Control */}
-            {hasData && (
-              <div style={{ display: 'flex', background: 'rgba(255,255,255,0.07)', borderRadius: '8px', padding: '3px', gap: '2px' }}>
-                {[
-                  { label: t.zoomDense, scale: 0.6 },
-                  { label: t.zoomStandard, scale: 1.0 },
-                  { label: t.zoomRoomy, scale: 1.8 },
-                ].map(z => {
-                  const isActive = Math.abs(barScale - z.scale) < 0.1;
-                  return (
-                    <button
-                      key={z.label}
-                      onClick={() => setBarScale(z.scale)}
-                      style={{
-                        padding: '4px 8px', borderRadius: '6px', border: 'none',
-                        fontSize: '8px', fontWeight: 600, letterSpacing: '0.04em', cursor: 'pointer',
-                        transition: 'all 0.2s',
-                        background: isActive ? model.color : 'transparent',
-                        color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.3)',
-                      }}
-                    >
-                      {z.label}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+            <div />
           </div>
 
           {/* ── Data view ── */}
@@ -305,70 +300,117 @@ export default function ModelSection() {
               <div
                 ref={scrollRef}
                 className="no-scrollbar"
-                style={{ position: 'relative', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch' }}
+                style={{ position: 'relative', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', cursor: 'grab' }}
+                onMouseDown={e => {
+                  const el = e.currentTarget;
+                  const startX = e.pageX - el.offsetLeft;
+                  const initSL = el.scrollLeft;
+                  const onMove = (ev: MouseEvent) => { el.scrollLeft = initSL - (ev.pageX - el.offsetLeft - startX); };
+                  const onUp = () => {
+                    document.removeEventListener('mousemove', onMove);
+                    document.removeEventListener('mouseup', onUp);
+                    el.style.cursor = 'grab';
+                  };
+                  el.style.cursor = 'grabbing';
+                  document.addEventListener('mousemove', onMove);
+                  document.addEventListener('mouseup', onUp);
+                }}
               >
                 <div style={{
-                  display: 'flex', alignItems: 'flex-end', gap: '4px', height: '140px',
-                  width: `${chartData.length * (containerW + 4)}px`,
-                  paddingTop: '30px', position: 'relative',
+                  display: 'flex', alignItems: 'center', height: '140px',
+                  width: `${chartData.length * colW}px`,
+                  position: 'relative',
                 }}>
                   {chartData.map((d, i) => {
-                    const pct = (d.value / maxVal) * 100;
+                    const ratio = d.value / maxVal;
                     const isLatest = i === chartData.length - 1;
                     const isPeak   = d.value === maxVal;
+                    const isSelected = selectedIndex === i;
+                    const isHovered = hoveredIndex === i;
+                    const active = isSelected || isHovered;
+                    const barFill = isPeak
+                      ? `linear-gradient(180deg, ${model.color}, ${model.color}80)`
+                      : active
+                      ? `linear-gradient(180deg, ${model.color}99, ${model.color}40)`
+                      : isLatest
+                      ? 'rgba(255,255,255,0.25)'
+                      : 'rgba(255,255,255,0.1)';
+
                     return (
                       <div
                         key={d.label}
+                        onClick={() => setSelectedIndexOverride(selectedIndex === i ? 'latest' : i)}
+                        onMouseEnter={() => setHoveredIndex(i)}
+                        onMouseLeave={() => setHoveredIndex(null)}
                         style={{
-                          width: `${containerW}px`, flexShrink: 0,
-                          display: 'flex', flexDirection: 'column', alignItems: 'center',
-                          gap: '6px', height: '100%', justifyContent: 'flex-end',
+                          width: `${colW}px`, flexShrink: 0, height: '100%',
+                          display: 'flex', flexDirection: 'column',
+                          cursor: 'pointer',
                         }}
                         title={`${d.fullLabel}: ${d.value.toLocaleString()}`}
                       >
-                        {/* Value label above bar */}
-                        <span style={{
-                          fontSize: '6px', fontWeight: 600,
-                          color: isPeak ? model.color : isLatest ? 'rgba(255,255,255,0.5)' : 'transparent',
-                          whiteSpace: 'nowrap',
-                        }}>
-                          {fmtK(d.value)}
-                        </span>
-                        {/* Bar body */}
+                        {/* ── Chart Area (110px) ── */}
                         <div style={{
-                          width: `${barW}px`,
-                          height: `${pct}%`,
-                          borderRadius: '2px 2px 1px 1px',
-                          background: isPeak
-                            ? `linear-gradient(180deg, ${model.color}, ${model.color}80)`
-                            : isLatest
-                              ? 'rgba(255,255,255,0.25)'
-                              : 'rgba(255,255,255,0.1)',
-                          boxShadow: isPeak ? `0 0 10px ${model.color}50` : 'none',
-                          transition: 'height 0.6s cubic-bezier(0.22,1,0.36,1)',
-                          minHeight: '2px',
-                        }} />
-                        {/* X-axis label */}
-                        <span style={{
-                          fontSize: '7px',
-                          color: isLatest ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.2)',
-                          whiteSpace: 'nowrap',
-                          letterSpacing: 0,
+                          height: '110px', width: '100%', display: 'flex', flexDirection: 'column',
+                          justifyContent: 'flex-end', alignItems: 'center', position: 'relative',
                         }}>
-                          {d.label}
-                        </span>
+                          {/* Value label above bar */}
+                          {(active || isLatest) && (
+                            <span style={{
+                              fontSize: '6px', fontWeight: 600,
+                              color: active ? model.color : isLatest ? 'rgba(255,255,255,0.5)' : 'transparent',
+                              whiteSpace: 'nowrap',
+                              background: active ? `${model.color}15` : 'transparent',
+                              padding: active ? '1px 3px' : '0',
+                              borderRadius: '2px',
+                              marginBottom: '2px',
+                            }}>
+                              {fmtK(d.value)}
+                            </span>
+                          )}
+                          {/* Bar body: height is 80 * ratio */}
+                          <div style={{
+                            width: `${barW}px`,
+                            height: `${Math.round(ratio * 80)}px`,
+                            borderRadius: '2px 2px 1px 1px',
+                            background: barFill,
+                            boxShadow: isPeak ? `0 0 10px ${model.color}50` : isSelected ? `0 0 8px ${model.color}30` : 'none',
+                            outline: isSelected ? `1.5px solid ${model.color}80` : 'none',
+                            outlineOffset: '1px',
+                            transition: 'height 0.6s cubic-bezier(0.22,1,0.36,1), background 0.2s',
+                            minHeight: '2px',
+                          }} />
+                        </div>
+
+                        {/* ── Label Area (30px) ── */}
+                        <div style={{
+                          height: '30px', width: '100%', display: 'flex', alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                          <span style={{
+                            fontSize: '7px',
+                            color: isSelected ? model.color : isLatest ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.2)',
+                            whiteSpace: 'nowrap',
+                            letterSpacing: 0,
+                            fontWeight: isSelected ? 700 : 400,
+                          }}>
+                            {d.label}
+                          </span>
+                        </div>
                       </div>
                     );
                   })}
 
                   {/* SVG Catmull-Rom trend line */}
                   {showTrend && chartData.length >= 2 && (() => {
-                    const BAR_AREA_H = 104; // 140 - 30(top) - 6(bottom labels approx)
-                    const TOP_OFFSET = 30;
+                    const TOP_PAD = 30;    // Top padding of the chart area within the 110px box
+                    const AREA_H = 80;     // Active chart area height (110 - 30)
+                    
                     const pts = chartData.map((d, i) => ({
-                      x: i * (containerW + 4) + containerW / 2,
-                      y: TOP_OFFSET + BAR_AREA_H * (1 - d.value / maxVal),
+                      x: i * colW + colW / 2,
+                      y: TOP_PAD + AREA_H * (1 - d.value / maxVal),
                     }));
+                    
                     let path = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
                     for (let i = 0; i < pts.length - 1; i++) {
                       const p0 = pts[Math.max(0, i - 1)];
@@ -383,19 +425,80 @@ export default function ModelSection() {
                     }
                     return (
                       <svg
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', animation: 'trend-draw 0.8s cubic-bezier(0.22,1,0.36,1) 0.3s both' }}
-                        viewBox={`0 0 ${chartData.length * (containerW + 4)} 140`}
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '110px', pointerEvents: 'none' }}
+                        viewBox={`0 0 ${chartData.length * colW} 110`}
                         preserveAspectRatio="none"
                       >
-                        <path d={path} stroke="rgba(0,195,255,0.15)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d={path} stroke="#00C3FF" strokeWidth="1" fill="none"
+                        <path d={path} stroke={`${model.color}30`} strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d={path} stroke={model.color} strokeWidth="1" fill="none"
                           strokeDasharray="4 2" strokeLinecap="round" strokeLinejoin="round" />
-                        {pts.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="1.5" fill="#00C3FF" opacity="0.8" />)}
+                        {pts.map((p, i) => {
+                          const isSel = selectedIndex === i;
+                          return (
+                            <circle
+                              key={i} cx={p.x} cy={p.y} r={isSel ? "2.5" : "1.5"}
+                              fill={model.color} opacity={isSel ? "1" : "0.8"}
+                              stroke={isSel ? "#000" : "none"} strokeWidth="0.5"
+                            />
+                          );
+                        })}
                       </svg>
                     );
                   })()}
                 </div>
               </div>
+
+              {/* ── Detail Panel for Model ── */}
+              {detail && (
+                <div style={{
+                  marginTop: '14px',
+                  background: 'rgba(255,255,255,0.03)',
+                  border: `1px solid ${model.color}25`,
+                  borderRadius: '12px', padding: '14px',
+                  animation: 'slide-up 0.3s cubic-bezier(0.22,1,0.36,1) both',
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                    <div>
+                      <div style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '4px' }}>
+                        {t.chartTitleMonthly}
+                      </div>
+                      <div style={{ fontSize: '12px', fontWeight: 600, color: model.color }}>{detail.cur.fullLabel}</div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: '24px', fontWeight: 200, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>
+                        {detail.cur.value.toLocaleString()}
+                      </div>
+                      <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.3)' }}>{t.kpiUnit}</div>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    {/* YoY */}
+                    <div style={{ flex: 1, background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '10px' }}>
+                      <div style={{ fontSize: '7px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', marginBottom: '6px' }}>{t.yoyLabel} YoY</div>
+                      {detail.yoy !== null ? (
+                        <>
+                          <div style={{ fontSize: '15px', fontWeight: 700, color: detail.yoy >= 0 ? '#34C759' : '#FF453A', lineHeight: 1, marginBottom: '4px' }}>
+                            {detail.yoy >= 0 ? '▲' : '▼'} {detail.yoy >= 0 ? '+' : ''}{detail.yoy.toFixed(1)}%
+                          </div>
+                          <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.2)' }}>{t.prevYear} {fmtK(detail.yoyPrev!.value)}</div>
+                        </>
+                      ) : <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.15)' }}>{t.noComparison}</div>}
+                    </div>
+                    {/* MoM */}
+                    <div style={{ flex: 1, background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '10px' }}>
+                      <div style={{ fontSize: '7px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', marginBottom: '6px' }}>环比 MoM</div>
+                      {detail.mom !== null ? (
+                        <>
+                          <div style={{ fontSize: '15px', fontWeight: 700, color: detail.mom >= 0 ? '#34C759' : '#FF453A', lineHeight: 1, marginBottom: '4px' }}>
+                            {detail.mom >= 0 ? '▲' : '▼'} {detail.mom >= 0 ? '+' : ''}{detail.mom.toFixed(1)}%
+                          </div>
+                          <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.2)' }}>{t.prevPeriod} {fmtK(detail.momPrev!.value)}</div>
+                        </>
+                      ) : <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.15)' }}>{t.noComparison}</div>}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Trend toggle below chart */}
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
