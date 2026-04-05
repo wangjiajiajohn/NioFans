@@ -53,13 +53,14 @@ interface SubChartProps {
 }
 
 function FinancialSubChart({ title, metric, period, data }: SubChartProps) {
+  const { t } = useLang();
   const colors: Record<MetricType, string> = {
     revenue: '#00A3DA',
     grossMargin: '#8E5AFF',
     vehicleMargin: '#00E5FF'
   };
   const mainColor = colors[metric];
-  const unit = metric === 'revenue' ? 'RMB Billions' : 'Percentage (%)';
+  const unit = metric === 'revenue' ? t.unitRmbBn : t.unitPercent;
 
   return (
     <div style={{ padding: '0 0 40px', position: 'relative' }}>
@@ -181,15 +182,15 @@ export default function FinancialChart() {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
                   <p style={{ fontSize: '9px', fontWeight: 700, color: colors.revenue, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-                    {latestData.quarter} Performance
+                    {latestData.quarter} {t.finPerformance}
                   </p>
                   {latestData.status && (
                     <span style={{ 
                       fontSize: '7px', fontWeight: 800, padding: '2px 6px', 
-                      background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', 
+                      background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', 
                       borderRadius: '4px', letterSpacing: '0.04em'
                     }}>
-                      {latestData.status}
+                      {latestData.status === 'ESTIMATED' ? t.finEstimated : latestData.status}
                     </span>
                   )}
                 </div>
@@ -197,7 +198,7 @@ export default function FinancialChart() {
                   <span style={{ fontSize: '32px', fontWeight: 200, color: '#FFF' }}>
                     <CountUp end={latestData.revenue} decimals={2} />
                   </span>
-                  <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>RMB BN</span>
+                  <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>{t.unitRmbBn}</span>
                 </div>
               </div>
               
