@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState, useEffect } from 'react';
-import { FLAT_DELIVERY_DATA } from '@/constants/nioData';
+import { FLAT_DELIVERY_DATA, PRE_2021_DELIVERY_OFFSET } from '@/constants/nioData';
 import { useLang } from '@/contexts/LangContext';
 
 type ViewMode = 'monthly' | 'quarterly' | 'yearly';
@@ -50,7 +50,7 @@ const QUARTERLY_BARS: BarData[] = (() => {
 
 // ── KPI stats ──────────────────────────────────────────────────────
 const total2025 = FLAT_DELIVERY_DATA.filter(d => d.month.startsWith('25')).reduce((s, d) => s + d.value, 0);
-const allTime = FLAT_DELIVERY_DATA.reduce((s, d) => s + d.value, 0);
+const allTime = FLAT_DELIVERY_DATA.reduce((s, d) => s + d.value, 0) + PRE_2021_DELIVERY_OFFSET;
 const latestEntry = FLAT_DELIVERY_DATA[FLAT_DELIVERY_DATA.length - 1];
 const prevYearLatest = FLAT_DELIVERY_DATA.find(
   d => d.month === `${String(+latestEntry.month.slice(0, 2) - 1).padStart(2, '0')}-${latestEntry.month.slice(3)}`
@@ -354,36 +354,46 @@ export default function DeliveryChart() {
                     onMouseEnter={() => setHoveredIndex(i)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     style={{
-                      display: 'flex', flexDirection: 'column', alignItems: 'center',
-                      justifyContent: 'flex-end', width: `${containerW}px`, flexShrink: 0,
-                      height: '100%', paddingBottom: bar.isYearStart ? '28px' : '18px',
-                      position: 'relative', cursor: 'pointer',
+                      display: 'flex', flexDirection: 'column',
+                      width: `${containerW}px`, flexShrink: 0,
+                      height: '100%', cursor: 'pointer',
                     }}
                   >
-                    {/* Top value label */}
-                    {(active || isLatest) && (
-                      <div style={{
-                        position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
-                        fontSize: '7px', fontWeight: 700, color: '#00A3DA', whiteSpace: 'nowrap',
-                        background: 'rgba(0,163,218,0.15)', padding: '1px 4px', borderRadius: '3px',
-                      }}>
-                        {(bar.value / 1000).toFixed(1)}k
-                      </div>
-                    )}
-
-                    {/* The bar */}
+                    {/* ── Chart Area (172px) ── */}
                     <div style={{
-                      width: `${barW}px`, height: `${pct}%`, background: barBg,
-                      borderRadius: '3px 3px 1px 1px', transition: 'background 0.15s', minHeight: '3px',
-                      boxShadow: isLatest ? '0 0 12px rgba(0,163,218,0.6)' : isSelected ? '0 0 8px rgba(0,163,218,0.4)' : 'none',
-                      outline: isSelected ? '1.5px solid rgba(0,163,218,0.65)' : 'none',
-                      outlineOffset: '1px',
-                      transformOrigin: 'bottom center',
-                      animation: `bar-grow 0.45s cubic-bezier(0.34,1.56,0.64,1) ${Math.min(i * 0.012, 0.5)}s both`,
-                    }} />
+                      height: '172px', width: '100%', display: 'flex', flexDirection: 'column',
+                      justifyContent: 'flex-end', alignItems: 'center', position: 'relative',
+                    }}>
+                      {/* Top value label */}
+                      {(active || isLatest) && (
+                        <div style={{
+                          zIndex: 10, marginBottom: '4px',
+                          fontSize: '7px', fontWeight: 700, color: '#00C3FF', whiteSpace: 'nowrap',
+                          background: 'rgba(0,195,255,0.15)', padding: '1px 4px', borderRadius: '3px',
+                          animation: 'fade-in 0.2s ease-out',
+                        }}>
+                          {(bar.value / 1000).toFixed(1)}k
+                        </div>
+                      )}
 
-                    {/* Bottom labels */}
-                    <div style={{ position: 'absolute', bottom: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
+                      {/* The bar */}
+                      <div style={{
+                        width: `${barW}px`, height: `${Math.round(pct)}%`, background: barBg,
+                        borderRadius: '3px 3px 1px 1px', transition: 'background 0.15s, height 0.3s',
+                        minHeight: '3px',
+                        boxShadow: isLatest ? '0 0 12px rgba(0,163,218,0.6)' : isSelected ? '0 0 8px rgba(0,163,218,0.4)' : 'none',
+                        outline: isSelected ? '1.5px solid rgba(0,163,218,0.65)' : 'none',
+                        outlineOffset: '1px',
+                        transformOrigin: 'bottom center',
+                        animation: `bar-grow 0.45s cubic-bezier(0.34,1.56,0.64,1) ${Math.min(i * 0.012, 0.5)}s both`,
+                      }} />
+                    </div>
+
+                    {/* ── Label Area (38px) ── */}
+                    <div style={{
+                      height: '38px', width: '100%', display: 'flex', flexDirection: 'column',
+                      alignItems: 'center', justifyContent: 'center', gap: '1px',
+                    }}>
                       <div style={{
                         fontSize: '7px', fontWeight: 500, lineHeight: 1,
                         color: isLatest || isSelected ? '#00A3DA' : 'rgba(255,255,255,0.3)',

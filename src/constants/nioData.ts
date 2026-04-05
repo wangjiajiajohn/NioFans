@@ -70,3 +70,5 @@ export const SWAP_DATA = {
   partners: 8
 };
 
+
+export const PRE_2021_DELIVERY_OFFSET = 76406;

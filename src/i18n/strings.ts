@@ -13,7 +13,7 @@ export const strings = {
     kpiRecord: '单月记录',
     kpiCumulative: '累计交付',
     kpi2025: '2025 全年',
-    kpiAllYears: '2021—2026',
+    kpiAllYears: '品牌创立至今',
     kpiUnit: '万台',
     yoyLabel: '同比',
 
@@ -82,7 +82,7 @@ export const strings = {
     kpiRecord: 'Monthly Record',
     kpiCumulative: 'Total Del.',
     kpi2025: '2025 Full Year',
-    kpiAllYears: '2021—2026',
+    kpiAllYears: 'Since Debut',
     kpiUnit: '×10k',
     yoyLabel: 'YoY',
 
