@@ -180,26 +180,26 @@ export default function FinancialChart() {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                  <p style={{ fontSize: '9px', fontWeight: 700, color: colors.revenue, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <p style={{ fontSize: '11px', fontWeight: 800, color: colors.revenue, letterSpacing: '0.14em', textTransform: 'uppercase' }}>
                     {latestData.quarter} {latestData.status === 'ESTIMATED' ? t.finForecast : t.finPerformance}
                   </p>
                   {latestData.status === 'ESTIMATED' && (
                     <span style={{ 
-                      fontSize: '7px', fontWeight: 800, padding: '2px 8px', 
-                      background: 'rgba(0, 163, 218, 0.2)', color: '#00A3DA', 
-                      borderRadius: '4px', letterSpacing: '0.04em',
-                      border: '1px solid rgba(0, 163, 218, 0.3)'
+                      fontSize: '9px', fontWeight: 900, padding: '3px 10px', 
+                      background: '#00A3DA', color: '#FFF', 
+                      borderRadius: '4px', letterSpacing: '0.06em',
+                      border: '1px solid #00A3DA'
                     }}>
-                      {t.finForecast}
+                      PREDICTION
                     </span>
                   )}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-                  <span style={{ fontSize: '32px', fontWeight: 200, color: '#FFF' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                  <span style={{ fontSize: '38px', fontWeight: 200, color: '#FFF', letterSpacing: '-0.02em' }}>
                     <CountUp end={latestData.revenue} decimals={2} />
                   </span>
-                  <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>{t.unitRmbBn}</span>
+                  <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>{t.unitRmbBn}</span>
                 </div>
               </div>
               

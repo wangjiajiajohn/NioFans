@@ -135,7 +135,7 @@ export const FINANCIAL_DATA = [
   {
     quarter: "2026 Q1",
     status: "ESTIMATED",
-    revenue: 31.28,
+    revenue: 312.8,
     grossMargin: 15.2,
     vehicleMargin: 20.2,
     cash: 68.0,

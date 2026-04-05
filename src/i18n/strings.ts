@@ -63,6 +63,8 @@ export const strings = {
     tabPower: '补能建设',
 
     // Financial
+    finForecast: '预估',
+    finPerformance: '财报表现',
     finRevenue: '季度营收',
     finMargin: '汽车毛利',
     finCash: '现金储备',
@@ -159,6 +161,8 @@ export const strings = {
     tabPower: 'Power',
 
     // Financial
+    finForecast: 'Forecast',
+    finPerformance: 'Actuals',
     finRevenue: 'Revenue Q4',
     finMargin: 'Veh. Margin',
     finCash: 'Cash Reserve',
