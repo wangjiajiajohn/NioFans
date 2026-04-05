@@ -1,19 +1,74 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Banner from '@/components/Banner';
 import DeliveryChart from '@/components/DeliveryChart';
 import ModelSection from '@/components/ModelSection';
+import FinancialSection from '@/components/FinancialSection';
+import PowerSection from '@/components/PowerSection';
 import PullEasterEgg from '@/components/PullEasterEgg';
 import { useLang } from '@/contexts/LangContext';
 
+type TabType = 'delivery' | 'financial' | 'power';
+
 export default function AppShell() {
   const { t } = useLang();
+  const [activeTab, setActiveTab] = useState<TabType>('delivery');
+  const tabs: TabType[] = ['delivery', 'financial', 'power'];
+  const activeIndex = tabs.indexOf(activeTab);
+
   return (
     <main className="page-shell">
       <PullEasterEgg />
       <Banner />
-      <DeliveryChart />
-      <ModelSection />
+
+      {/* ── Premium Segmented Control ── */}
+      <div 
+        style={{ 
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          background: 'rgba(255,255,255,0.85)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          paddingBottom: '2px',
+          borderBottom: '1px solid rgba(0,0,0,0.05)'
+        }}
+      >
+        <div className="nav-capsule">
+          {/* Sliding Indicator */}
+          <div 
+            className="nav-indicator"
+            style={{ 
+              width: 'calc(33.33% - 8px)',
+              transform: `translateX(${activeIndex * 100}%)`,
+              left: '4px'
+            }}
+          />
+          
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              className={`nav-pill ${activeTab === tab ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab)}
+              style={{ width: '90px', textAlign: 'center' }}
+            >
+              {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : t.tabPower}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Tab Content ── */}
+      <div key={activeTab} className="anim-fade-up">
+        {activeTab === 'delivery' && (
+          <>
+            <DeliveryChart />
+            <ModelSection />
+          </>
+        )}
+        {activeTab === 'financial' && <FinancialSection />}
+        {activeTab === 'power' && <PowerSection />}
+      </div>
 
       {/* ── Site Footer ── */}
       <footer style={{ padding: '36px 16px 52px', textAlign: 'center', background: '#0B0F14' }}>

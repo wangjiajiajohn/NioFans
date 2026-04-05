@@ -54,8 +54,27 @@ export const strings = {
     // 2026 annual target
     target2026Label: '2026 年度目标',
     target2026SubLabel: '基于 2025 全年 × 1.45 估算',
-    target2026Current: '当前进度',
+    target2026Current: '进度',
     target2026Gap: '还差',
+
+    // Tabs
+    tabDelivery: '交付数据',
+    tabFinancial: '财务表现',
+    tabPower: '补能建设',
+
+    // Financial
+    finRevenue: '季度营收',
+    finMargin: '汽车毛利',
+    finCash: '现金储备',
+    finRD: '研发投入',
+    finUnit: '亿',
+
+    // Power
+    pwrSwapTotal: '换电站总数',
+    pwrHighway: '高速网络',
+    pwrYTD: '年内新增',
+    pwrPartner: '换电伙伴',
+    pwrUnit: '座',
 
     // Footer
     footerTagline: 'Blue Sky Coming',
@@ -125,6 +144,25 @@ export const strings = {
     target2026SubLabel: 'Est. 2025 Full Year × 1.45',
     target2026Current: 'Progress',
     target2026Gap: 'Remaining',
+
+    // Tabs
+    tabDelivery: 'Delivery',
+    tabFinancial: 'Finance',
+    tabPower: 'Power',
+
+    // Financial
+    finRevenue: 'Revenue Q4',
+    finMargin: 'Veh. Margin',
+    finCash: 'Cash Reserve',
+    finRD: 'R&D Spend',
+    finUnit: 'bn',
+
+    // Power
+    pwrSwapTotal: 'Total Stations',
+    pwrHighway: 'Highway',
+    pwrYTD: 'New YTD',
+    pwrPartner: 'Partners',
+    pwrUnit: 'st',
 
     // Footer
     footerTagline: 'Blue Sky Coming',

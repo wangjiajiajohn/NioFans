@@ -213,3 +213,50 @@ html, body {
   background: radial-gradient(ellipse at 50% 0%, rgba(0,163,218,0.08) 0%, transparent 60%);
   pointer-events: none;
 }
+
+/* ── Premium Segmented Control ── */
+.nav-capsule {
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  background: rgba(245, 245, 247, 0.7) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  padding: 4px !important;
+  border-radius: 100px !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+  width: fit-content !important;
+  margin: 20px auto 10px !important;
+}
+
+.nav-pill {
+  position: relative !important;
+  z-index: 2 !important;
+  border: none !important;
+  background: none !important;
+  padding: 8px 18px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: rgba(0, 0, 0, 0.4) !important;
+  cursor: pointer !important;
+  transition: color 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  letter-spacing: 0.02em !important;
+}
+
+.nav-pill.active {
+  color: #0D0D0D !important;
+  font-weight: 600 !important;
+}
+
+.nav-indicator {
+  position: absolute !important;
+  z-index: 1 !important;
+  top: 4px !important;
+  bottom: 4px !important;
+  left: 4px !important;
+  background: #FFFFFF !important;
+  border-radius: 100px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), width 0.35s !important;
+}
