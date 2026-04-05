@@ -8,7 +8,7 @@ export const strings = {
 
     // KPI
     sectionLabel: '交付数据概览',
-    kpiThisMonth: '本月交付',
+    kpiThisMonth: '上月交付',
     kpiAllTime: '历史累计',
     kpiRecord: '单月记录',
     kpiCumulative: '累计交付',
@@ -77,7 +77,7 @@ export const strings = {
 
     // KPI
     sectionLabel: 'Delivery Overview',
-    kpiThisMonth: 'This Month',
+    kpiThisMonth: 'Last Month',
     kpiAllTime: 'All Time',
     kpiRecord: 'Monthly Record',
     kpiCumulative: 'Total Del.',
