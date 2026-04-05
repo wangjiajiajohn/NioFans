@@ -26,9 +26,9 @@ const MODEL_TAG_KEYS: Record<string, 'modelTagES8' | 'modelTagL90' | 'modelTagFi
 };
 
 const MODELS: ModelConfig[] = [
-  { id: 'firefly',  name: '萤火虫', brand: 'Firefly', tag: '',  color: '#E8940A' },
-  { id: 'es8',      name: 'ES8',    brand: 'NIO',     tag: '',  color: '#00A3DA' },
-  { id: 'l90',      name: 'L90',    brand: 'ONVO',    tag: '',  color: '#4E7CF6' },
+  { id: 'firefly',  name: '萤火虫', brand: 'Firefly', tag: '',  color: '#C9FF00' },
+  { id: 'es8',      name: 'ES8',    brand: 'NIO',     tag: '',  color: '#FF7A00' },
+  { id: 'l90',      name: 'L90',    brand: 'ONVO',    tag: '',  color: '#00A3DA' },
 ];
 
 /** Map component model ids → actual keys used in month-special-count.json */
