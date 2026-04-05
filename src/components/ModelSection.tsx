@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLang } from '@/contexts/LangContext';
 import SPECIAL_DATA from '../../month-special-count.json';
+import CountUp from './CountUp';
 
 type BrandId = 'ONVO' | 'Firefly' | 'NIO';
 
@@ -262,7 +263,7 @@ export default function ModelSection() {
                     {latest!.fullLabel}
                   </p>
                   <p style={{ fontSize: '22px', fontWeight: 200, color: '#FFFFFF', letterSpacing: '-0.02em', lineHeight: 1 }}>
-                    {latest!.value.toLocaleString()}
+                    <CountUp end={latest!.value} />
                   </p>
                   <p style={{ fontSize: '8px', color: 'rgba(255,255,255,0.3)', marginTop: '4px' }}>
                     {latest!.fullLabel}
@@ -281,7 +282,11 @@ export default function ModelSection() {
                     {t.kpiCumulative}
                   </p>
                   <p style={{ fontSize: '22px', fontWeight: 200, color: model.color, letterSpacing: '-0.02em', lineHeight: 1 }}>
-                    {fmtK(cumulative)}
+                    {cumulative >= 10000 ? (
+                      <><CountUp end={cumulative / 10000} decimals={1} />万</>
+                    ) : (
+                      <CountUp end={cumulative} />
+                    )}
                   </p>
                   <p style={{ fontSize: '8px', color: `${model.color}80`, marginTop: '4px' }}>
                     {chartData[0]?.fullLabel.slice(0, 4)}—{latest!.fullLabel.slice(0, 4)}
@@ -538,11 +543,11 @@ export default function ModelSection() {
                   <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
                     <div style={{ flex: 1, padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
                       <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', margin: '0 0 4px 0' }}>年度总预估</p>
-                      <p style={{ fontSize: '18px', fontWeight: 700, color: '#00C3FF', margin: 0 }}>~11.5 <span style={{ fontSize: '10px' }}>万台</span></p>
+                      <p style={{ fontSize: '18px', fontWeight: 700, color: '#00C3FF', margin: 0 }}>~<CountUp end={11.5} decimals={1} /> <span style={{ fontSize: '10px' }}>万台</span></p>
                     </div>
                     <div style={{ flex: 1, padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
                       <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', margin: '0 0 4px 0' }}>峰值月度 (12月)</p>
-                      <p style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: 0 }}>~1.85 <span style={{ fontSize: '10px' }}>万台</span></p>
+                      <p style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: 0 }}>~<CountUp end={1.85} decimals={2} /> <span style={{ fontSize: '10px' }}>万台</span></p>
                     </div>
                   </div>
 

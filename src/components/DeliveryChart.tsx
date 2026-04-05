@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FLAT_DELIVERY_DATA, PRE_2021_DELIVERY_OFFSET } from '@/constants/nioData';
 import { useLang } from '@/contexts/LangContext';
+import CountUp from './CountUp';
 
 type ViewMode = 'monthly' | 'quarterly' | 'yearly';
 
@@ -173,7 +174,7 @@ export default function DeliveryChart() {
               {`20${latestEntry.month.replace('-', '.')}`}
             </div>
             <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
-              {(latestEntry.value / 10000).toFixed(2)}
+              <CountUp end={latestEntry.value / 10000} decimals={2} />
               <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
             </div>
             {latestYoY && (
@@ -187,7 +188,7 @@ export default function DeliveryChart() {
           <div className="kpi-card">
             <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>{t.kpiAllTime}</div>
             <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
-              {(allTime / 10000).toFixed(1)}
+              <CountUp end={allTime / 10000} decimals={1} />
               <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
             </div>
             <div style={{ marginTop: '6px' }}><span className="badge-blue">{t.kpiAllYears}</span></div>
@@ -216,7 +217,7 @@ export default function DeliveryChart() {
             </div>
             <div style={{ textAlign: 'right' }}>
               <p style={{ fontSize: '20px', fontWeight: 300, color: '#0D0D0D', letterSpacing: '-0.02em', lineHeight: 1 }}>
-                {(target2026 / 10000).toFixed(1)}
+                <CountUp end={target2026 / 10000} decimals={1} />
                 <span style={{ fontSize: '10px', fontWeight: 400, color: '#999', marginLeft: '2px' }}>{t.kpiUnit}</span>
               </p>
               <p style={{ fontSize: '8px', color: '#999', marginTop: '2px' }}>TARGET</p>
@@ -240,13 +241,13 @@ export default function DeliveryChart() {
               <div>
                 <p style={{ fontSize: '8px', color: '#999', marginBottom: '2px' }}>{t.target2026Current}</p>
                 <p style={{ fontSize: '13px', fontWeight: 600, color: '#00A3DA', letterSpacing: '-0.01em' }}>
-                  {(total2026 / 10000).toFixed(1)}{t.kpiUnit}
+                  <CountUp end={total2026 / 10000} decimals={1} />{t.kpiUnit}
                 </p>
               </div>
               <div>
                 <p style={{ fontSize: '8px', color: '#999', marginBottom: '2px' }}>{t.target2026Gap}</p>
                 <p style={{ fontSize: '13px', fontWeight: 600, color: '#666', letterSpacing: '-0.01em' }}>
-                  {((target2026 - total2026) / 10000).toFixed(1)}{t.kpiUnit}
+                  <CountUp end={(target2026 - total2026) / 10000} decimals={1} />{t.kpiUnit}
                 </p>
               </div>
             </div>
