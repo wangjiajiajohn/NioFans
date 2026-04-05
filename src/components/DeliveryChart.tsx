@@ -90,12 +90,17 @@ export default function DeliveryChart() {
   const [selectedIndexOverride, setSelectedIndexOverride] = useState<number | 'latest' | null>('latest');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [showTrend, setShowTrend] = useState(true);
+  const [barScale, setBarScale] = useState(1.8);
+  const barScaleRef = useRef(1.8);
+  const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
 
   const bars = viewMode === 'monthly' ? MONTHLY_BARS : viewMode === 'quarterly' ? QUARTERLY_BARS : YEARLY_BARS;
   const maxVal = Math.max(...bars.map(b => b.value));
   const yoyOffset = viewMode === 'monthly' ? 12 : viewMode === 'quarterly' ? 4 : 1;
-  const containerW = viewMode === 'monthly' ? 24 : viewMode === 'quarterly' ? 44 : 56;
-  const barW = viewMode === 'monthly' ? 14 : viewMode === 'quarterly' ? 28 : 36;
+  const BASE_CW = viewMode === 'monthly' ? 24 : viewMode === 'quarterly' ? 44 : 56;
+  const BASE_BW = viewMode === 'monthly' ? 14 : viewMode === 'quarterly' ? 28 : 36;
+  const containerW = Math.max(10, Math.round(BASE_CW * barScale));
+  const barW       = Math.max(6,  Math.round(BASE_BW * barScale));
 
   // Resolve selected index: 'latest' means always point at last bar
   const selectedIndex: number | null =
@@ -109,6 +114,41 @@ export default function DeliveryChart() {
       scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
     }
   }, [viewMode]);
+
+  // Update ref to latest scale for pinch logic
+  useEffect(() => {
+    barScaleRef.current = barScale;
+  }, [barScale]);
+
+  // Pinch-to-zoom: must be non-passive so we can preventDefault
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    function dist(t: TouchList) {
+      const dx = t[0].clientX - t[1].clientX;
+      const dy = t[0].clientY - t[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    function onStart(e: TouchEvent) {
+      if (e.touches.length === 2)
+        pinchRef.current = { dist: dist(e.touches), scale: barScaleRef.current };
+    }
+    function onMove(e: TouchEvent) {
+      if (e.touches.length !== 2 || !pinchRef.current) return;
+      e.preventDefault();
+      const ratio = dist(e.touches) / pinchRef.current.dist;
+      setBarScale(Math.min(3, Math.max(0.3, pinchRef.current.scale * ratio)));
+    }
+    function onEnd() { pinchRef.current = null; }
+    el.addEventListener('touchstart', onStart, { passive: true });
+    el.addEventListener('touchmove',  onMove,  { passive: false });
+    el.addEventListener('touchend',   onEnd,   { passive: true });
+    return () => {
+      el.removeEventListener('touchstart', onStart);
+      el.removeEventListener('touchmove',  onMove);
+      el.removeEventListener('touchend',   onEnd);
+    };
+  }, []);
 
   // Compute detail card data
   const detail = selectedIndex !== null ? (() => {
@@ -239,10 +279,9 @@ export default function DeliveryChart() {
               </p>
             </div>
             {/* Mode toggle */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
               <div style={{ display: 'flex', background: 'rgba(255,255,255,0.07)', borderRadius: '8px', padding: '3px', gap: '2px' }}>
                 {(['monthly', 'quarterly', 'yearly'] as ViewMode[]).map(mode => (
-
                   <button
                     key={mode}
                     onClick={() => setViewMode(mode)}
@@ -258,6 +297,33 @@ export default function DeliveryChart() {
                   </button>
                 ))}
               </div>
+
+              {/* Zoom toggle */}
+              <div style={{ display: 'flex', background: 'rgba(255,255,255,0.07)', borderRadius: '8px', padding: '3px', gap: '2px' }}>
+                {[
+                  { label: t.zoomDense, scale: 0.6 },
+                  { label: t.zoomStandard, scale: 1.0 },
+                  { label: t.zoomRoomy, scale: 1.8 },
+                ].map(z => {
+                  const isActive = Math.abs(barScale - z.scale) < 0.1;
+                  return (
+                    <button
+                      key={z.label}
+                      onClick={() => setBarScale(z.scale)}
+                      style={{
+                        padding: '4px 8px', borderRadius: '6px', border: 'none',
+                        fontSize: '9px', fontWeight: 600, letterSpacing: '0.04em', cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        background: isActive ? 'rgba(0,163,218,0.8)' : 'transparent',
+                        color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.3)',
+                      }}
+                    >
+                      {z.label}
+                    </button>
+                  );
+                })}
+              </div>
+
               <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.06em' }}>
                 {t.chartScroll}
               </div>

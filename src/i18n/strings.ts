@@ -11,6 +11,7 @@ export const strings = {
     kpiThisMonth: '本月交付',
     kpiAllTime: '历史累计',
     kpiRecord: '单月记录',
+    kpiCumulative: '累计交付',
     kpi2025: '2025 全年',
     kpiAllYears: '2021—2026',
     kpiUnit: '万台',
@@ -34,6 +35,10 @@ export const strings = {
     prevYear: '去年同期',
     prevPeriod: '上期',
     noComparison: '暂无对比数据',
+    zoomLabel: '显示密度',
+    zoomDense: '极简',
+    zoomStandard: '标准',
+    zoomRoomy: '宽松',
 
     // Model section
     modelSectionEyebrow: 'VEHICLE DELIVERY · 车型月交付',
@@ -75,6 +80,7 @@ export const strings = {
     kpiThisMonth: 'This Month',
     kpiAllTime: 'All Time',
     kpiRecord: 'Monthly Record',
+    kpiCumulative: 'Total Del.',
     kpi2025: '2025 Full Year',
     kpiAllYears: '2021—2026',
     kpiUnit: '×10k',
@@ -98,6 +104,10 @@ export const strings = {
     prevYear: 'Prev Year',
     prevPeriod: 'Prev Period',
     noComparison: 'No prior data',
+    zoomLabel: 'Density',
+    zoomDense: 'Dense',
+    zoomStandard: 'Std',
+    zoomRoomy: 'Wide',
 
     // Model section
     modelSectionEyebrow: 'VEHICLE DELIVERY · By Model',

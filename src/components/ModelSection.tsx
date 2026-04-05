@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useLang } from '@/contexts/LangContext';
 import SPECIAL_DATA from '../../month-special-count.json';
 
@@ -66,6 +66,60 @@ export default function ModelSection() {
   const [showTrend, setShowTrend] = useState(true);
   const { t } = useLang();
 
+  // Zoom and scroll state
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [barScale, setBarScale] = useState(1.8);
+  const barScaleRef = useRef(1.8);
+  const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
+
+  // Constants for scaling
+  const BASE_CW = 22; // Base container width per bar
+  const BASE_BW = 12; // Base bar width
+  const containerW = Math.max(8, Math.round(BASE_CW * barScale));
+  const barW = Math.max(4, Math.round(BASE_BW * barScale));
+
+  // Pinch-to-zoom logic
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    function dist(t: TouchList) {
+      const dx = t[0].clientX - t[1].clientX;
+      const dy = t[0].clientY - t[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    function onStart(e: TouchEvent) {
+      if (e.touches.length === 2)
+        pinchRef.current = { dist: dist(e.touches), scale: barScaleRef.current };
+    }
+    function onMove(e: TouchEvent) {
+      if (e.touches.length !== 2 || !pinchRef.current) return;
+      e.preventDefault();
+      const ratio = dist(e.touches) / pinchRef.current.dist;
+      setBarScale(Math.min(3, Math.max(0.4, pinchRef.current.scale * ratio)));
+    }
+    function onEnd() { pinchRef.current = null; }
+    el.addEventListener('touchstart', onStart, { passive: true });
+    el.addEventListener('touchmove',  onMove,  { passive: false });
+    el.addEventListener('touchend',   onEnd,   { passive: true });
+    return () => {
+      el.removeEventListener('touchstart', onStart);
+      el.removeEventListener('touchmove',  onMove);
+      el.removeEventListener('touchend',   onEnd);
+    };
+  }, []);
+
+  // Update ref to latest scale for pinch logic
+  useEffect(() => {
+    barScaleRef.current = barScale;
+  }, [barScale]);
+
+  // Scroll to end when model changes or data loads
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+    }
+  }, [activeId]);
+
   const model = MODELS.find(m => m.id === activeId)!;
   const modelTag = t[MODEL_TAG_KEYS[activeId]];
   const chartData = parseModelData(activeId);
@@ -73,6 +127,7 @@ export default function ModelSection() {
   const hasData = chartData.length > 0;
   const latest = hasData ? chartData[chartData.length - 1] : null;
   const peak   = hasData ? chartData.reduce((a, b) => a.value > b.value ? a : b) : null;
+  const cumulative = hasData ? chartData.reduce((sum, item) => sum + item.value, 0) : 0;
   const maxVal = peak?.value ?? 1;
 
   return (
@@ -147,20 +202,50 @@ export default function ModelSection() {
           <div style={{ height: '2px', background: `linear-gradient(90deg, ${model.color}, transparent)` }} />
 
           {/* Card header */}
-          <div style={{ padding: '18px 18px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-            <span style={{
-              fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em',
-              textTransform: 'uppercase', color: model.color,
-            }}>
-              {model.brand}
-            </span>
-            {' '}
-            <span style={{ fontSize: '16px', fontWeight: 400, color: '#FFFFFF', marginLeft: '4px' }}>
-              {model.name}
-            </span>
-            <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', marginTop: '4px', letterSpacing: '0.03em' }}>
-              {modelTag}
-            </p>
+          <div style={{ padding: '18px 18px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <span style={{
+                fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em',
+                textTransform: 'uppercase', color: model.color,
+              }}>
+                {model.brand}
+              </span>
+              {' '}
+              <span style={{ fontSize: '16px', fontWeight: 400, color: '#FFFFFF', marginLeft: '4px' }}>
+                {model.name}
+              </span>
+              <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', marginTop: '4px', letterSpacing: '0.03em' }}>
+                {modelTag}
+              </p>
+            </div>
+
+            {/* Zoom Control */}
+            {hasData && (
+              <div style={{ display: 'flex', background: 'rgba(255,255,255,0.07)', borderRadius: '8px', padding: '3px', gap: '2px' }}>
+                {[
+                  { label: t.zoomDense, scale: 0.6 },
+                  { label: t.zoomStandard, scale: 1.0 },
+                  { label: t.zoomRoomy, scale: 1.8 },
+                ].map(z => {
+                  const isActive = Math.abs(barScale - z.scale) < 0.1;
+                  return (
+                    <button
+                      key={z.label}
+                      onClick={() => setBarScale(z.scale)}
+                      style={{
+                        padding: '4px 8px', borderRadius: '6px', border: 'none',
+                        fontSize: '8px', fontWeight: 600, letterSpacing: '0.04em', cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        background: isActive ? model.color : 'transparent',
+                        color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.3)',
+                      }}
+                    >
+                      {z.label}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* ── Data view ── */}
@@ -198,13 +283,13 @@ export default function ModelSection() {
                     fontSize: '7px', fontWeight: 700, letterSpacing: '0.14em',
                     textTransform: 'uppercase', color: `${model.color}99`, marginBottom: '8px',
                   }}>
-                    {t.kpiRecord}
+                    {t.kpiCumulative}
                   </p>
                   <p style={{ fontSize: '22px', fontWeight: 200, color: model.color, letterSpacing: '-0.02em', lineHeight: 1 }}>
-                    {fmtK(peak!.value)}
+                    {fmtK(cumulative)}
                   </p>
                   <p style={{ fontSize: '8px', color: `${model.color}80`, marginTop: '4px' }}>
-                    {peak!.fullLabel}
+                    {t.kpiAllYears}
                   </p>
                 </div>
               </div>
@@ -217,19 +302,16 @@ export default function ModelSection() {
               </div>
 
               {/* Bar chart with optional trend overlay */}
-              <div style={{ position: 'relative' }}>
-                {/* Grid lines */}
-                {[0.5].map(pct => (
-                  <div key={pct} style={{
-                    position: 'absolute', left: 0, right: 0,
-                    bottom: `calc(26px + ${pct * 100}px - ${pct * 100}px + ${pct * 100}%)`,
-                    borderTop: '1px dashed rgba(255,255,255,0.06)',
-                    pointerEvents: 'none',
-                  }} />
-                ))}
-
-                {/* Bars */}
-                <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '100px' }}>
+              <div
+                ref={scrollRef}
+                className="no-scrollbar"
+                style={{ position: 'relative', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch' }}
+              >
+                <div style={{
+                  display: 'flex', alignItems: 'flex-end', gap: '4px', height: '140px',
+                  width: `${chartData.length * (containerW + 4)}px`,
+                  paddingTop: '30px', position: 'relative',
+                }}>
                   {chartData.map((d, i) => {
                     const pct = (d.value / maxVal) * 100;
                     const isLatest = i === chartData.length - 1;
@@ -237,7 +319,11 @@ export default function ModelSection() {
                     return (
                       <div
                         key={d.label}
-                        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', height: '100%', justifyContent: 'flex-end' }}
+                        style={{
+                          width: `${containerW}px`, flexShrink: 0,
+                          display: 'flex', flexDirection: 'column', alignItems: 'center',
+                          gap: '6px', height: '100%', justifyContent: 'flex-end',
+                        }}
                         title={`${d.fullLabel}: ${d.value.toLocaleString()}`}
                       >
                         {/* Value label above bar */}
@@ -250,7 +336,7 @@ export default function ModelSection() {
                         </span>
                         {/* Bar body */}
                         <div style={{
-                          width: '100%',
+                          width: `${barW}px`,
                           height: `${pct}%`,
                           borderRadius: '2px 2px 1px 1px',
                           background: isPeak
@@ -260,6 +346,7 @@ export default function ModelSection() {
                               : 'rgba(255,255,255,0.1)',
                           boxShadow: isPeak ? `0 0 10px ${model.color}50` : 'none',
                           transition: 'height 0.6s cubic-bezier(0.22,1,0.36,1)',
+                          minHeight: '2px',
                         }} />
                         {/* X-axis label */}
                         <span style={{
@@ -273,42 +360,41 @@ export default function ModelSection() {
                       </div>
                     );
                   })}
-                </div>
 
-                {/* SVG Catmull-Rom trend line */}
-                {showTrend && chartData.length >= 2 && (() => {
-                  const n = chartData.length;
-                  const pts = chartData.map((d, i) => ({
-                    x: (i + 0.5) / n * 100,
-                    y: 100 - (d.value / maxVal) * 100,
-                  }));
-                  let path = `M ${pts[0].x.toFixed(2)} ${pts[0].y.toFixed(2)}`;
-                  for (let i = 0; i < pts.length - 1; i++) {
-                    const p0 = pts[Math.max(0, i - 1)];
-                    const p1 = pts[i];
-                    const p2 = pts[i + 1];
-                    const p3 = pts[Math.min(pts.length - 1, i + 2)];
-                    const cp1x = p1.x + (p2.x - p0.x) / 6;
-                    const cp1y = p1.y + (p2.y - p0.y) / 6;
-                    const cp2x = p2.x - (p3.x - p1.x) / 6;
-                    const cp2y = p2.y - (p3.y - p1.y) / 6;
-                    path += ` C ${cp1x.toFixed(2)} ${cp1y.toFixed(2)}, ${cp2x.toFixed(2)} ${cp2y.toFixed(2)}, ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`;
-                  }
-                  return (
-                    <svg key="trend" viewBox="0 0 100 100" preserveAspectRatio="none"
-                      style={{
-                        position: 'absolute', left: 0, top: 0,
-                        width: '100%', height: '100px',
-                        pointerEvents: 'none',
-                        animation: 'trend-draw 0.8s cubic-bezier(0.22,1,0.36,1) 0.3s both',
-                      }}>
-                      <path d={path} stroke="rgba(0,195,255,0.2)" strokeWidth="3" fill="none" vectorEffect="non-scaling-stroke" />
-                      <path d={path} stroke="#00C3FF" strokeWidth="1" fill="none"
-                        strokeDasharray="4 2" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-                      {pts.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="1.5" fill="#00C3FF" opacity="0.8" vectorEffect="non-scaling-stroke" />)}
-                    </svg>
-                  );
-                })()}
+                  {/* SVG Catmull-Rom trend line */}
+                  {showTrend && chartData.length >= 2 && (() => {
+                    const BAR_AREA_H = 104; // 140 - 30(top) - 6(bottom labels approx)
+                    const TOP_OFFSET = 30;
+                    const pts = chartData.map((d, i) => ({
+                      x: i * (containerW + 4) + containerW / 2,
+                      y: TOP_OFFSET + BAR_AREA_H * (1 - d.value / maxVal),
+                    }));
+                    let path = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+                    for (let i = 0; i < pts.length - 1; i++) {
+                      const p0 = pts[Math.max(0, i - 1)];
+                      const p1 = pts[i];
+                      const p2 = pts[i + 1];
+                      const p3 = pts[Math.min(pts.length - 1, i + 2)];
+                      const cp1x = p1.x + (p2.x - p0.x) / 6;
+                      const cp1y = p1.y + (p2.y - p0.y) / 6;
+                      const cp2x = p2.x - (p3.x - p1.x) / 6;
+                      const cp2y = p2.y - (p3.y - p1.y) / 6;
+                      path += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+                    }
+                    return (
+                      <svg
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', animation: 'trend-draw 0.8s cubic-bezier(0.22,1,0.36,1) 0.3s both' }}
+                        viewBox={`0 0 ${chartData.length * (containerW + 4)} 140`}
+                        preserveAspectRatio="none"
+                      >
+                        <path d={path} stroke="rgba(0,195,255,0.15)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d={path} stroke="#00C3FF" strokeWidth="1" fill="none"
+                          strokeDasharray="4 2" strokeLinecap="round" strokeLinejoin="round" />
+                        {pts.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="1.5" fill="#00C3FF" opacity="0.8" />)}
+                      </svg>
+                    );
+                  })()}
+                </div>
               </div>
 
               {/* Trend toggle below chart */}
@@ -391,21 +477,7 @@ export default function ModelSection() {
         </div>
       </div>
 
-      {/* More models hint */}
-      <div style={{ marginTop: '20px', padding: '0 16px', display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
-        {['ET9', 'ES6', 'EC7', 'ET5T', 'ET9 Ultra'].map(name => (
-          <span key={name} style={{
-            fontSize: '8px', fontWeight: 600, letterSpacing: '0.12em',
-            color: 'rgba(255,255,255,0.35)',
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: '100px',
-            padding: '4px 10px',
-          }}>
-            {name}
-          </span>
-        ))}
-      </div>
+
     </section>
   );
 }
