@@ -160,6 +160,7 @@ export default function Banner() {
                 inset: 0,
                 background:
                   'linear-gradient(180deg, rgba(6,6,8,0.72) 0%, rgba(6,6,8,0) 30%, rgba(6,6,8,0) 52%, rgba(6,6,8,0.88) 100%)',
+                pointerEvents: 'none',
               }}
             />
           </div>
@@ -180,6 +181,7 @@ export default function Banner() {
           justifyContent: 'space-between',
           alignItems: 'flex-start',
           zIndex: 10,
+          pointerEvents: 'none',
         }}
       >
         <div>
@@ -219,6 +221,7 @@ export default function Banner() {
             borderRadius: '100px', padding: '5px 10px',
             cursor: 'pointer', fontSize: '8px', fontWeight: 700,
             letterSpacing: '0.12em',
+            pointerEvents: 'auto',
           }}
         >
           <span style={{ color: lang === 'zh' ? '#FFFFFF' : 'rgba(255,255,255,0.35)' }}>ZH</span>
@@ -234,6 +237,7 @@ export default function Banner() {
           bottom: 0, left: 0, right: 0,
           padding: '0 22px 40px',
           zIndex: 10,
+          pointerEvents: 'none',
         }}
       >
         <div style={{ maxWidth: '90%' }}>
@@ -299,6 +303,7 @@ export default function Banner() {
               padding: '7px 15px',
               borderRadius: '100px',
               animation: 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.65s both',
+              pointerEvents: 'auto',
             }}
           >
             <span
@@ -378,6 +383,7 @@ export default function Banner() {
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.3s',
+                pointerEvents: 'auto',
               }}
             />
           ))}
