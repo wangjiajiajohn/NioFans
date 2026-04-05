@@ -96,7 +96,7 @@ export const BANNERS = [
     subtitle: "全新车型 · 邀您体验",
     date: "2026.04.15",
     image: "/2.png",
-    inviteText: "长按扫码 ｜ 预约购车",
+    inviteText: "长按扫码 ｜ 预约试驾",
     showLiveBadge: false,
   },
   {
