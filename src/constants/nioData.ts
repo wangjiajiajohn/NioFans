@@ -45,12 +45,26 @@ export const DELIVERY_DATA: Record<number, DeliveryPoint[]> = [2021, 2022, 2023,
   {} as Record<number, DeliveryPoint[]>
 );
 
-export const ES9_BANNER = {
-  title: 'NIO ES9',
-  subtitle: '科技行政旗舰SUV · 重磅技术发布会',
-  date: '2026.04.09',
-  image: '/1.png'
-};
+export const BANNERS = [
+  {
+    id: '1',
+    title: 'NIO ES9',
+    subtitle: '科技行政旗舰SUV · 重磅技术发布会',
+    date: '2026.04.09',
+    image: '/1.png',
+    inviteText: '预约发布会直播',
+    showLiveBadge: true
+  },
+  {
+    id: '2',
+    title: 'NIO 2026',
+    subtitle: '全新车型 · 邀您体验',
+    date: '2026.04.15',
+    image: '/2.png',
+    inviteText: '预约购车',
+    showLiveBadge: false
+  }
+];
 
 export const EVENTS = [
   { date: '2026.03', title: 'NIO ES9 极寒测试完成', desc: '在漠河完成 -45°C 极寒环境下的全系统稳定性测试。', tag: '技术' },
