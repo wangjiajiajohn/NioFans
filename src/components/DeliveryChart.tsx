@@ -50,10 +50,7 @@ const QUARTERLY_BARS: BarData[] = (() => {
 
 // ── KPI stats ──────────────────────────────────────────────────────
 const total2025 = FLAT_DELIVERY_DATA.filter(d => d.month.startsWith('25')).reduce((s, d) => s + d.value, 0);
-const total2024 = FLAT_DELIVERY_DATA.filter(d => d.month.startsWith('24')).reduce((s, d) => s + d.value, 0);
-const yoy2025 = ((total2025 - total2024) / total2024 * 100).toFixed(1);
 const allTime = FLAT_DELIVERY_DATA.reduce((s, d) => s + d.value, 0);
-const bestMonth = [...FLAT_DELIVERY_DATA].sort((a, b) => b.value - a.value)[0];
 const latestEntry = FLAT_DELIVERY_DATA[FLAT_DELIVERY_DATA.length - 1];
 const prevYearLatest = FLAT_DELIVERY_DATA.find(
   d => d.month === `${String(+latestEntry.month.slice(0, 2) - 1).padStart(2, '0')}-${latestEntry.month.slice(3)}`
@@ -151,22 +148,6 @@ export default function DeliveryChart() {
               <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
             </div>
             <div style={{ marginTop: '6px' }}><span className="badge-blue">{t.kpiAllYears}</span></div>
-          </div>
-          <div className="kpi-card">
-            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>{t.kpiRecord}</div>
-            <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
-              {(bestMonth.value / 10000).toFixed(1)}
-              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
-            </div>
-            <div style={{ marginTop: '6px' }}><span className="badge-blue">20{bestMonth.month.replace('-', '.')}</span></div>
-          </div>
-          <div className="kpi-card">
-            <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>{t.kpi2025}</div>
-            <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
-              {(total2025 / 10000).toFixed(1)}
-              <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.kpiUnit}</span>
-            </div>
-            <div style={{ marginTop: '6px' }}><span className="badge-green">▲ YoY +{yoy2025}%</span></div>
           </div>
         </div>
 
