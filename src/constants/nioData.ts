@@ -133,16 +133,16 @@ export const EVENTS = [
 
 export const FINANCIAL_DATA = [
   {
-    quarter: "2024 Q4",
-    revenue: 204.5,
-    grossMargin: 12.5,
-    vehicleMargin: 18.2,
-    cash: 520,
-    rd: 36.8,
+    quarter: "2026 Q1",
+    revenue: 312.8,
+    grossMargin: 15.2,
+    vehicleMargin: 20.2,
+    cash: 680,
+    rd: 42.5,
   },
 ];
 
-// Historical Quarterly Data (2020 - 2025)
+// Historical Quarterly Data (2020 - 2026)
 export const FINANCIAL_QUARTERLY = [
   { period: "20 Q1", revenue: 13.7, grossMargin: -12.2, vehicleMargin: -7.4 },
   { period: "20 Q2", revenue: 37.2, grossMargin: 8.4, vehicleMargin: 9.7 },
@@ -168,6 +168,7 @@ export const FINANCIAL_QUARTERLY = [
   { period: "25 Q2", revenue: 210.2, grossMargin: 14.2, vehicleMargin: 19.0 },
   { period: "25 Q3", revenue: 235.5, grossMargin: 15.5, vehicleMargin: 19.8 },
   { period: "25 Q4", revenue: 280.0, grossMargin: 17.0, vehicleMargin: 21.0 },
+  { period: "26 Q1", revenue: 312.8, grossMargin: 15.2, vehicleMargin: 20.2 },
 ];
 
 // Historical Annual Data
@@ -178,6 +179,7 @@ export const FINANCIAL_ANNUAL = [
   { period: "2023", revenue: 556.2, grossMargin: 5.5, vehicleMargin: 9.5 },
   { period: "2024", revenue: 664.8, grossMargin: 10.2, vehicleMargin: 14.5 },
   { period: "2025", revenue: 890.7, grossMargin: 14.9, vehicleMargin: 19.6 },
+  { period: "2026", revenue: 1250.0, grossMargin: 16.5, vehicleMargin: 21.0 },
 ];
 
 export const SWAP_DATA = {
