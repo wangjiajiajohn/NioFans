@@ -65,10 +65,10 @@ function FinancialSubChart({ title, metric, period, data }: SubChartProps) {
         </span>
       </div>
 
-      <div style={{ height: '160px', width: '100%', marginLeft: '-24px' }}>
-        <ResponsiveContainer width="115%" height="100%">
+      <div style={{ height: '160px', width: '100%' }}>
+        <ResponsiveContainer width="100%" height="100%">
           {metric === 'revenue' ? (
-            <BarChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <BarChart data={data} margin={{ top: 10, right: 5, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="barGradientFin" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#00C3FF" stopOpacity={0.9}/>
@@ -93,7 +93,7 @@ function FinancialSubChart({ title, metric, period, data }: SubChartProps) {
               </Bar>
             </BarChart>
           ) : (
-            <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <AreaChart data={data} margin={{ top: 10, right: 5, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id={`areaGradient-${metric}`} x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor={mainColor} stopOpacity={0.3}/>
