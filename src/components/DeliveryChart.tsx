@@ -151,10 +151,11 @@ export default function DeliveryChart() {
   }, []);
 
   // Compute detail card data
-  const detail = selectedIndex !== null ? (() => {
+  const detail = (selectedIndex !== null && selectedIndex < bars.length) ? (() => {
     const cur = bars[selectedIndex];
     const momPrev = selectedIndex > 0 ? bars[selectedIndex - 1] : null;
     const yoyPrev = selectedIndex >= yoyOffset ? bars[selectedIndex - yoyOffset] : null;
+    if (!cur) return null;
     const yoy = yoyPrev ? (cur.value - yoyPrev.value) / yoyPrev.value * 100 : null;
     const mom = momPrev ? (cur.value - momPrev.value) / momPrev.value * 100 : null;
     return { cur, momPrev, yoyPrev, yoy, mom };
@@ -284,7 +285,10 @@ export default function DeliveryChart() {
                 {(['monthly', 'quarterly', 'yearly'] as ViewMode[]).map(mode => (
                   <button
                     key={mode}
-                    onClick={() => setViewMode(mode)}
+                    onClick={() => {
+                      setViewMode(mode);
+                      setSelectedIndexOverride('latest');
+                    }}
                     style={{
                       padding: '5px 10px', borderRadius: '6px', border: 'none',
                       fontSize: '10px', fontWeight: 600, letterSpacing: '0.06em', cursor: 'pointer',
