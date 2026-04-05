@@ -28,13 +28,13 @@ export default function SplashScreen() {
   }, []);
 
   useEffect(() => {
-    // shown → exiting after 3s
-    const t1 = setTimeout(() => setPhase('exiting'), 3000);
-    // exiting → done after 3.5s (fade-out completes)
+    // shown → exiting after 1.8s
+    const t1 = setTimeout(() => setPhase('exiting'), 1800);
+    // exiting → done after 2.3s (fade-out completes)
     const t2 = setTimeout(() => {
       setPhase('done');
       document.body.style.overflow = '';
-    }, 3500);
+    }, 2300);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 

@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { BANNERS } from '@/constants/nioData';
 import { useLang } from '@/contexts/LangContext';
+import { getAssetPath } from '@/utils/paths';
 
 export default function Banner() {
   const { lang, t, toggleLang } = useLang();
@@ -94,7 +95,7 @@ export default function Banner() {
           >
             {/* Car image */}
             <Image
-              src={banner.image}
+              src={getAssetPath(banner.image)}
               alt={banner.title}
               fill
               priority
