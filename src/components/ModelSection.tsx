@@ -284,7 +284,7 @@ export default function ModelSection() {
                     {fmtK(cumulative)}
                   </p>
                   <p style={{ fontSize: '8px', color: `${model.color}80`, marginTop: '4px' }}>
-                    {t.kpiAllYears}
+                    {chartData[0]?.fullLabel.slice(0, 4)}—{latest!.fullLabel.slice(0, 4)}
                   </p>
                 </div>
               </div>
@@ -466,7 +466,7 @@ export default function ModelSection() {
                     </div>
                     <div style={{ textAlign: 'right' }}>
                       <div style={{ fontSize: '24px', fontWeight: 200, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>
-                        {detail.cur.value.toLocaleString()}
+                        {(detail.cur.value / 10000).toFixed(2)}
                       </div>
                       <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.3)' }}>{t.kpiUnit}</div>
                     </div>
