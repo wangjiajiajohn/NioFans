@@ -209,29 +209,11 @@ export default function ModelSection() {
                 </div>
               </div>
 
-              {/* Chart header: title + trend toggle */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              {/* Chart title */}
+              <div style={{ marginBottom: '8px' }}>
                 <p style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>
                   {t.chartTitleMonthly}
                 </p>
-                <button
-                  onClick={() => setShowTrend(v => !v)}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: '4px',
-                    background: showTrend ? 'rgba(0,195,255,0.12)' : 'rgba(255,255,255,0.05)',
-                    border: `1px solid ${showTrend ? 'rgba(0,195,255,0.4)' : 'rgba(255,255,255,0.12)'}`,
-                    borderRadius: '100px', padding: '3px 8px', cursor: 'pointer', transition: 'all 0.2s',
-                  }}
-                >
-                  <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                    <path d="M0 6 C1.5 6, 2 1.5, 3.5 1.5 C5 1.5, 5 4, 6.5 3 C8 2, 9 4, 12 0.5"
-                      stroke={showTrend ? '#00C3FF' : 'rgba(255,255,255,0.25)'}
-                      strokeWidth="1.4" fill="none" strokeLinecap="round" strokeDasharray="3 2" />
-                  </svg>
-                  <span style={{ fontSize: '8px', fontWeight: 600, color: showTrend ? '#00C3FF' : 'rgba(255,255,255,0.25)', letterSpacing: '0.06em' }}>
-                    {t.modelTrendLine}
-                  </span>
-                </button>
               </div>
 
               {/* Bar chart with optional trend overlay */}
@@ -329,12 +311,33 @@ export default function ModelSection() {
                 })()}
               </div>
 
+              {/* Trend toggle below chart */}
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
+                <button
+                  onClick={() => setShowTrend(v => !v)}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '4px',
+                    background: showTrend ? 'rgba(0,195,255,0.12)' : 'rgba(255,255,255,0.05)',
+                    border: `1px solid ${showTrend ? 'rgba(0,195,255,0.4)' : 'rgba(255,255,255,0.12)'}`,
+                    borderRadius: '100px', padding: '4px 10px', cursor: 'pointer', transition: 'all 0.2s',
+                  }}
+                >
+                  <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
+                    <path d="M0 6 C1.5 6, 2 1.5, 3.5 1.5 C5 1.5, 5 4, 6.5 3 C8 2, 9 4, 12 0.5"
+                      stroke={showTrend ? '#00C3FF' : 'rgba(255,255,255,0.25)'}
+                      strokeWidth="1.4" fill="none" strokeLinecap="round" strokeDasharray="3 2" />
+                  </svg>
+                  <span style={{ fontSize: '8px', fontWeight: 600, color: showTrend ? '#00C3FF' : 'rgba(255,255,255,0.25)', letterSpacing: '0.06em' }}>
+                    {t.modelTrendLine}
+                  </span>
+                </button>
+              </div>
+
               {/* Data source note */}
               <p style={{
-                marginTop: '16px', fontSize: '8px',
+                marginTop: '12px', fontSize: '8px',
                 color: 'rgba(255,255,255,0.2)', letterSpacing: '0.04em', textAlign: 'center',
               }}>
-                {t.prevYear !== '' ? '' : ''}
                 Source · NIO Official Monthly Reports
               </p>
             </div>
