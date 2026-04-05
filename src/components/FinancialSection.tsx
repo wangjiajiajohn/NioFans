@@ -65,10 +65,6 @@ export default function FinancialSection() {
 
       <div style={{ width: '40px', height: '1px', background: 'rgba(0,0,0,0.05)', margin: '0 auto 24px' }} />
 
-      {/* 5-Year Deep Dive Analysis Section */}
-      <p className="section-label" style={{ marginBottom: '8px', opacity: 0.6, fontSize: '10px' }}>
-        HISTORICAL DEEP DIVE (2020 - 2025)
-      </p>
       <FinancialChart />
     </div>
   );
