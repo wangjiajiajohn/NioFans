@@ -16,6 +16,22 @@ export default function AppShell() {
   const tabs: TabType[] = ['delivery', 'financial', 'power'];
   const activeIndex = tabs.indexOf(activeTab);
 
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab);
+    
+    // Auto-scroll to sticky dock position (Instant)
+    if (typeof window !== 'undefined') {
+      const bannerH = window.innerWidth; // Banner is 1:1 square
+      const brandH = 80; // Brand Identity section height approx
+      const target = bannerH + brandH - 12; // Adjust for some spacing
+      
+      window.scrollTo({
+        top: target,
+        behavior: 'auto'
+      });
+    }
+  };
+
   return (
     <main className="page-shell">
       <PullEasterEgg />
@@ -90,7 +106,7 @@ export default function AppShell() {
             <button
               key={tab}
               className={`nav-pill ${activeTab === tab ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => handleTabChange(tab)}
               style={{ width: '100px', textAlign: 'center' }}
             >
               {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : t.tabPower}
@@ -100,7 +116,7 @@ export default function AppShell() {
       </div>
 
       {/* ── Tab Content ── */}
-      <div key={activeTab} className="anim-fade-up">
+      <div key={activeTab}>
         {activeTab === 'delivery' && (
           <>
             <DeliveryChart />

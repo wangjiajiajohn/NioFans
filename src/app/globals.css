@@ -30,7 +30,7 @@ html, body {
   font-family: 'Outfit', 'Inter', -apple-system, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; removed to allow instant JS jumps */
   /* overflow-x: hidden removed to prevent breaking sticky items */
 }
 
