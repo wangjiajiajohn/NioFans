@@ -1,14 +1,10 @@
 "use client";
 import React from 'react';
-import { FINANCIAL_DATA } from '@/constants/nioData';
 import { useLang } from '@/contexts/LangContext';
-import CountUp from './CountUp';
-
 import FinancialChart from './FinancialChart';
 
 export default function FinancialSection() {
   const { t } = useLang();
-  const data = FINANCIAL_DATA[0]; // Using latest Q4 data
 
   return (
     <div className="w-full anim-fade-up" style={{ background: '#FFFFFF' }}>

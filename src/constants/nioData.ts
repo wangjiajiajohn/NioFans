@@ -134,11 +134,12 @@ export const EVENTS = [
 export const FINANCIAL_DATA = [
   {
     quarter: "2026 Q1",
-    revenue: 312.8,
+    status: "ESTIMATED",
+    revenue: 31.28,
     grossMargin: 15.2,
     vehicleMargin: 20.2,
-    cash: 680,
-    rd: 42.5,
+    cash: 68.0,
+    rd: 4.25,
   },
 ];
 

@@ -179,12 +179,23 @@ export default function FinancialChart() {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
               <div>
-                <p style={{ fontSize: '9px', fontWeight: 700, color: colors.revenue, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '4px' }}>
-                  {latestData.quarter} Performance
-                </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                  <p style={{ fontSize: '9px', fontWeight: 700, color: colors.revenue, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                    {latestData.quarter} Performance
+                  </p>
+                  {latestData.status && (
+                    <span style={{ 
+                      fontSize: '7px', fontWeight: 800, padding: '2px 6px', 
+                      background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', 
+                      borderRadius: '4px', letterSpacing: '0.04em'
+                    }}>
+                      {latestData.status}
+                    </span>
+                  )}
+                </div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
                   <span style={{ fontSize: '32px', fontWeight: 200, color: '#FFF' }}>
-                    <CountUp end={latestData.revenue} decimals={1} />
+                    <CountUp end={latestData.revenue} decimals={2} />
                   </span>
                   <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>RMB BN</span>
                 </div>
