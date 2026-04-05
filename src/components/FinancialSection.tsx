@@ -4,6 +4,8 @@ import { FINANCIAL_DATA } from '@/constants/nioData';
 import { useLang } from '@/contexts/LangContext';
 import CountUp from './CountUp';
 
+import FinancialChart from './FinancialChart';
+
 export default function FinancialSection() {
   const { t } = useLang();
   const data = FINANCIAL_DATA[0]; // Using latest Q4 data
@@ -11,80 +13,63 @@ export default function FinancialSection() {
   return (
     <div className="w-full anim-fade-up" style={{ padding: '24px 16px', background: '#FFFFFF' }}>
       <p className="section-label" style={{ marginBottom: '14px' }}>
-        {data.quarter} {t.tabFinancial}
+        {data.quarter} {t.financialTitle}
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+      {/* Latest Performance Summary - KPI Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '32px' }}>
         {/* Revenue */}
         <div className="kpi-card">
           <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>
-            {t.finRevenue}
+            {t.revenue}
           </div>
           <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
             <CountUp end={data.revenue} decimals={1} />
-            <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.finUnit}</span>
-          </div>
-          <div style={{ marginTop: '6px' }}>
-            <span className="badge-blue">24Q4 OFFICIAL</span>
+            <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>B</span>
           </div>
         </div>
 
         {/* Vehicle Margin */}
         <div className="kpi-card">
           <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>
-            {t.finMargin}
+            {t.vehicleMargin}
           </div>
           <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
             <CountUp end={data.vehicleMargin} decimals={1} />
             <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>%</span>
-          </div>
-          <div style={{ marginTop: '6px' }}>
-            <span className="badge-green">▲ {t.yoyLabel} 1.2%</span>
           </div>
         </div>
 
         {/* Cash Reserve */}
         <div className="kpi-card">
           <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>
-            {t.finCash}
+            {t.pwrUnit} Cash
           </div>
           <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
             <CountUp end={data.cash / 10} decimals={1} />
-            <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.finUnit}</span>
-          </div>
-          <div style={{ marginTop: '6px' }}>
-            <span className="badge-blue">STABLE</span>
+            <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>B</span>
           </div>
         </div>
 
         {/* R&D Spend */}
         <div className="kpi-card">
           <div style={{ fontSize: '10px', color: '#999', marginBottom: '6px', fontWeight: 500 }}>
-            {t.finRD}
+            R&D
           </div>
           <div style={{ fontSize: '26px', fontWeight: 300, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1 }}>
             <CountUp end={data.rd} decimals={1} />
-            <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>{t.finUnit}</span>
-          </div>
-          <div style={{ marginTop: '6px' }}>
-            <span className="badge-blue">QUARTERLY</span>
+            <span style={{ fontSize: '12px', fontWeight: 400, color: '#999', marginLeft: '3px' }}>B</span>
           </div>
         </div>
       </div>
 
-      {/* Financial Disclaimer or extra note */}
-      <div style={{ 
-        marginTop: '16px', 
-        padding: '12px', 
-        borderRadius: '10px', 
-        background: '#F8F9FB', 
-        fontSize: '9px', 
-        color: '#999',
-        lineHeight: 1.6
-      }}>
-        * 财务数据以蔚来官方财报为准，金额单位为人民币（CNY）。
-        研发投入持续保持高位，支撑全栈技术开发。
-      </div>
+      <div style={{ width: '40px', height: '1px', background: 'rgba(0,0,0,0.05)', margin: '0 auto 24px' }} />
+
+      {/* 5-Year Deep Dive Analysis Section */}
+      <p className="section-label" style={{ marginBottom: '8px', opacity: 0.6, fontSize: '10px' }}>
+        HISTORICAL DEEP DIVE (2020 - 2025)
+      </p>
+      <FinancialChart />
     </div>
   );
 }

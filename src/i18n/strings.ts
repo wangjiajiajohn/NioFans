@@ -73,7 +73,15 @@ export const strings = {
     pwrSwapTotal: '换电站总数',
     pwrHighway: '高速网络',
     pwrYTD: '年内新增',
-    pwrPartner: '换电伙伴',
+    financialTitle: "财务表现",
+    revenue: "营业收入",
+    grossMargin: "综合毛利率",
+    vehicleMargin: "汽车毛利率",
+    quarterly: "按季度",
+    annual: "按年度",
+    unitRmbBn: "亿元 (RMB)",
+    unitPercent: "百分比 (%)",
+    swapTitle: "充换电建设",
     pwrUnit: '座',
 
     // Footer
