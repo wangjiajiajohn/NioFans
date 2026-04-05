@@ -6,9 +6,10 @@ import { useLang } from '@/contexts/LangContext';
 import { getAssetPath } from '@/utils/paths';
 
 export default function Banner() {
-  const { lang, t, toggleLang } = useLang();
+  const { lang, toggleLang } = useLang();
   const [visualIndex, setVisualIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -31,9 +32,10 @@ export default function Banner() {
   }, [isTransitioning]);
 
   useEffect(() => {
+    if (isDragging) return; // Pause auto-play while user is interacting
     const interval = setInterval(nextBanner, 5000);
     return () => clearInterval(interval);
-  }, [nextBanner]);
+  }, [nextBanner, isDragging]);
 
   const handleTransitionEnd = () => {
     if (visualIndex === 0) {
@@ -56,8 +58,6 @@ export default function Banner() {
 
   // Map visual index back to original BANNER index for content rendering
   const currentBanner = (visualIndex - 1 + BANNERS.length) % BANNERS.length;
-
-  const [isDragging, setIsDragging] = useState(false);
 
   const handleStart = (clientX: number) => {
     setIsDragging(true);
@@ -241,49 +241,7 @@ export default function Banner() {
         }}
       >
         <div style={{ maxWidth: '90%' }}>
-          {/* Eyebrow */}
-          <p
-            style={{
-              fontSize: '8px',
-              fontWeight: 600,
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase',
-              color: 'rgba(0,195,255,0.6)',
-              marginBottom: '12px',
-              animation: 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s both',
-            }}
-          >
-            {BANNERS[currentBanner].date} · NIO TECHNOLOGY
-          </p>
-
-          <h1
-            style={{
-              fontSize: '42px',
-              fontWeight: 700,
-              letterSpacing: '0.02em',
-              lineHeight: 1.1,
-              color: '#FFFFFF',
-              marginBottom: '8px',
-              animation: 'fade-up 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s both',
-              textShadow: '0 2px 10px rgba(0,0,0,0.3)',
-            }}
-          >
-            {BANNERS[currentBanner].title}
-          </h1>
-
-          {/* Subtitle */}
-          <p
-            style={{
-              fontSize: '14px',
-              fontWeight: 400,
-              color: 'rgba(255,255,255,0.7)',
-              letterSpacing: '0.03em',
-              marginBottom: '24px',
-              animation: 'fade-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.5s both',
-            }}
-          >
-            {BANNERS[currentBanner].subtitle || t.bannerCarSubtitle}
-          </p>
+          {/* Removed text overlaps per user request to show more of the car image */}
         </div>
 
         {/* Event pill */}
