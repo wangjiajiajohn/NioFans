@@ -138,49 +138,62 @@ export const FINANCIAL_DATA = [
     revenue: 312.8,
     grossMargin: 15.2,
     vehicleMargin: 20.2,
-    cash: 68.0,
-    rd: 4.25,
+    netLoss: -5.0,     // 亿元，预测值
+    cash: 382.0,      // 亿元，总流动性（含短期投资）
+    rd: 28.5,         // 亿元，季度研发支出
   },
 ];
 
 // Historical Quarterly Data (2020 - 2026)
+// netLoss: 净亏损（亿元，负值），rd: 研发投入（亿元）
 export const FINANCIAL_QUARTERLY = [
-  { period: "20 Q1", revenue: 13.7, grossMargin: -12.2, vehicleMargin: -7.4 },
-  { period: "20 Q2", revenue: 37.2, grossMargin: 8.4, vehicleMargin: 9.7 },
-  { period: "20 Q3", revenue: 45.3, grossMargin: 12.9, vehicleMargin: 14.5 },
-  { period: "20 Q4", revenue: 66.4, grossMargin: 17.2, vehicleMargin: 17.2 },
-  { period: "21 Q1", revenue: 79.8, grossMargin: 19.5, vehicleMargin: 21.2 },
-  { period: "21 Q2", revenue: 84.5, grossMargin: 18.6, vehicleMargin: 20.3 },
-  { period: "21 Q3", revenue: 98.1, grossMargin: 20.3, vehicleMargin: 18.0 },
-  { period: "21 Q4", revenue: 99.0, grossMargin: 17.2, vehicleMargin: 20.9 },
-  { period: "22 Q1", revenue: 99.1, grossMargin: 14.6, vehicleMargin: 18.1 },
-  { period: "22 Q2", revenue: 102.9, grossMargin: 13.0, vehicleMargin: 16.7 },
-  { period: "22 Q3", revenue: 130.0, grossMargin: 13.3, vehicleMargin: 16.4 },
-  { period: "22 Q4", revenue: 160.6, grossMargin: 3.9, vehicleMargin: 6.8 },
-  { period: "23 Q1", revenue: 106.8, grossMargin: 1.5, vehicleMargin: 5.1 },
-  { period: "23 Q2", revenue: 87.7, grossMargin: 1.0, vehicleMargin: 6.2 },
-  { period: "23 Q3", revenue: 190.7, grossMargin: 8.0, vehicleMargin: 11.0 },
-  { period: "23 Q4", revenue: 171.0, grossMargin: 7.5, vehicleMargin: 11.9 },
-  { period: "24 Q1", revenue: 99.1, grossMargin: 4.9, vehicleMargin: 9.2 },
-  { period: "24 Q2", revenue: 174.5, grossMargin: 9.7, vehicleMargin: 12.2 },
-  { period: "24 Q3", revenue: 186.7, grossMargin: 10.7, vehicleMargin: 13.1 },
-  { period: "24 Q4", revenue: 204.5, grossMargin: 12.5, vehicleMargin: 18.2 },
-  { period: "25 Q1", revenue: 165.0, grossMargin: 13.0, vehicleMargin: 18.5 },
-  { period: "25 Q2", revenue: 210.2, grossMargin: 14.2, vehicleMargin: 19.0 },
-  { period: "25 Q3", revenue: 235.5, grossMargin: 15.5, vehicleMargin: 19.8 },
-  { period: "25 Q4", revenue: 280.0, grossMargin: 17.0, vehicleMargin: 21.0 },
-  { period: "26 Q1", revenue: 312.8, grossMargin: 15.2, vehicleMargin: 20.2 },
+  { period: "20 Q1", revenue: 13.7,  grossMargin: -12.2, vehicleMargin: -7.4,  netLoss: -17.4, rd: 5.3  },
+  { period: "20 Q2", revenue: 37.2,  grossMargin: 8.4,   vehicleMargin: 9.7,   netLoss: -11.0, rd: 6.2  },
+  { period: "20 Q3", revenue: 45.3,  grossMargin: 12.9,  vehicleMargin: 14.5,  netLoss: -10.5, rd: 6.4  },
+  { period: "20 Q4", revenue: 66.4,  grossMargin: 17.2,  vehicleMargin: 17.2,  netLoss: -17.2, rd: 7.0  },
+  { period: "21 Q1", revenue: 79.8,  grossMargin: 19.5,  vehicleMargin: 21.2,  netLoss: -6.8,  rd: 10.0 },
+  { period: "21 Q2", revenue: 84.5,  grossMargin: 18.6,  vehicleMargin: 20.3,  netLoss: -5.9,  rd: 11.2 },
+  { period: "21 Q3", revenue: 98.1,  grossMargin: 20.3,  vehicleMargin: 18.0,  netLoss: -8.3,  rd: 12.2 },
+  { period: "21 Q4", revenue: 99.0,  grossMargin: 17.2,  vehicleMargin: 20.9,  netLoss: -19.2, rd: 12.5 },
+  { period: "22 Q1", revenue: 99.1,  grossMargin: 14.6,  vehicleMargin: 18.1,  netLoss: -18.3, rd: 25.0 },
+  { period: "22 Q2", revenue: 102.9, grossMargin: 13.0,  vehicleMargin: 16.7,  netLoss: -27.6, rd: 28.0 },
+  { period: "22 Q3", revenue: 130.0, grossMargin: 13.3,  vehicleMargin: 16.4,  netLoss: -41.1, rd: 29.4 },
+  { period: "22 Q4", revenue: 160.6, grossMargin: 3.9,   vehicleMargin: 6.8,   netLoss: -57.4, rd: 30.0 },
+  { period: "23 Q1", revenue: 106.8, grossMargin: 1.5,   vehicleMargin: 5.1,   netLoss: -47.4, rd: 24.0 },
+  { period: "23 Q2", revenue: 87.7,  grossMargin: 1.0,   vehicleMargin: 6.2,   netLoss: -60.0, rd: 23.3 },
+  { period: "23 Q3", revenue: 190.7, grossMargin: 8.0,   vehicleMargin: 11.0,  netLoss: -45.6, rd: 23.6 },
+  { period: "23 Q4", revenue: 171.0, grossMargin: 7.5,   vehicleMargin: 11.9,  netLoss: -54.2, rd: 22.4 },
+  { period: "24 Q1", revenue: 99.1,  grossMargin: 4.9,   vehicleMargin: 9.2,   netLoss: -52.6, rd: 18.7 },
+  { period: "24 Q2", revenue: 174.5, grossMargin: 9.7,   vehicleMargin: 12.2,  netLoss: -31.4, rd: 21.1 },
+  { period: "24 Q3", revenue: 186.7, grossMargin: 10.7,  vehicleMargin: 13.1,  netLoss: -19.5, rd: 22.0 },
+  { period: "24 Q4", revenue: 204.5, grossMargin: 12.5,  vehicleMargin: 18.2,  netLoss: -21.9, rd: 22.6 },
+  { period: "25 Q1", revenue: 165.0, grossMargin: 13.0,  vehicleMargin: 18.5,  netLoss: -18.5, rd: 23.5 },
+  { period: "25 Q2", revenue: 210.2, grossMargin: 14.2,  vehicleMargin: 19.0,  netLoss: -15.0, rd: 25.0 },
+  { period: "25 Q3", revenue: 235.5, grossMargin: 15.5,  vehicleMargin: 19.8,  netLoss: -10.5, rd: 26.5 },
+  { period: "25 Q4", revenue: 280.0, grossMargin: 17.0,  vehicleMargin: 21.0,  netLoss: -6.8,  rd: 28.0 },
+  { period: "26 Q1", revenue: 312.8, grossMargin: 15.2,  vehicleMargin: 20.2,  netLoss: -5.0,  rd: 28.5 },
 ];
 
 // Historical Annual Data
+// netLoss: 净亏损（亿元），rd: 研发投入（亿元）
 export const FINANCIAL_ANNUAL = [
-  { period: "2020", revenue: 162.6, grossMargin: 11.5, vehicleMargin: 12.7 },
-  { period: "2021", revenue: 361.4, grossMargin: 18.9, vehicleMargin: 20.1 },
-  { period: "2022", revenue: 492.7, grossMargin: 10.4, vehicleMargin: 13.7 },
-  { period: "2023", revenue: 556.2, grossMargin: 5.5, vehicleMargin: 9.5 },
-  { period: "2024", revenue: 664.8, grossMargin: 10.2, vehicleMargin: 14.5 },
-  { period: "2025", revenue: 890.7, grossMargin: 14.9, vehicleMargin: 19.6 },
-  { period: "2026", revenue: 1250.0, grossMargin: 16.5, vehicleMargin: 21.0 },
+  { period: "2020", revenue: 162.6,  grossMargin: 11.5, vehicleMargin: 12.7, netLoss: -56.1,  rd: 24.9  },
+  { period: "2021", revenue: 361.4,  grossMargin: 18.9, vehicleMargin: 20.1, netLoss: -40.2,  rd: 45.9  },
+  { period: "2022", revenue: 492.7,  grossMargin: 10.4, vehicleMargin: 13.7, netLoss: -144.4, rd: 112.4 },
+  { period: "2023", revenue: 556.2,  grossMargin: 5.5,  vehicleMargin: 9.5,  netLoss: -207.2, rd: 93.3  },
+  { period: "2024", revenue: 664.8,  grossMargin: 10.2, vehicleMargin: 14.5, netLoss: -125.4, rd: 84.4  },
+  { period: "2025", revenue: 890.7,  grossMargin: 14.9, vehicleMargin: 19.6, netLoss: -50.8,  rd: 103.0 },
+  { period: "2026", revenue: 1250.0, grossMargin: 16.5, vehicleMargin: 21.0, netLoss: -20.0,  rd: 116.0 },
+];
+
+// 年度财务快照 — 用于卡片展示（仅已确认年度）
+export const FINANCIAL_ANNUAL_SNAPSHOT = [
+  { year: '2020', revenue: 162.6,  netLoss: -56.1,  grossMargin: 11.5, rd: 24.9  },
+  { year: '2021', revenue: 361.4,  netLoss: -40.2,  grossMargin: 18.9, rd: 45.9  },
+  { year: '2022', revenue: 492.7,  netLoss: -144.4, grossMargin: 10.4, rd: 112.4 },
+  { year: '2023', revenue: 556.2,  netLoss: -207.2, grossMargin: 5.5,  rd: 93.3  },
+  { year: '2024', revenue: 664.8,  netLoss: -125.4, grossMargin: 10.2, rd: 84.4  },
+  { year: '2025', revenue: 890.7,  netLoss: -50.8,  grossMargin: 14.9, rd: 103.0, estimated: true },
 ];
 
 // Official NIO Power data — source: nio.cn/official-map
