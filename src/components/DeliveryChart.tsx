@@ -91,7 +91,7 @@ const trendArrow = (v: number) => v >= 0 ? '▲' : '▼';
 
 // ── Main Component ─────────────────────────────────────────────────
 export default function DeliveryChart() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('monthly');
   const [selectedIndexOverride, setSelectedIndexOverride] = useState<number | 'latest' | null>('latest');
