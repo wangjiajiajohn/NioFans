@@ -16,12 +16,12 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
   delivery: {
     zh: [
       { tag: '交付动态', text: 'ES8 累计交付突破 9 万辆，旗舰 SUV 持续热销' },
-      { tag: '新车发布', text: 'ES9 技术产品发布会圆满落幕，全新智能驾驶平台亮相' },
+      { tag: '新车发布', text: 'ES9 技术产品发布会 4 月 9 日即将举行，敬请期待' },
       { tag: '月度数据', text: '2026 年 3 月交付 35,500 辆，同比大幅增长' },
     ],
     en: [
       { tag: 'DELIVERY', text: 'ES8 cumulative deliveries surpass 90,000 units' },
-      { tag: 'LAUNCH', text: 'ES9 Tech Event concluded — new smart driving platform unveiled' },
+      { tag: 'LAUNCH', text: 'ES9 Tech Event on Apr 9 — stay tuned for the unveiling' },
       { tag: 'MONTHLY', text: 'March 2026: 35,500 units delivered, strong YoY growth' },
     ],
   },
