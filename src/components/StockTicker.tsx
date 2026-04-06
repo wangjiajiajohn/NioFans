@@ -148,9 +148,6 @@ export default function StockTicker() {
     return () => clearInterval(timer);
   }, [fetchAll]);
 
-  // Check if we have any data to display
-  const hasData = data.us !== null || data.hk !== null;
-
   return (
     <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '12px' }}>
       {loading ? (
@@ -159,13 +156,13 @@ export default function StockTicker() {
           <div style={{ width: '1px', height: '14px', background: '#E8E8E8', flexShrink: 0 }} />
           <SkeletonRow label="9866" exchange="HKEX" />
         </>
-      ) : hasData ? (
+      ) : (
         <>
-          {data.us && <StockRow label="NIO"  exchange="NYSE" prefix="$"   data={data.us} decimals={2} />}
-          {data.us && data.hk && <div style={{ width: '1px', height: '14px', background: '#E8E8E8', flexShrink: 0 }} />}
-          {data.hk && <StockRow label="9866" exchange="HKEX" prefix="HK$" data={data.hk} decimals={2} />}
+          <StockRow label="NIO"  exchange="NYSE" prefix="$"   data={data.us} decimals={2} />
+          <div style={{ width: '1px', height: '14px', background: '#E8E8E8', flexShrink: 0 }} />
+          <StockRow label="9866" exchange="HKEX" prefix="HK$" data={data.hk} decimals={2} />
         </>
-      ) : null}
+      )}
     </div>
   );
 }
