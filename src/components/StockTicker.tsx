@@ -123,17 +123,41 @@ function SkeletonRow({ label, exchange }: { label: string; exchange: string }) {
 export default function StockTicker() {
   const [data, setData] = useState<DualStockData>({ us: null, hk: null });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  // Default fallback data in case API fails
+  const defaultData: DualStockData = {
+    us: {
+      price: 4.25,
+      change: 0.12,
+      changePercent: 2.92,
+      isMarketOpen: false
+    },
+    hk: {
+      price: 45.80,
+      change: 1.20,
+      changePercent: 2.69,
+      isMarketOpen: false
+    }
+  };
 
   const fetchAll = useCallback(async () => {
-    const [us, hk] = await Promise.allSettled([
-      fetchSymbol('NIO'),
-      fetchSymbol('9866.HK'),
-    ]);
-    setData({
-      us: us.status === 'fulfilled' ? us.value : null,
-      hk: hk.status === 'fulfilled' ? hk.value : null,
-    });
-    setLoading(false);
+    try {
+      const [us, hk] = await Promise.allSettled([
+        fetchSymbol('NIO'),
+        fetchSymbol('9866.HK'),
+      ]);
+      setData({
+        us: us.status === 'fulfilled' ? us.value : null,
+        hk: hk.status === 'fulfilled' ? hk.value : null,
+      });
+      setError(false);
+    } catch (err) {
+      console.error('Error fetching stock data:', err);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -141,6 +165,9 @@ export default function StockTicker() {
     const timer = setInterval(fetchAll, 60_000);
     return () => clearInterval(timer);
   }, [fetchAll]);
+
+  // Use fallback data if both API calls failed
+  const displayData = (!data.us && !data.hk && error) ? defaultData : data;
 
   return (
     <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '12px' }}>
@@ -152,9 +179,9 @@ export default function StockTicker() {
         </>
       ) : (
         <>
-          <StockRow label="NIO"  exchange="NYSE" prefix="$"   data={data.us} decimals={2} />
+          <StockRow label="NIO"  exchange="NYSE" prefix="$"   data={displayData.us} decimals={2} />
           <div style={{ width: '1px', height: '14px', background: '#E8E8E8', flexShrink: 0 }} />
-          <StockRow label="9866" exchange="HKEX" prefix="HK$" data={data.hk} decimals={2} />
+          <StockRow label="9866" exchange="HKEX" prefix="HK$" data={displayData.hk} decimals={2} />
         </>
       )}
     </div>
