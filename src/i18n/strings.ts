@@ -52,16 +52,16 @@ export const strings = {
     modelTrendLine: '趋势线',
     
     // AI Prediction
-    aiPrediction: 'AI Prediction',
-    aiPredictionTitle: '2026 Annual Sales Forecast',
-    aiAnnualEstimate: 'Annual Estimate',
-    aiPeakMonth: 'Peak Month (Dec)',
-    aiProcess: 'Process (SCM Model)',
-    aiProcessStep1: 'Based on actual delivery in Mar 2026 (6,119 units)',
-    aiProcessStep2: 'Applied NIO brand 5-year "seasonal correction index"',
-    aiProcessStep3: 'Smoothed 2025 launch ramp anomalies (removed abnormal MoM)',
-    aiProcessStep4: 'Fitted Q4 year-end sprint effect (seasonal weight 1.8x - 2.5x)',
-    aiUnit: 'k units'
+    aiPrediction: 'AI 推演',
+    aiPredictionTitle: '2026 年度销量预测',
+    aiAnnualEstimate: '年度总预估',
+    aiPeakMonth: '峰值月度 (12月)',
+    aiProcess: '推演过程 (SCM 模型)',
+    aiProcessStep1: '以 2026.03 实际交付 (6,119台) 为基准锚点',
+    aiProcessStep2: '应用 NIO 品牌五年期"季节性修正指数"',
+    aiProcessStep3: '平滑 2025 首发爬坡期异常波动 (剔除异常 MoM)',
+    aiProcessStep4: '拟合 Q4 年底冲刺效应 (季节性权重系数 1.8x - 2.5x)',
+    aiUnit: '万台',
 
     // 2026 annual target
     target2026Label: '2026 年度目标',
@@ -187,6 +187,18 @@ export const strings = {
     modelComingSoon: 'Coming Soon',
     modelComingDesc: 'Monthly delivery data coming soon',
     modelTrendLine: 'Trend',
+    
+    // AI Prediction
+    aiPrediction: 'AI Prediction',
+    aiPredictionTitle: '2026 Annual Sales Forecast',
+    aiAnnualEstimate: 'Annual Estimate',
+    aiPeakMonth: 'Peak Month (Dec)',
+    aiProcess: 'Process (SCM Model)',
+    aiProcessStep1: 'Based on actual delivery in Mar 2026 (6,119 units)',
+    aiProcessStep2: 'Applied NIO brand 5-year "seasonal correction index"',
+    aiProcessStep3: 'Smoothed 2025 launch ramp anomalies (removed abnormal MoM)',
+    aiProcessStep4: 'Fitted Q4 year-end sprint effect (seasonal weight 1.8x - 2.5x)',
+    aiUnit: 'k units',
 
     // 2026 annual target
     target2026Label: '2026 Annual Target',
