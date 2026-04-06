@@ -23,10 +23,10 @@ export default function TestDriveButton() {
           border: '1px solid rgba(0,0,0,0.08)', borderRadius: '100px',
           cursor: 'pointer', fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em',
           boxShadow: '0 2px 16px rgba(0,0,0,0.14), 0 1px 4px rgba(0,0,0,0.08)',
-          transition: 'transform 0.15s ease',
+          animation: 'btn-breathe 2.6s ease-in-out infinite',
         }}
-        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
-        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+        onMouseEnter={e => { e.currentTarget.style.animationPlayState = 'paused'; e.currentTarget.style.transform = 'scale(1.06)'; }}
+        onMouseLeave={e => { e.currentTarget.style.animationPlayState = 'running'; e.currentTarget.style.transform = ''; }}
       >
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l3-4h10l3 4h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2" />
