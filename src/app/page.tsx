@@ -65,6 +65,11 @@ export default function AppShell() {
   const dragOffset = useRef(0);
 
   const onTouchStart = (e: React.TouchEvent) => {
+    // Check if the touch is inside a scrollable table
+    const target = e.target as HTMLElement;
+    if (target.closest('.no-scrollbar') || target.closest('div[style*="overflowX: auto"]') || target.closest('div[style*="overflow-x: auto"]')) {
+      return; // Skip if touch is inside a scrollable table
+    }
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
     dragDir.current = null;
@@ -73,6 +78,9 @@ export default function AppShell() {
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
+    // Check if touch started outside scrollable tables
+    if (touchStartX.current === 0) return;
+    
     const dx = e.touches[0].clientX - touchStartX.current;
     const dy = e.touches[0].clientY - touchStartY.current;
 
@@ -95,7 +103,19 @@ export default function AppShell() {
   };
 
   const onTouchEnd = () => {
-    if (dragDir.current !== 'h') return;
+    // Check if touch started outside scrollable tables
+    if (touchStartX.current === 0) {
+      return;
+    }
+    
+    if (dragDir.current !== 'h') {
+      // Reset touch state
+      touchStartX.current = 0;
+      touchStartY.current = 0;
+      dragDir.current = null;
+      dragOffset.current = 0;
+      return;
+    }
 
     const w = panelRef.current?.offsetWidth ?? 375;
     const offset = dragOffset.current;
@@ -113,6 +133,10 @@ export default function AppShell() {
       setActiveTab(tabs[activeIndex - 1]);
     }
 
+    // Reset touch state
+    touchStartX.current = 0;
+    touchStartY.current = 0;
+    dragDir.current = null;
     dragOffset.current = 0;
   };
 
