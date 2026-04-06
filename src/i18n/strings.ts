@@ -136,6 +136,13 @@ export const strings = {
     easterEggText: '蔚来，为你而来！',
     easterEggPullMore: '继续下拉',
     easterEggRelease: '松手解锁',
+    
+    // Q1 Guidance
+    q1Guidance: 'Q1 指引',
+    q1Actual: '实际',
+    q1BeatHigh: '超上限',
+    q1BeatLow: '超下限',
+    q1BelowLow: '低于下限',
   },
 
   en: {
@@ -266,6 +273,13 @@ export const strings = {
     easterEggText: 'NIO · Made for You!',
     easterEggPullMore: 'Pull down',
     easterEggRelease: 'Release to reveal',
+    
+    // Q1 Guidance
+    q1Guidance: 'Q1 Guidance',
+    q1Actual: 'Actual',
+    q1BeatHigh: 'Above High End',
+    q1BeatLow: 'Above Low End',
+    q1BelowLow: 'Below Low End',
   },
 } as const;
 

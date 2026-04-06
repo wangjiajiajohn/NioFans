@@ -282,14 +282,14 @@ export default function DeliveryChart() {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               {q1BeatHigh >= 0 && <span style={{ fontSize: '11px' }}>🧧</span>}
-              <span style={{ fontSize: '9px', color: '#999' }}>Q1 指引</span>
+              <span style={{ fontSize: '9px', color: '#999' }}>{t.q1Guidance}</span>
               <span style={{ fontSize: '9px', fontWeight: 600, color: '#666' }}>
-                {(Q1_GUIDANCE_LOW/10000).toFixed(1)}～{(Q1_GUIDANCE_HIGH/10000).toFixed(1)}万台
+                {(Q1_GUIDANCE_LOW/10000).toFixed(1)}～{(Q1_GUIDANCE_HIGH/10000).toFixed(1)}万{lang === 'zh' ? '台' : 'units'}
               </span>
               <span style={{ fontSize: '9px', color: '#ddd' }}>·</span>
-              <span style={{ fontSize: '9px', color: '#999' }}>实际</span>
+              <span style={{ fontSize: '9px', color: '#999' }}>{t.q1Actual}</span>
               <span style={{ fontSize: '9px', fontWeight: 700, color: '#CC1A1A' }}>
-                {(q1Actual/10000).toFixed(2)}万台
+                {(q1Actual/10000).toFixed(2)}万{lang === 'zh' ? '台' : 'units'}
               </span>
             </div>
             <div style={{
@@ -304,7 +304,7 @@ export default function DeliveryChart() {
               letterSpacing: '0.02em',
               boxShadow: q1BeatHigh >= 0 ? '0 1px 6px rgba(212,18,18,0.3)' : 'none',
             }}>
-              ▲ 超上限 {Math.abs(q1BeatHigh).toLocaleString()}台
+              ▲ {t.q1BeatHigh} {Math.abs(q1BeatHigh).toLocaleString()}{lang === 'zh' ? '台' : 'units'}
             </div>
           </div>
         </div>
