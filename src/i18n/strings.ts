@@ -50,6 +50,18 @@ export const strings = {
     modelComingSoon: '数据建设中',
     modelComingDesc: '月度交付数据即将上线',
     modelTrendLine: '趋势线',
+    
+    // AI Prediction
+    aiPrediction: 'AI Prediction',
+    aiPredictionTitle: '2026 Annual Sales Forecast',
+    aiAnnualEstimate: 'Annual Estimate',
+    aiPeakMonth: 'Peak Month (Dec)',
+    aiProcess: 'Process (SCM Model)',
+    aiProcessStep1: 'Based on actual delivery in Mar 2026 (6,119 units)',
+    aiProcessStep2: 'Applied NIO brand 5-year "seasonal correction index"',
+    aiProcessStep3: 'Smoothed 2025 launch ramp anomalies (removed abnormal MoM)',
+    aiProcessStep4: 'Fitted Q4 year-end sprint effect (seasonal weight 1.8x - 2.5x)',
+    aiUnit: 'k units'
 
     // 2026 annual target
     target2026Label: '2026 年度目标',
