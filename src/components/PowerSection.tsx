@@ -5,6 +5,7 @@ import {
 import { POWER_DATA, SWAP_GROWTH_HISTORY } from '@/constants/nioData';
 import { useLang } from '@/contexts/LangContext';
 import CountUp from './CountUp';
+import { getAssetPath } from '@/utils/paths';
 
 // ── Custom Tooltip ──────────────────────────────────────────────────────────
 interface TooltipPayload { value: number; }
@@ -67,7 +68,7 @@ export default function PowerSection() {
           marginTop: '24px'
         }}>
           <Image
-            src="/power-map.png"
+            src={getAssetPath('/power-map.png')}
             alt="NIO Power station map"
             width={1000}
             height={1000}
