@@ -16,7 +16,7 @@ export default function TestDriveButton() {
       <button
         onClick={() => setOpen(true)}
         style={{
-          position: 'fixed', bottom: '100px', right: '16px', zIndex: 900,
+          position: 'fixed', bottom: '28px', right: '16px', zIndex: 900,
           display: 'flex', alignItems: 'center', gap: '6px',
           padding: '10px 18px',
           background: '#FFF', color: '#0D0D0D',
