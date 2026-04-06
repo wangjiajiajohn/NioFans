@@ -16,13 +16,13 @@ export default function TestDriveButton() {
       <button
         onClick={() => setOpen(true)}
         style={{
-          position: 'fixed', bottom: '28px', right: '16px', zIndex: 900,
+          position: 'fixed', bottom: '100px', right: '16px', zIndex: 900,
           display: 'flex', alignItems: 'center', gap: '6px',
           padding: '10px 18px',
-          background: '#0D0D0D', color: '#FFF',
-          border: 'none', borderRadius: '100px',
+          background: '#FFF', color: '#0D0D0D',
+          border: '1px solid rgba(0,0,0,0.08)', borderRadius: '100px',
           cursor: 'pointer', fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.28)',
+          boxShadow: '0 2px 16px rgba(0,0,0,0.14), 0 1px 4px rgba(0,0,0,0.08)',
           transition: 'transform 0.15s ease',
         }}
         onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
@@ -84,10 +84,9 @@ export default function TestDriveButton() {
             onClick={() => setOpen(false)}
             style={{
               position: 'absolute', top: '14px', right: '14px',
-              width: '30px', height: '30px', borderRadius: '50%',
-              background: 'rgba(0,0,0,0.4)',
-              backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255,255,255,0.18)',
+              width: '28px', height: '28px', borderRadius: '50%',
+              background: 'transparent',
+              border: '1.5px solid rgba(255,255,255,0.6)',
               cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
