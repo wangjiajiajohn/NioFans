@@ -23,7 +23,7 @@ export default function TestDriveButton() {
           border: '1px solid rgba(0,0,0,0.08)', borderRadius: '100px',
           cursor: 'pointer', fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em',
           boxShadow: '0 2px 16px rgba(0,0,0,0.14), 0 1px 4px rgba(0,0,0,0.08)',
-          animation: 'btn-breathe 1.4s ease-in-out infinite',
+          animation: 'btn-breathe 2.8s ease-in-out infinite',
         }}
         onMouseEnter={e => { e.currentTarget.style.animationPlayState = 'paused'; e.currentTarget.style.transform = 'scale(1.06)'; }}
         onMouseLeave={e => { e.currentTarget.style.animationPlayState = 'running'; e.currentTarget.style.transform = ''; }}
