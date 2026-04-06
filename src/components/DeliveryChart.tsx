@@ -280,16 +280,22 @@ export default function DeliveryChart() {
               : 'rgba(120,120,120,0.06)',
             border: `1px solid ${q1BeatHigh >= 0 ? 'rgba(212,175,55,0.35)' : 'rgba(150,150,150,0.2)'}`,
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'nowrap' }}>
               {q1BeatHigh >= 0 && <span style={{ fontSize: '11px' }}>🧧</span>}
-              <span style={{ fontSize: '9px', color: '#999' }}>{t.q1Guidance}</span>
-              <span style={{ fontSize: '9px', fontWeight: 600, color: '#666' }}>
-                {(Q1_GUIDANCE_LOW/10000).toFixed(1)}～{(Q1_GUIDANCE_HIGH/10000).toFixed(1)}万{lang === 'zh' ? '台' : 'units'}
+              <span style={{ fontSize: '9px', color: '#999', whiteSpace: 'nowrap' }}>{t.q1Guidance}</span>
+              <span style={{ fontSize: '9px', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>
+                {lang === 'zh' 
+                  ? `${(Q1_GUIDANCE_LOW/10000).toFixed(1)}～${(Q1_GUIDANCE_HIGH/10000).toFixed(1)}万台`
+                  : `${(Q1_GUIDANCE_LOW).toLocaleString()}～${(Q1_GUIDANCE_HIGH).toLocaleString()} units`
+                }
               </span>
               <span style={{ fontSize: '9px', color: '#ddd' }}>·</span>
-              <span style={{ fontSize: '9px', color: '#999' }}>{t.q1Actual}</span>
-              <span style={{ fontSize: '9px', fontWeight: 700, color: '#CC1A1A' }}>
-                {(q1Actual/10000).toFixed(2)}万{lang === 'zh' ? '台' : 'units'}
+              <span style={{ fontSize: '9px', color: '#999', whiteSpace: 'nowrap' }}>{t.q1Actual}</span>
+              <span style={{ fontSize: '9px', fontWeight: 700, color: '#CC1A1A', whiteSpace: 'nowrap' }}>
+                {lang === 'zh' 
+                  ? `${(q1Actual/10000).toFixed(2)}万台`
+                  : `${q1Actual.toLocaleString()} units`
+                }
               </span>
             </div>
             <div style={{
@@ -304,7 +310,7 @@ export default function DeliveryChart() {
               letterSpacing: '0.02em',
               boxShadow: q1BeatHigh >= 0 ? '0 1px 6px rgba(212,18,18,0.3)' : 'none',
             }}>
-              ▲ {t.q1BeatHigh} {Math.abs(q1BeatHigh).toLocaleString()}{lang === 'zh' ? '台' : 'units'}
+              ▲ {t.q1BeatHigh} {Math.abs(q1BeatHigh).toLocaleString()}{lang === 'zh' ? '台' : ' units'}
             </div>
           </div>
         </div>
