@@ -272,45 +272,57 @@ export default function DeliveryChart() {
 
           {/* Q1 beat guidance callout */}
           <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            padding: '8px 10px',
-            borderRadius: '8px',
+            padding: '16px 20px',
+            borderRadius: '12px',
             background: q1BeatHigh >= 0
               ? 'linear-gradient(90deg, rgba(220,20,20,0.07), rgba(212,175,55,0.06))'
               : 'rgba(120,120,120,0.06)',
             border: `1px solid ${q1BeatHigh >= 0 ? 'rgba(212,175,55,0.35)' : 'rgba(150,150,150,0.2)'}`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '20px',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'nowrap' }}>
-              {q1BeatHigh >= 0 && <span style={{ fontSize: '11px' }}>🧧</span>}
-              <span style={{ fontSize: '9px', color: '#999', whiteSpace: 'nowrap' }}>{t.q1Guidance}</span>
-              <span style={{ fontSize: '9px', fontWeight: 600, color: '#666', whiteSpace: 'nowrap' }}>
-                {lang === 'zh' 
-                  ? `${(Q1_GUIDANCE_LOW/10000).toFixed(1)}～${(Q1_GUIDANCE_HIGH/10000).toFixed(1)}万台`
-                  : `${(Q1_GUIDANCE_LOW).toLocaleString()}～${(Q1_GUIDANCE_HIGH).toLocaleString()} units`
-                }
-              </span>
-              <span style={{ fontSize: '9px', color: '#ddd' }}>·</span>
-              <span style={{ fontSize: '9px', color: '#999', whiteSpace: 'nowrap' }}>{t.q1Actual}</span>
-              <span style={{ fontSize: '9px', fontWeight: 700, color: '#CC1A1A', whiteSpace: 'nowrap' }}>
-                {lang === 'zh' 
-                  ? `${(q1Actual/10000).toFixed(2)}万台`
-                  : `${q1Actual.toLocaleString()} units`
-                }
-              </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {q1BeatHigh >= 0 && <span style={{ fontSize: '14px' }}>🧧</span>}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '11px', color: '#999' }}>{t.q1Guidance}</span>
+                  <span style={{ fontSize: '11px', fontWeight: 600, color: '#666' }}>
+                    {lang === 'zh' 
+                      ? `${(Q1_GUIDANCE_LOW/10000).toFixed(1)}～${(Q1_GUIDANCE_HIGH/10000).toFixed(1)}万台`
+                      : `${(Q1_GUIDANCE_LOW).toLocaleString()}–${(Q1_GUIDANCE_HIGH).toLocaleString()} units`
+                    }
+                  </span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '11px', color: '#999' }}>{t.q1Actual}</span>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#CC1A1A' }}>
+                    {lang === 'zh' 
+                      ? `${(q1Actual/10000).toFixed(2)}万台`
+                      : `${q1Actual.toLocaleString()} units`
+                    }
+                  </span>
+                </div>
+              </div>
             </div>
             <div style={{
-              display: 'flex', alignItems: 'center', gap: '3px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '4px',
               background: q1BeatHigh >= 0
                 ? 'linear-gradient(90deg, #D41212, #B8860B)'
                 : '#999',
               color: '#FFE97A',
               fontSize: '9px', fontWeight: 700,
-              padding: '2px 8px',
-              borderRadius: '100px',
+              padding: '8px 16px',
+              borderRadius: '20px',
               letterSpacing: '0.02em',
-              boxShadow: q1BeatHigh >= 0 ? '0 1px 6px rgba(212,18,18,0.3)' : 'none',
+              boxShadow: q1BeatHigh >= 0 ? '0 2px 8px rgba(212,18,18,0.3)' : 'none',
             }}>
-              ▲ {t.q1BeatHigh} {Math.abs(q1BeatHigh).toLocaleString()}{lang === 'zh' ? '台' : ' units'}
+              <span>▲ {lang === 'zh' ? t.q1BeatHigh : 'Above High End'}</span>
+              <span>{Math.abs(q1BeatHigh).toLocaleString()}{lang === 'zh' ? '台' : ' units'}</span>
             </div>
           </div>
         </div>
