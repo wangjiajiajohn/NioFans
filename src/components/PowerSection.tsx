@@ -263,7 +263,7 @@ export default function PowerSection() {
             <div style={{
               borderRadius: '16px',
               overflow: 'hidden',
-              border: '1px solid rgba(0,163,218,0.15)',
+              border: '1px solid rgba(0,163,218,0.08)',
               position: 'relative',
               background: '#0D1520',
               height: '280px',
@@ -278,10 +278,16 @@ export default function PowerSection() {
                   display: 'block',
                   objectFit: 'cover',
                   objectPosition: 'center 25%',
-                  filter: 'brightness(0.88) contrast(1.05) saturate(1.1)',
+                  filter: 'grayscale(1) invert(1) brightness(0.55) sepia(1) hue-rotate(195deg) saturate(6)',
                   userSelect: 'none',
                 }}
               />
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'radial-gradient(ellipse at center, transparent 55%, #0D1520 92%)',
+                pointerEvents: 'none',
+              }} />
             </div>
           </div>
 
