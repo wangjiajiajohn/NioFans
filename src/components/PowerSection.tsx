@@ -257,13 +257,23 @@ export default function PowerSection() {
             paddingTop: '20px',
             marginBottom: '16px',
           }}>
-            <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#00A3DA', marginBottom: '12px' }}>
-              {lang === 'zh' ? '全球补能网络分布' : 'Global Power Network'}
-            </p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#C8A84B', margin: 0 }}>
+                {lang === 'zh' ? '全球补能网络分布' : 'Global Power Network'}
+              </p>
+              <a
+                href="https://www.nio.cn/official-map"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '0.08em', color: '#C8A84B', opacity: 0.7, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '3px' }}
+              >
+                {lang === 'zh' ? '官网查看' : 'View Map'} ↗
+              </a>
+            </div>
             <div style={{
               borderRadius: '16px',
               overflow: 'hidden',
-              border: '1px solid rgba(0,163,218,0.08)',
+              border: '1px solid rgba(200,168,75,0.12)',
               position: 'relative',
               background: '#0D1520',
               height: '280px',
@@ -278,7 +288,7 @@ export default function PowerSection() {
                   display: 'block',
                   objectFit: 'cover',
                   objectPosition: 'center 25%',
-                  filter: 'grayscale(1) invert(1) brightness(0.55) sepia(1) hue-rotate(195deg) saturate(6)',
+                  filter: 'grayscale(1) invert(1) brightness(0.55) sepia(1) hue-rotate(20deg) saturate(5)',
                   userSelect: 'none',
                 }}
               />
