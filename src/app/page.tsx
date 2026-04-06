@@ -7,6 +7,7 @@ import PowerSection from '@/components/PowerSection';
 import PullEasterEgg from '@/components/PullEasterEgg';
 import NewsTicker from '@/components/NewsTicker';
 import StockTicker from '@/components/StockTicker';
+import TestDriveButton from '@/components/TestDriveButton';
 import { useLang } from '@/contexts/LangContext';
 
 type TabType = 'delivery' | 'financial' | 'power';
@@ -118,6 +119,7 @@ export default function AppShell() {
   return (
     <main className="page-shell">
       <PullEasterEgg />
+      <TestDriveButton />
 
       {/* ── Sticky Header ── */}
       <div
