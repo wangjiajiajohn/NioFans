@@ -12,26 +12,16 @@ export default function TestDriveButton() {
 
   return (
     <>
-      {/* ── Floating pill button ── */}
+      {/* ── Floating pill ── */}
       <button
         onClick={() => setOpen(true)}
         style={{
-          position: 'fixed',
-          bottom: '28px',
-          right: '16px',
-          zIndex: 900,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
+          position: 'fixed', bottom: '28px', right: '16px', zIndex: 900,
+          display: 'flex', alignItems: 'center', gap: '6px',
           padding: '10px 18px',
-          background: '#0D0D0D',
-          color: '#FFF',
-          border: 'none',
-          borderRadius: '100px',
-          cursor: 'pointer',
-          fontSize: '12px',
-          fontWeight: 600,
-          letterSpacing: '0.04em',
+          background: '#0D0D0D', color: '#FFF',
+          border: 'none', borderRadius: '100px',
+          cursor: 'pointer', fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em',
           boxShadow: '0 4px 24px rgba(0,0,0,0.28)',
           transition: 'transform 0.15s ease',
         }}
@@ -51,37 +41,28 @@ export default function TestDriveButton() {
           onClick={() => setOpen(false)}
           style={{
             position: 'fixed', inset: 0, zIndex: 1100,
-            background: 'rgba(0,0,0,0.6)',
-            backdropFilter: 'blur(6px)',
-            WebkitBackdropFilter: 'blur(6px)',
-            animation: 'fade-in 0.2s ease both',
+            background: 'rgba(0,0,0,0.55)',
+            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+            animation: 'fade-in 0.22s ease both',
           }}
         />
       )}
 
-      {/* ── Bottom sheet (dark) ── */}
+      {/* ── Bottom sheet ── */}
       <div
         style={{
-          position: 'fixed',
-          left: 0, right: 0, bottom: 0,
+          position: 'fixed', left: 0, right: 0, bottom: 0,
           zIndex: 1200,
-          background: '#111214',
           borderRadius: '20px 20px 0 0',
-          boxShadow: '0 -2px 40px rgba(0,0,0,0.5)',
+          overflow: 'hidden',                          /* image flush to rounded corners */
+          boxShadow: '0 -2px 60px rgba(0,0,0,0.6)',
           transform: open ? 'translateY(0)' : 'translateY(100%)',
-          transition: 'transform 0.38s cubic-bezier(0.22, 1, 0.36, 1)',
-          maxWidth: '480px',
-          margin: '0 auto',
-          overflow: 'hidden',
-          paddingBottom: '36px',
+          transition: 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+          maxWidth: '480px', margin: '0 auto',
+          background: '#0a0a0a',
         }}
       >
-        {/* Handle */}
-        <div style={{ padding: '12px 0 8px', display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '36px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.12)' }} />
-        </div>
-
-        {/* Image full-width */}
+        {/* Image — first child, no gap above */}
         <div style={{ position: 'relative' }}>
           <img
             src={getAssetPath('/2.png')}
@@ -89,32 +70,54 @@ export default function TestDriveButton() {
             style={{ width: '100%', display: 'block' }}
             draggable={false}
           />
-          {/* Close button over image */}
+
+          {/* Drag handle — floats over image */}
+          <div style={{
+            position: 'absolute', top: '10px', left: 0, right: 0,
+            display: 'flex', justifyContent: 'center', pointerEvents: 'none',
+          }}>
+            <div style={{ width: '36px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.35)' }} />
+          </div>
+
+          {/* Close — floats over image */}
           <button
             onClick={() => setOpen(false)}
             style={{
-              position: 'absolute', top: '12px', right: '12px',
+              position: 'absolute', top: '14px', right: '14px',
               width: '30px', height: '30px', borderRadius: '50%',
-              background: 'rgba(0,0,0,0.45)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              border: '1px solid rgba(255,255,255,0.15)',
+              background: 'rgba(0,0,0,0.4)',
+              backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255,255,255,0.18)',
               cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-              <path d="M1 1l10 10M11 1L1 11" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round" />
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+              <path d="M1 1l10 10M11 1L1 11" stroke="rgba(255,255,255,0.85)" strokeWidth="1.6" strokeLinecap="round" />
             </svg>
           </button>
+
+          {/* Bottom fade — image bleeds into dark area */}
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0, height: '64px',
+            background: 'linear-gradient(to bottom, transparent, #0a0a0a)',
+            pointerEvents: 'none',
+          }} />
         </div>
 
-        {/* Footer text */}
-        <div style={{ padding: '16px 24px 0' }}>
-          <p style={{ fontSize: '15px', fontWeight: 600, color: '#FFF', letterSpacing: '0.01em' }}>
+        {/* Text area */}
+        <div style={{ padding: '4px 24px 40px' }}>
+          <p style={{
+            fontSize: '15px', fontWeight: 600,
+            color: 'rgba(255,255,255,0.92)',
+            letterSpacing: '0.01em',
+          }}>
             预约试驾
           </p>
-          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '5px', letterSpacing: '0.02em', lineHeight: 1.6 }}>
+          <p style={{
+            fontSize: '11px', color: 'rgba(255,255,255,0.35)',
+            marginTop: '5px', letterSpacing: '0.03em', lineHeight: 1.6,
+          }}>
             微信扫一扫 · 长按识别二维码 · 一对一专属顾问服务
           </p>
         </div>
