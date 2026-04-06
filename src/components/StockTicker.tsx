@@ -123,23 +123,6 @@ function SkeletonRow({ label, exchange }: { label: string; exchange: string }) {
 export default function StockTicker() {
   const [data, setData] = useState<DualStockData>({ us: null, hk: null });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  // Default fallback data in case API fails
-  const defaultData: DualStockData = {
-    us: {
-      price: 4.25,
-      change: 0.12,
-      changePercent: 2.92,
-      isMarketOpen: false
-    },
-    hk: {
-      price: 45.80,
-      change: 1.20,
-      changePercent: 2.69,
-      isMarketOpen: false
-    }
-  };
 
   const fetchAll = useCallback(async () => {
     try {
@@ -151,10 +134,9 @@ export default function StockTicker() {
         us: us.status === 'fulfilled' ? us.value : null,
         hk: hk.status === 'fulfilled' ? hk.value : null,
       });
-      setError(false);
     } catch (err) {
       console.error('Error fetching stock data:', err);
-      setError(true);
+      setData({ us: null, hk: null });
     } finally {
       setLoading(false);
     }
@@ -166,8 +148,8 @@ export default function StockTicker() {
     return () => clearInterval(timer);
   }, [fetchAll]);
 
-  // Use fallback data if both API calls failed
-  const displayData = (!data.us && !data.hk && error) ? defaultData : data;
+  // Check if we have any data to display
+  const hasData = data.us !== null || data.hk !== null;
 
   return (
     <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '12px' }}>
@@ -177,13 +159,13 @@ export default function StockTicker() {
           <div style={{ width: '1px', height: '14px', background: '#E8E8E8', flexShrink: 0 }} />
           <SkeletonRow label="9866" exchange="HKEX" />
         </>
-      ) : (
+      ) : hasData ? (
         <>
-          <StockRow label="NIO"  exchange="NYSE" prefix="$"   data={displayData.us} decimals={2} />
-          <div style={{ width: '1px', height: '14px', background: '#E8E8E8', flexShrink: 0 }} />
-          <StockRow label="9866" exchange="HKEX" prefix="HK$" data={displayData.hk} decimals={2} />
+          {data.us && <StockRow label="NIO"  exchange="NYSE" prefix="$"   data={data.us} decimals={2} />}
+          {data.us && data.hk && <div style={{ width: '1px', height: '14px', background: '#E8E8E8', flexShrink: 0 }} />}
+          {data.hk && <StockRow label="9866" exchange="HKEX" prefix="HK$" data={data.hk} decimals={2} />}
         </>
-      )}
+      ) : null}
     </div>
   );
 }
