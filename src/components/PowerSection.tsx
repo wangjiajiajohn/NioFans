@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer
 } from 'recharts';
@@ -53,40 +52,8 @@ export default function PowerSection() {
 
   return (
     <div className="w-full anim-fade-up" style={{ background: '#FFFFFF' }}>
-      
-      {/* ── 1. Top Section: White Background Overview ── */}
-      <div style={{ padding: '0 16px 12px' }}>
-        {/* Pure Map Card (Aggressive Crop of Original Screenshot) - No titles or buttons above */}
-        <div style={{
-          borderRadius: '24px',
-          overflow: 'hidden',
-          border: '1px solid rgba(0,0,0,0.03)',
-          position: 'relative',
-          background: '#F8FAFC',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.02)',
-          height: '400px',
-          marginTop: '24px'
-        }}>
-          <Image
-            src={getAssetPath('/power-map.png')}
-            alt="NIO Power station map"
-            width={1000}
-            height={1000}
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'block',
-              // Using 'cover' to ensure zero gaps on the sides
-              objectFit: 'cover',
-              filter: 'brightness(1.05) contrast(1.02)',
-              opacity: 1,
-            }}
-            priority={true}
-          />
-        </div>
-      </div>
 
-      {/* ── 2. Bottom Section: Dark Mode Data Terminal ── */}
+      {/* ── Dark Mode Data Terminal ── */}
       <div style={{
         background: 'linear-gradient(to bottom, #FFFFFF 0%, #0B1015 20px)',
         padding: '0 16px 28px',
@@ -281,6 +248,39 @@ export default function PowerSection() {
                   />
                 </AreaChart>
               </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* ── Station Map ── */}
+          <div style={{
+            borderTop: '1px solid rgba(255,255,255,0.06)',
+            paddingTop: '20px',
+            marginBottom: '16px',
+          }}>
+            <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#00A3DA', marginBottom: '12px' }}>
+              {lang === 'zh' ? '全球补能网络分布' : 'Global Power Network'}
+            </p>
+            <div style={{
+              borderRadius: '16px',
+              overflow: 'hidden',
+              border: '1px solid rgba(0,163,218,0.15)',
+              position: 'relative',
+              background: '#0D1520',
+              height: '220px',
+            }}>
+              <img
+                src={getAssetPath('/power-map.png')}
+                alt="NIO Power station map"
+                draggable={false}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  display: 'block',
+                  objectFit: 'cover',
+                  filter: 'brightness(0.88) contrast(1.05) saturate(1.1)',
+                  userSelect: 'none',
+                }}
+              />
             </div>
           </div>
 
