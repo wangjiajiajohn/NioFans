@@ -278,7 +278,7 @@ export default function PowerSection() {
                   display: 'block',
                   objectFit: 'cover',
                   objectPosition: 'center 25%',
-                  filter: 'brightness(0.8) contrast(1.1) saturate(1.3) sepia(0.2) hue-rotate(200deg)',
+                  filter: 'brightness(0.88) contrast(1.05) saturate(1.1)',
                   userSelect: 'none',
                 }}
               />
