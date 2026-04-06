@@ -266,7 +266,7 @@ export default function PowerSection() {
               border: '1px solid rgba(0,163,218,0.15)',
               position: 'relative',
               background: '#0D1520',
-              height: '220px',
+              height: '280px',
             }}>
               <img
                 src={getAssetPath('/power-map.png')}
