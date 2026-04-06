@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import DeliveryChart from '@/components/DeliveryChart';
 import ModelSection from '@/components/ModelSection';
 import FinancialSection from '@/components/FinancialSection';
@@ -56,6 +56,11 @@ export default function AppShell() {
   const [activeTab, setActiveTab] = useState<TabType>('delivery');
   const tabs: TabType[] = ['delivery', 'financial', 'power'];
   const activeIndex = tabs.indexOf(activeTab);
+
+  // Scroll to top when tab changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeTab]);
 
   // ── Swipe carousel (direct DOM for zero-lag tracking) ──
   const panelRef = useRef<HTMLDivElement>(null);
