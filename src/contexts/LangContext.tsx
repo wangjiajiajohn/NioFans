@@ -16,11 +16,14 @@ const LangContext = createContext<LangContextType>({
 });
 
 export function LangProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Lang>(() => {
-    if (typeof window === 'undefined') return 'zh';
+  const [lang, setLang] = useState<Lang>('zh');
+
+  React.useEffect(() => {
     const stored = localStorage.getItem('nio-lang') as Lang | null;
-    return (stored === 'en' || stored === 'zh') ? stored : 'zh';
-  });
+    if (stored === 'en' || stored === 'zh') {
+      setLang(stored);
+    }
+  }, []);
 
   const toggleLang = () => {
     setLang(prev => {
