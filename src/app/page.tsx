@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import DeliveryChart from '@/components/DeliveryChart';
 import ModelSection from '@/components/ModelSection';
 import FinancialSection from '@/components/FinancialSection';
@@ -56,30 +56,70 @@ export default function AppShell() {
   const tabs: TabType[] = ['delivery', 'financial', 'power'];
   const activeIndex = tabs.indexOf(activeTab);
 
-  // ── Swipe to change tab ──
-  const touchStartX = React.useRef<number>(0);
-  const touchStartY = React.useRef<number>(0);
+  // ── Swipe carousel (direct DOM for zero-lag tracking) ──
+  const panelRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const dragDir = useRef<'h' | 'v' | null>(null);
+  const dragOffset = useRef(0);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
+  const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
+    dragDir.current = null;
+    dragOffset.current = 0;
+    if (panelRef.current) panelRef.current.style.transition = 'none';
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    const dy = e.changedTouches[0].clientY - touchStartY.current;
-    // Only trigger if horizontal swipe dominates and distance > 48px
-    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
-    const dir = dx < 0 ? 1 : -1; // left swipe → next tab
-    const next = activeIndex + dir;
-    if (next >= 0 && next < tabs.length) setActiveTab(tabs[next]);
+  const onTouchMove = (e: React.TouchEvent) => {
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = e.touches[0].clientY - touchStartY.current;
+
+    if (dragDir.current === null) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      dragDir.current = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+    }
+    if (dragDir.current !== 'h') return;
+
+    // Rubber-band at first/last tab
+    let offset = dx;
+    if ((activeIndex === 0 && dx > 0) || (activeIndex === tabs.length - 1 && dx < 0)) {
+      offset = dx * 0.18;
+    }
+
+    dragOffset.current = offset;
+    if (panelRef.current) {
+      panelRef.current.style.transform = `translateX(${offset}px)`;
+    }
+  };
+
+  const onTouchEnd = () => {
+    if (dragDir.current !== 'h') return;
+
+    const w = panelRef.current?.offsetWidth ?? 375;
+    const offset = dragOffset.current;
+
+    // Snap back first
+    if (panelRef.current) {
+      panelRef.current.style.transition = 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)';
+      panelRef.current.style.transform = 'translateX(0)';
+    }
+
+    // Switch tab if threshold (25% of width) exceeded
+    if (offset < -(w * 0.25) && activeIndex < tabs.length - 1) {
+      setActiveTab(tabs[activeIndex + 1]);
+    } else if (offset > w * 0.25 && activeIndex > 0) {
+      setActiveTab(tabs[activeIndex - 1]);
+    }
+
+    dragOffset.current = 0;
   };
 
   return (
     <main className="page-shell">
       <PullEasterEgg />
 
-      {/* ── Sticky Header: Brand + Tabs + Lang toggle ── */}
+      {/* ── Sticky Header ── */}
       <div
         style={{
           position: 'sticky',
@@ -94,27 +134,15 @@ export default function AppShell() {
         }}
       >
         {/* Brand row */}
-        <div
-          style={{
-            padding: '10px 20px 6px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <div style={{ padding: '10px 20px 6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <StockTicker />
-
-          {/* Lang toggle */}
           <button
             onClick={toggleLang}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '5px',
-              background: 'transparent',
-              border: 'none',
-              padding: '4px 0',
+              background: 'transparent', border: 'none', padding: '4px 0',
               cursor: 'pointer', fontSize: '9px', fontWeight: 600,
-              letterSpacing: '0.08em',
-              color: '#0D0D0D',
+              letterSpacing: '0.08em', color: '#0D0D0D',
             }}
           >
             <span style={{ opacity: lang === 'zh' ? 0.9 : 0.25, transition: 'opacity 0.2s' }}>ZH</span>
@@ -128,11 +156,7 @@ export default function AppShell() {
           <div className="nav-capsule" style={{ margin: 0 }}>
             <div
               className="nav-indicator"
-              style={{
-                width: 'calc(33.33% - 8px)',
-                transform: `translateX(${activeIndex * 100}%)`,
-                left: '4px',
-              }}
+              style={{ width: 'calc(33.33% - 8px)', transform: `translateX(${activeIndex * 100}%)`, left: '4px' }}
             />
             {tabs.map((tab) => (
               <button
@@ -148,26 +172,31 @@ export default function AppShell() {
         </div>
       </div>
 
-      {/* ── Tab Content ── */}
-      <div key={activeTab} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-        {/* News ticker for each tab */}
-        <NewsTicker items={NEWS[activeTab][lang]} />
+      {/* ── Tab Content (swipeable) ── */}
+      <div style={{ overflow: 'hidden' }}>
+        <div
+          ref={panelRef}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          style={{ touchAction: 'pan-y', willChange: 'transform' }}
+        >
+          <NewsTicker items={NEWS[activeTab][lang]} />
 
-        {activeTab === 'delivery' && (
-          <>
-            <DeliveryChart />
-            <ModelSection />
-          </>
-        )}
-        {activeTab === 'financial' && <FinancialSection />}
-        {activeTab === 'power' && <PowerSection />}
+          {activeTab === 'delivery' && (
+            <>
+              <DeliveryChart />
+              <ModelSection />
+            </>
+          )}
+          {activeTab === 'financial' && <FinancialSection />}
+          {activeTab === 'power' && <PowerSection />}
+        </div>
       </div>
 
-      {/* ── Site Footer ── */}
+      {/* ── Footer ── */}
       <footer style={{ padding: '20px 20px 36px', background: '#0B0F14' }}>
         <div style={{ width: '32px', height: '1px', background: 'rgba(255,255,255,0.08)', marginBottom: '14px' }} />
-
-        {/* Brand + copyright inline */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
           <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>
             Blue Sky Coming
@@ -177,18 +206,10 @@ export default function AppShell() {
             {t.footerCopyright}
           </span>
         </div>
-
-        {/* Disclaimer — single compact paragraph */}
-        <p style={{
-          fontSize: '8.5px', color: 'rgba(255,255,255,0.2)',
-          lineHeight: 1.7, letterSpacing: '0.01em',
-          maxWidth: '360px',
-        }}>
+        <p style={{ fontSize: '8.5px', color: 'rgba(255,255,255,0.2)', lineHeight: 1.7, letterSpacing: '0.01em', maxWidth: '360px' }}>
           {t.disclaimerBody}
         </p>
       </footer>
-
     </main>
   );
 }
-
