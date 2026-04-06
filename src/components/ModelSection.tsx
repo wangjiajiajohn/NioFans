@@ -323,7 +323,7 @@ export default function ModelSection() {
               <div
                 ref={scrollRef}
                 className="no-scrollbar"
-                style={{ position: 'relative', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', cursor: 'grab' }}
+                style={{ position: 'relative', overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', cursor: 'grab', outline: 'none' }}
                 onMouseDown={e => {
                   const el = e.currentTarget;
                   const startX = e.pageX - el.offsetLeft;

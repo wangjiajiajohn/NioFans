@@ -211,9 +211,9 @@ export default function PowerSection() {
               </div>
               <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.2)' }}>{t.pwrUnit}</span>
             </div>
-            <div style={{ height: '140px', width: '100%' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={SWAP_GROWTH_HISTORY} margin={{ top: 8, right: 4, left: -28, bottom: 0 }}>
+            <div style={{ height: '140px', width: '100%', outline: 'none' }}>
+              <ResponsiveContainer width="100%" height="100%" style={{ outline: 'none' }}>
+                <AreaChart data={SWAP_GROWTH_HISTORY} margin={{ top: 8, right: 4, left: -28, bottom: 0 }} style={{ outline: 'none' }}>
                   <defs>
                     <linearGradient id="swapGrowthGradient" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#00A3DA" stopOpacity={0.35} />

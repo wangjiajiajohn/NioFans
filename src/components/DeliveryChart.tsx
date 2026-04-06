@@ -315,7 +315,7 @@ export default function DeliveryChart() {
           <div
             ref={scrollRef}
             className="no-scrollbar"
-            style={{ overflowX: 'auto', overflowY: 'hidden', cursor: 'grab', WebkitOverflowScrolling: 'touch' }}
+            style={{ overflowX: 'auto', overflowY: 'hidden', cursor: 'grab', WebkitOverflowScrolling: 'touch', outline: 'none' }}
             onMouseDown={e => {
               const el = e.currentTarget;
               const startX = e.pageX - el.offsetLeft;
