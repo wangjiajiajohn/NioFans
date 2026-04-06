@@ -59,7 +59,7 @@ export default function AppShell() {
 
   // Scroll to top when tab changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, [activeTab]);
 
   // ── Swipe carousel (direct DOM for zero-lag tracking) ──
