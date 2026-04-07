@@ -235,7 +235,7 @@ export default function AppShell() {
 
         {/* Tab row */}
         <div ref={tabRowRef} style={{ padding: '6px 20px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', overflowX: 'auto', whiteSpace: 'nowrap', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          <div className="nav-capsule" style={{ margin: 0, minWidth: 'fit-content' }}>
+          <div className="nav-capsule" style={{ margin: 0, backgroundColor: '#F5F5F7', border: '1px solid #EBEBEB', borderRadius: '100px', padding: '4px' }}>
             <div
               className="nav-indicator"
               style={{ width: 'calc(25% - 8px)', transform: `translateX(${activeIndex * 100}%)`, left: '4px' }}
@@ -245,7 +245,7 @@ export default function AppShell() {
                 key={tab}
                 className={`nav-pill ${activeTab === tab ? 'active' : ''}`}
                 onClick={() => setActiveTab(tab)}
-                style={{ width: '80px', textAlign: 'center' }}
+                style={{ width: '100px', textAlign: 'center' }}
               >
                 {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : tab === 'power' ? t.tabPower : '动态'}
               </button>
@@ -276,69 +276,105 @@ export default function AppShell() {
           {activeTab === 'dynamic' && (
             <div style={{ padding: '20px' }}>
               <h3 style={{ color: '#0D0D0D', marginBottom: '20px', fontSize: '18px', fontWeight: 600 }}>最近动态</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {/* 动态卡片 1 */}
                 <div style={{
-                  background: '#FFFFFF',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  border: '1px solid #EBEBEB',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                  background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  border: '1px solid var(--nio-blue-glow)',
+                  boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
+                  transition: 'all 0.3s ease'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                    <span style={{ color: '#FF6A00', fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em' }}>品牌动态</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                    <span style={{ 
+                      background: 'rgba(0, 163, 218, 0.1)',
+                      color: 'var(--nio-blue)',
+                      fontSize: '10px', 
+                      fontWeight: 600, 
+                      letterSpacing: '0.08em',
+                      padding: '4px 12px',
+                      borderRadius: '100px'
+                    }}>品牌动态</span>
                     <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>2026-04-09</span>
                   </div>
-                  <h4 style={{ color: '#0D0D0D', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>蔚来 ES9 产品技术发布会即将举行</h4>
-                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '12px', lineHeight: 1.5 }}>蔚来 ES9 产品技术发布会将于4月9日 19:00举行，全新旗舰SUV将带来5,280mm车长、2,010mm车宽、1,800mm车高、3,130mm轴距的豪华体验。</p>
+                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>蔚来 ES9 产品技术发布会即将举行</h4>
+                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来 ES9 产品技术发布会将于4月9日 19:00举行，全新旗舰SUV将带来5,280mm车长、2,010mm车宽、1,800mm车高、3,130mm轴距的豪华体验。</p>
                 </div>
                 
                 {/* 动态卡片 2 */}
                 <div style={{
-                  background: '#FFFFFF',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  border: '1px solid #EBEBEB',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                  background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  border: '1px solid var(--nio-blue-glow)',
+                  boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
+                  transition: 'all 0.3s ease'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                    <span style={{ color: '#FF6A00', fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em' }}>技术创新</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                    <span style={{ 
+                      background: 'rgba(0, 163, 218, 0.1)',
+                      color: 'var(--nio-blue)',
+                      fontSize: '10px', 
+                      fontWeight: 600, 
+                      letterSpacing: '0.08em',
+                      padding: '4px 12px',
+                      borderRadius: '100px'
+                    }}>技术创新</span>
                     <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>2026-04-08</span>
                   </div>
-                  <h4 style={{ color: '#0D0D0D', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>智能辅助驾驶系统全面升级</h4>
-                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '12px', lineHeight: 1.5 }}>蔚来推出安心高效的全场景智能辅助驾驶体验，依托蔚来云技术，实时关注车辆状态，提供安心之至的出行服务体验。</p>
+                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>智能辅助驾驶系统全面升级</h4>
+                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来推出安心高效的全场景智能辅助驾驶体验，依托蔚来云技术，实时关注车辆状态，提供安心之至的出行服务体验。</p>
                 </div>
                 
                 {/* 动态卡片 3 */}
                 <div style={{
-                  background: '#FFFFFF',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  border: '1px solid #EBEBEB',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                  background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  border: '1px solid var(--nio-blue-glow)',
+                  boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
+                  transition: 'all 0.3s ease'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                    <span style={{ color: '#FF6A00', fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em' }}>能源服务</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                    <span style={{ 
+                      background: 'rgba(0, 163, 218, 0.1)',
+                      color: 'var(--nio-blue)',
+                      fontSize: '10px', 
+                      fontWeight: 600, 
+                      letterSpacing: '0.08em',
+                      padding: '4px 12px',
+                      borderRadius: '100px'
+                    }}>能源服务</span>
                     <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>2026-04-07</span>
                   </div>
-                  <h4 style={{ color: '#0D0D0D', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>全球创新的智能能源服务体系</h4>
-                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '12px', lineHeight: 1.5 }}>蔚来搭建了可充可换可升级的能源服务体系，为用户提供全场景的加电服务，包括蔚来家充桩、换电站和充电车等多种选择。</p>
+                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>全球创新的智能能源服务体系</h4>
+                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来搭建了可充可换可升级的能源服务体系，为用户提供全场景的加电服务，包括蔚来家充桩、换电站和充电车等多种选择。</p>
                 </div>
                 
                 {/* 动态卡片 4 */}
                 <div style={{
-                  background: '#FFFFFF',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  border: '1px solid #EBEBEB',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+                  background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  border: '1px solid var(--nio-blue-glow)',
+                  boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
+                  transition: 'all 0.3s ease'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                    <span style={{ color: '#FF6A00', fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em' }}>用户服务</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                    <span style={{ 
+                      background: 'rgba(0, 163, 218, 0.1)',
+                      color: 'var(--nio-blue)',
+                      fontSize: '10px', 
+                      fontWeight: 600, 
+                      letterSpacing: '0.08em',
+                      padding: '4px 12px',
+                      borderRadius: '100px'
+                    }}>用户服务</span>
                     <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>2026-04-06</span>
                   </div>
-                  <h4 style={{ color: '#0D0D0D', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>NIO House 佛山顺德顺峰山蔚来中心开业</h4>
-                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '12px', lineHeight: 1.5 }}>蔚来中心·佛山顺德顺峰山正式开业，为用户提供Living Café、Gallery、Joy Camp和Community Chamber等多元化服务空间。</p>
+                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>NIO House 佛山顺德顺峰山蔚来中心开业</h4>
+                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来中心·佛山顺德顺峰山正式开业，为用户提供Living Café、Gallery、Joy Camp和Community Chamber等多元化服务空间。</p>
                 </div>
               </div>
             </div>
