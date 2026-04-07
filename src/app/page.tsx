@@ -198,9 +198,7 @@ export default function AppShell() {
           top: 0,
           zIndex: 1000,
           width: '100%',
-          background: 'rgba(255,255,255,0.96)',
-          backdropFilter: 'blur(24px) saturate(200%)',
-          WebkitBackdropFilter: 'blur(24px) saturate(200%)',
+          background: '#FFFFFF',
           borderBottom: '1px solid #EBEBEB',
           transition: 'transform 0.1s ease-out',
         }}
