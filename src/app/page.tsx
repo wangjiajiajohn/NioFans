@@ -343,11 +343,11 @@ export default function AppShell() {
                       letterSpacing: '0.08em',
                       padding: '4px 12px',
                       borderRadius: '100px'
-                    }}>能源服务</span>
+                    }}>产品更新</span>
                     <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>2026-04-07</span>
                   </div>
-                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>全球创新的智能能源服务体系</h4>
-                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来搭建了可充可换可升级的能源服务体系，为用户提供全场景的加电服务，包括蔚来家充桩、换电站和充电车等多种选择。</p>
+                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>萤火中换新改款</h4>
+                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来萤火中换新改款正式发布，全新设计语言，升级智能驾驶辅助系统，续航里程提升至600公里，为用户带来更加出色的驾驶体验。</p>
                 </div>
                 
                 {/* 动态卡片 4 */}
