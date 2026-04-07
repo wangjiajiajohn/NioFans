@@ -10,7 +10,7 @@ import StockTicker from '@/components/StockTicker';
 import TestDriveButton from '@/components/TestDriveButton';
 import { useLang } from '@/contexts/LangContext';
 
-type TabType = 'delivery' | 'financial' | 'power';
+type TabType = 'delivery' | 'financial' | 'power' | 'dynamic';
 
 const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: string; text: string }[] }> = {
   delivery: {
@@ -49,12 +49,24 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
       { tag: 'CHARGING', text: '28,456 3rd-party poles; 86% users are non-NIO owners' },
     ],
   },
+  dynamic: {
+    zh: [
+      { tag: '品牌动态', text: '蔚来ES9全球首秀，引领智能电动SUV新潮流' },
+      { tag: '用户社区', text: '蔚来车主社区活跃度持续攀升，用户粘性领先行业' },
+      { tag: '赛事活动', text: '蔚来车队在电动方程式锦标赛中取得优异成绩' },
+    ],
+    en: [
+      { tag: 'BRAND', text: 'NIO ES9 global debut — leading smart electric SUV trend' },
+      { tag: 'COMMUNITY', text: 'NIO owner community engagement continues to rise' },
+      { tag: 'RACING', text: 'NIO team achieves excellent results in Formula E championship' },
+    ],
+  },
 };
 
 export default function AppShell() {
   const { lang, toggleLang, t } = useLang();
   const [activeTab, setActiveTab] = useState<TabType>('delivery');
-  const tabs: TabType[] = ['delivery', 'financial', 'power'];
+  const tabs: TabType[] = ['delivery', 'financial', 'power', 'dynamic'];
   const activeIndex = tabs.indexOf(activeTab);
 
   // Scroll to top when tab changes
@@ -222,20 +234,20 @@ export default function AppShell() {
         </div>
 
         {/* Tab row */}
-        <div ref={tabRowRef} style={{ padding: '6px 20px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <div className="nav-capsule" style={{ margin: 0 }}>
+        <div ref={tabRowRef} style={{ padding: '6px 20px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', overflowX: 'auto', whiteSpace: 'nowrap', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="nav-capsule" style={{ margin: 0, minWidth: 'fit-content' }}>
             <div
               className="nav-indicator"
-              style={{ width: 'calc(33.33% - 8px)', transform: `translateX(${activeIndex * 100}%)`, left: '4px' }}
+              style={{ width: 'calc(25% - 8px)', transform: `translateX(${activeIndex * 100}%)`, left: '4px' }}
             />
             {tabs.map((tab) => (
               <button
                 key={tab}
                 className={`nav-pill ${activeTab === tab ? 'active' : ''}`}
                 onClick={() => setActiveTab(tab)}
-                style={{ width: '100px', textAlign: 'center' }}
+                style={{ width: '80px', textAlign: 'center' }}
               >
-                {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : t.tabPower}
+                {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : tab === 'power' ? t.tabPower : '动态'}
               </button>
             ))}
           </div>
@@ -261,6 +273,12 @@ export default function AppShell() {
           )}
           {activeTab === 'financial' && <FinancialSection />}
           {activeTab === 'power' && <PowerSection />}
+          {activeTab === 'dynamic' && (
+            <div style={{ padding: '20px', textAlign: 'center' }}>
+              <h3 style={{ color: '#FFFFFF', marginBottom: '20px' }}>动态</h3>
+              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>蔚来品牌最新动态内容</p>
+            </div>
+          )}
         </div>
       </div>
 
