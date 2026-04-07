@@ -40,12 +40,12 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
   power: {
     zh: [
       { tag: '补能网络', text: '换电站总数达 3,789 座，高速网络覆盖持续扩张' },
-      { tag: '里程碑', text: '累计换电次数突破 1.069 亿次，全球最大换电网络' },
+      { tag: '里程碑', text: '累计换电次数突破 1.071 亿次，全球最大换电网络' },
       { tag: '充电生态', text: '接入第三方充电桩超 28,456 根，86% 用户来自非蔚来车主' },
     ],
     en: [
       { tag: 'NETWORK', text: '3,789 swap stations — highway coverage expanding' },
-      { tag: 'MILESTONE', text: '106.9M cumulative swaps — world\'s largest swap network' },
+      { tag: 'MILESTONE', text: '107.1M cumulative swaps — world\'s largest swap network' },
       { tag: 'CHARGING', text: '28,456 3rd-party poles; 86% users are non-NIO owners' },
     ],
   },
@@ -57,10 +57,83 @@ export default function AppShell() {
   const tabs: TabType[] = ['delivery', 'financial', 'power'];
   const activeIndex = tabs.indexOf(activeTab);
 
-  // Scroll to top when tab changes
+  // Scroll to top when tab changes, then reset tab bar to initial state
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
+    window.dispatchEvent(new Event('scroll'));
   }, [activeTab]);
+
+  // ── Scroll-driven progressive tab bar shrink + color ──
+  const brandRowRef = useRef<HTMLDivElement>(null);
+  const tabRowRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const onScroll = () => {
+      const brandH = brandRowRef.current?.offsetHeight ?? 44;
+      const p = Math.min(Math.max(window.scrollY / brandH, 0), 1);
+      const el = tabRowRef.current;
+      if (!el) return;
+
+      // Outer padding: 8px → 4px
+      const pad = lerp(8, 4, p);
+      el.style.paddingTop = `${pad}px`;
+      el.style.paddingBottom = `${pad}px`;
+
+      // Background: white → #0B1015 (matches chart dark)
+      const bgR = Math.round(lerp(255, 11, p));
+      const bgG = Math.round(lerp(255, 15, p));
+      const bgB = Math.round(lerp(255, 20, p));
+      el.style.background = `rgba(${bgR},${bgG},${bgB},0.96)`;
+
+      // Shadow
+      const shadowA = lerp(0, 0.5, p).toFixed(3);
+      const shadowY = lerp(0, 8, p).toFixed(1);
+      const shadowBlur = lerp(0, 24, p).toFixed(1);
+      el.style.boxShadow = `0 ${shadowY}px ${shadowBlur}px rgba(0,0,0,${shadowA})`;
+
+      // Border: grey → subtle NIO blue glow
+      const bdrR = Math.round(lerp(235, 0, p));
+      const bdrG = Math.round(lerp(235, 163, p));
+      const bdrB = Math.round(lerp(235, 218, p));
+      const bdrA = lerp(1, 0.15, p).toFixed(2);
+      el.style.borderBottom = `1px solid rgba(${bdrR},${bdrG},${bdrB},${bdrA})`;
+
+      // Pills: padding + font
+      const pills = el.querySelectorAll('.nav-pill') as NodeListOf<HTMLElement>;
+      pills.forEach(pill => {
+        pill.style.setProperty('padding', `${lerp(8,5,p).toFixed(1)}px ${lerp(18,14,p).toFixed(1)}px`, 'important');
+        pill.style.setProperty('font-size', `${lerp(13,11,p).toFixed(1)}px`, 'important');
+        // Inactive text: dark → muted white
+        const tv = Math.round(lerp(0, 255, p));
+        pill.style.setProperty('color', `rgba(${tv},${tv},${tv},${lerp(0.4, 0.45, p).toFixed(2)})`, 'important');
+      });
+
+      // Active pill: dark → bright white
+      const activePill = el.querySelector('.nav-pill.active') as HTMLElement | null;
+      if (activePill) {
+        const av = Math.round(lerp(13, 255, p));
+        activePill.style.setProperty('color', `rgb(${av},${av},${av})`, 'important');
+      }
+
+      // Nav capsule: light frosted → dark frosted
+      const capsule = el.querySelector('.nav-capsule') as HTMLElement | null;
+      if (capsule) {
+        const cv = Math.round(lerp(245, 255, p));
+        const ca = lerp(0.7, 0.07, p).toFixed(2);
+        capsule.style.setProperty('background', `rgba(${cv},${cv},${cv},${ca})`, 'important');
+        capsule.style.setProperty('border', `1px solid rgba(255,255,255,${lerp(0.4, 0.1, p).toFixed(2)})`, 'important');
+      }
+
+      // Indicator: white solid → subtle white ghost
+      const indicator = el.querySelector('.nav-indicator') as HTMLElement | null;
+      if (indicator) {
+        indicator.style.setProperty('background', `rgba(255,255,255,${lerp(1, 0.12, p).toFixed(2)})`, 'important');
+        indicator.style.setProperty('box-shadow', `0 2px 8px rgba(0,0,0,${lerp(0.08, 0, p).toFixed(3)})`, 'important');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // ── Swipe carousel (direct DOM for zero-lag tracking) ──
   const panelRef = useRef<HTMLDivElement>(null);
@@ -150,56 +223,57 @@ export default function AppShell() {
       <PullEasterEgg />
       <TestDriveButton />
 
-      {/* ── Sticky Header ── */}
-      <div
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1000,
-          width: '100%',
-          background: 'rgba(255,255,255,0.96)',
-          backdropFilter: 'blur(24px) saturate(200%)',
-          WebkitBackdropFilter: 'blur(24px) saturate(200%)',
-          borderBottom: '1px solid #EBEBEB',
-          transform: 'translate3d(0,0,0)',
-        }}
-      >
-        {/* Brand row */}
-        <div style={{ padding: '10px 20px 6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <StockTicker />
-          <button
-            onClick={toggleLang}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '5px',
-              background: 'transparent', border: 'none', padding: '4px 0',
-              cursor: 'pointer', fontSize: '9px', fontWeight: 600,
-              letterSpacing: '0.08em', color: '#0D0D0D',
-            }}
-          >
-            <span style={{ opacity: lang === 'zh' ? 0.9 : 0.25, transition: 'opacity 0.2s' }}>ZH</span>
-            <span style={{ width: '1px', height: '10px', background: '#DDD', display: 'inline-block' }} />
-            <span style={{ opacity: lang === 'en' ? 0.9 : 0.25, transition: 'opacity 0.2s' }}>EN</span>
-          </button>
-        </div>
+      {/* ── Brand row — scrolls away ── */}
+      <div ref={brandRowRef} style={{
+        padding: '10px 20px 6px',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        background: '#fff',
+      }}>
+        <StockTicker />
+        <button
+          onClick={toggleLang}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '5px',
+            background: 'transparent', border: 'none', padding: '4px 0',
+            cursor: 'pointer', fontSize: '9px', fontWeight: 600,
+            letterSpacing: '0.08em', color: '#0D0D0D',
+          }}
+        >
+          <span style={{ opacity: lang === 'zh' ? 0.9 : 0.25, transition: 'opacity 0.2s' }}>ZH</span>
+          <span style={{ width: '1px', height: '10px', background: '#DDD', display: 'inline-block' }} />
+          <span style={{ opacity: lang === 'en' ? 0.9 : 0.25, transition: 'opacity 0.2s' }}>EN</span>
+        </button>
+      </div>
 
-        {/* Tab row */}
-        <div style={{ padding: '0 0 8px', display: 'flex', justifyContent: 'center' }}>
-          <div className="nav-capsule" style={{ margin: 0 }}>
-            <div
-              className="nav-indicator"
-              style={{ width: 'calc(33.33% - 8px)', transform: `translateX(${activeIndex * 100}%)`, left: '4px' }}
-            />
-            {tabs.map((tab) => (
-              <button
-                key={tab}
-                className={`nav-pill ${activeTab === tab ? 'active' : ''}`}
-                onClick={() => setActiveTab(tab)}
-                style={{ width: '100px', textAlign: 'center' }}
-              >
-                {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : t.tabPower}
-              </button>
-            ))}
-          </div>
+      {/* ── Tab row — sticks to top ── */}
+      <div ref={tabRowRef} style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+        width: '100%',
+        padding: '8px 0',
+        display: 'flex', justifyContent: 'center',
+        background: 'rgba(255,255,255,0.96)',
+        backdropFilter: 'blur(24px) saturate(200%)',
+        WebkitBackdropFilter: 'blur(24px) saturate(200%)',
+        borderBottom: '1px solid #EBEBEB',
+        transform: 'translate3d(0,0,0)',
+      }}>
+        <div className="nav-capsule" style={{ margin: 0 }}>
+          <div
+            className="nav-indicator"
+            style={{ width: 'calc(33.33% - 8px)', transform: `translateX(${activeIndex * 100}%)`, left: '4px' }}
+          />
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              className={`nav-pill ${activeTab === tab ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab)}
+              style={{ width: '100px', textAlign: 'center' }}
+            >
+              {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : t.tabPower}
+            </button>
+          ))}
         </div>
       </div>
 
