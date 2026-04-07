@@ -89,8 +89,6 @@ export default function AppShell() {
       if (!headerEl || !brandRowEl || !tabRowEl) return;
       
       const brandHeight = brandRowEl.offsetHeight;
-      const tabHeight = tabRowEl.offsetHeight;
-      const headerHeight = headerEl.offsetHeight;
       
       // Calculate scroll progress (0 to 1)
       const progress = Math.min(Math.max(scrollY / brandHeight, 0), 1);
@@ -235,7 +233,7 @@ export default function AppShell() {
 
         {/* Tab row */}
         <div ref={tabRowRef} style={{ padding: '6px 20px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', overflowX: 'auto', whiteSpace: 'nowrap', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          <div className="nav-capsule" style={{ margin: 0, backgroundColor: '#F5F5F7', border: '1px solid #EBEBEB', borderRadius: '100px', padding: '4px' }}>
+          <div className="nav-capsule" style={{ margin: 0, backgroundColor: '#F5F5F7', border: '1px solid #EBEBEB', boxShadow: '0 4px 14px rgba(0, 0, 0, 0.04)' }}>
             <div
               className="nav-indicator"
               style={{ width: 'calc(25% - 8px)', transform: `translateX(${activeIndex * 100}%)`, left: '4px' }}
@@ -383,18 +381,18 @@ export default function AppShell() {
       </div>
 
       {/* ── Footer ── */}
-      <footer style={{ padding: '20px 20px 36px', background: '#0B0F14' }}>
-        <div style={{ width: '32px', height: '1px', background: 'rgba(255,255,255,0.08)', marginBottom: '14px' }} />
+      <footer style={{ padding: '20px 20px 36px', background: '#FFFFFF', borderTop: '1px solid #EBEBEB' }}>
+        <div style={{ width: '32px', height: '1px', background: 'rgba(0,0,0,0.08)', marginBottom: '14px' }} />
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-          <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.22em', color: 'rgba(0,0,0,0.5)', textTransform: 'uppercase' }}>
             Blue Sky Coming
           </span>
-          <span style={{ color: 'rgba(255,255,255,0.15)', fontSize: '8px' }}>·</span>
-          <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.06em' }}>
+          <span style={{ color: 'rgba(0,0,0,0.15)', fontSize: '8px' }}>·</span>
+          <span style={{ fontSize: '8px', color: 'rgba(0,0,0,0.25)', letterSpacing: '0.06em' }}>
             {t.footerCopyright}
           </span>
         </div>
-        <p style={{ fontSize: '8.5px', color: 'rgba(255,255,255,0.2)', lineHeight: 1.7, letterSpacing: '0.01em', maxWidth: '360px' }}>
+        <p style={{ fontSize: '8.5px', color: 'rgba(0,0,0,0.2)', lineHeight: 1.7, letterSpacing: '0.01em', maxWidth: '360px' }}>
           {t.disclaimerBody}
         </p>
       </footer>
