@@ -93,11 +93,12 @@ export default function AppShell() {
       // Calculate scroll progress (0 to 1)
       const progress = Math.min(Math.max(scrollY / brandHeight, 0), 1);
       
-      // Move header up
-      const translateY = -Math.min(scrollY, brandHeight);
+      // Move header up only when scrolling down (scrollY > 0)
+      // Prevent header from moving down when scrolling up beyond top
+      const translateY = scrollY > 0 ? -Math.min(scrollY, brandHeight) : 0;
       headerEl.style.transform = `translate3d(0, ${translateY}px, 0)`;
       
-      // Scale tab row (only when scrolled)
+      // Scale tab row (only when scrolled down)
       if (scrollY > 0) {
         const scale = 1 - progress * 0.05; // Scale down by 5%
         const scaleOrigin = 'center bottom';
