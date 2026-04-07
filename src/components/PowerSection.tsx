@@ -258,14 +258,14 @@ export default function PowerSection() {
             marginBottom: '16px',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-              <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#C8A84B', margin: 0 }}>
+              <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#FF6A00', margin: 0 }}>
                 {lang === 'zh' ? '全球补能网络分布' : 'Global Power Network'}
               </p>
               <a
                 href="https://www.nio.cn/official-map"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '0.08em', color: '#C8A84B', opacity: 0.7, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '3px' }}
+                style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '0.08em', color: '#FF6A00', opacity: 0.7, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '3px' }}
               >
                 {lang === 'zh' ? '官网查看' : 'View Map'} ↗
               </a>
