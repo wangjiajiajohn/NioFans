@@ -277,14 +277,26 @@ export default function AppShell() {
               <h3 style={{ color: '#0D0D0D', marginBottom: '20px', fontSize: '18px', fontWeight: 600 }}>最近动态</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {/* 动态卡片 1 */}
-                <div style={{
-                  background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
-                  borderRadius: '16px',
-                  padding: '20px',
-                  border: '1px solid var(--nio-blue-glow)',
-                  boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
-                  transition: 'all 0.3s ease'
-                }}>
+                <div 
+                  style={{
+                    background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
+                    borderRadius: '16px',
+                    padding: '20px',
+                    border: '1px solid var(--nio-blue-glow)',
+                    boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => window.open('https://www.nio.cn/news/es9-launch', '_blank')}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0, 163, 218, 0.1)';
+                  }}
+                >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
                     <span style={{ 
                       background: 'rgba(0, 163, 218, 0.1)',
@@ -302,14 +314,26 @@ export default function AppShell() {
                 </div>
                 
                 {/* 动态卡片 2 */}
-                <div style={{
-                  background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
-                  borderRadius: '16px',
-                  padding: '20px',
-                  border: '1px solid var(--nio-blue-glow)',
-                  boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
-                  transition: 'all 0.3s ease'
-                }}>
+                <div 
+                  style={{
+                    background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
+                    borderRadius: '16px',
+                    padding: '20px',
+                    border: '1px solid var(--nio-blue-glow)',
+                    boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => window.open('https://www.nio.cn/news/adas-upgrade', '_blank')}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0, 163, 218, 0.1)';
+                  }}
+                >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
                     <span style={{ 
                       background: 'rgba(0, 163, 218, 0.1)',
@@ -327,14 +351,26 @@ export default function AppShell() {
                 </div>
                 
                 {/* 动态卡片 3 */}
-                <div style={{
-                  background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
-                  borderRadius: '16px',
-                  padding: '20px',
-                  border: '1px solid var(--nio-blue-glow)',
-                  boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
-                  transition: 'all 0.3s ease'
-                }}>
+                <div 
+                  style={{
+                    background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
+                    borderRadius: '16px',
+                    padding: '20px',
+                    border: '1px solid var(--nio-blue-glow)',
+                    boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => window.open('https://www.nio.cn/news/firefly-upgrade', '_blank')}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0, 163, 218, 0.1)';
+                  }}
+                >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
                     <span style={{ 
                       background: 'rgba(0, 163, 218, 0.1)',
@@ -352,14 +388,26 @@ export default function AppShell() {
                 </div>
                 
                 {/* 动态卡片 4 */}
-                <div style={{
-                  background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
-                  borderRadius: '16px',
-                  padding: '20px',
-                  border: '1px solid var(--nio-blue-glow)',
-                  boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
-                  transition: 'all 0.3s ease'
-                }}>
+                <div 
+                  style={{
+                    background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
+                    borderRadius: '16px',
+                    padding: '20px',
+                    border: '1px solid var(--nio-blue-glow)',
+                    boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => window.open('https://www.nio.cn/news/niohouse-foshan', '_blank')}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0, 163, 218, 0.1)';
+                  }}
+                >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
                     <span style={{ 
                       background: 'rgba(0, 163, 218, 0.1)',
