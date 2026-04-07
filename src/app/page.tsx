@@ -287,7 +287,7 @@ export default function AppShell() {
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
                   }}
-                  onClick={() => window.open('https://www.nio.cn/news/es9-launch', '_blank')}
+                  onClick={() => window.open('https://www.nio.cn/news', '_blank')}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
                     (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
@@ -324,7 +324,7 @@ export default function AppShell() {
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
                   }}
-                  onClick={() => window.open('https://www.nio.cn/news/adas-upgrade', '_blank')}
+                  onClick={() => window.open('https://www.nio.cn/news', '_blank')}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
                     (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
@@ -361,7 +361,7 @@ export default function AppShell() {
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
                   }}
-                  onClick={() => window.open('https://www.nio.cn/news/firefly-upgrade', '_blank')}
+                  onClick={() => window.open('https://www.nio.cn/news', '_blank')}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
                     (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
@@ -398,7 +398,7 @@ export default function AppShell() {
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
                   }}
-                  onClick={() => window.open('https://www.nio.cn/news/niohouse-foshan', '_blank')}
+                  onClick={() => window.open('https://www.nio.cn/news', '_blank')}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
                     (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
