@@ -87,11 +87,15 @@ export default function AppShell() {
       const translateY = -Math.min(scrollY, brandHeight);
       headerEl.style.transform = `translate3d(0, ${translateY}px, 0)`;
       
-      // Scale tab row
-      const scale = 1 - progress * 0.05; // Scale down by 5%
-      const scaleOrigin = 'center bottom';
-      tabRowEl.style.transform = `scale(${scale})`;
-      tabRowEl.style.transformOrigin = scaleOrigin;
+      // Scale tab row (only when scrolled)
+      if (scrollY > 0) {
+        const scale = 1 - progress * 0.05; // Scale down by 5%
+        const scaleOrigin = 'center bottom';
+        tabRowEl.style.transform = `scale(${scale})`;
+        tabRowEl.style.transformOrigin = scaleOrigin;
+      } else {
+        tabRowEl.style.transform = 'scale(1)';
+      }
     };
     
     window.addEventListener('scroll', onScroll);
@@ -220,7 +224,7 @@ export default function AppShell() {
         </div>
 
         {/* Tab row */}
-        <div ref={tabRowRef} style={{ padding: '0 0 8px', display: 'flex', justifyContent: 'center' }}>
+        <div ref={tabRowRef} style={{ padding: '6px 20px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <div className="nav-capsule" style={{ margin: 0 }}>
             <div
               className="nav-indicator"
