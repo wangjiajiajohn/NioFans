@@ -65,8 +65,8 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
 
 export default function AppShell() {
   const { lang, toggleLang, t } = useLang();
-  const [activeTab, setActiveTab] = useState<TabType>('delivery');
-  const tabs: TabType[] = ['delivery', 'financial', 'power', 'dynamic'];
+  const [activeTab, setActiveTab] = useState<TabType>('dynamic');
+  const tabs: TabType[] = ['dynamic', 'delivery', 'financial', 'power'];
   const activeIndex = tabs.indexOf(activeTab);
 
   // Scroll to top when tab changes
@@ -274,9 +274,54 @@ export default function AppShell() {
           {activeTab === 'financial' && <FinancialSection />}
           {activeTab === 'power' && <PowerSection />}
           {activeTab === 'dynamic' && (
-            <div style={{ padding: '20px', textAlign: 'center' }}>
-              <h3 style={{ color: '#FFFFFF', marginBottom: '20px' }}>动态</h3>
-              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>蔚来品牌最新动态内容</p>
+            <div style={{ padding: '20px' }}>
+              <h3 style={{ color: '#FFFFFF', marginBottom: '20px', fontSize: '18px', fontWeight: 600 }}>最近动态</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {/* 动态卡片 1 */}
+                <div style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  border: '1px solid rgba(255,255,255,0.08)'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                    <span style={{ color: '#FF6A00', fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em' }}>品牌动态</span>
+                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>2026-04-08</span>
+                  </div>
+                  <h4 style={{ color: '#FFFFFF', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>蔚来ES9全球首秀，引领智能电动SUV新潮流</h4>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', lineHeight: 1.5 }}>4月9日，蔚来将举办ES9技术产品发布会，全新旗舰SUV将搭载最新的智能驾驶技术和电池技术，引领行业新趋势。</p>
+                </div>
+                
+                {/* 动态卡片 2 */}
+                <div style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  border: '1px solid rgba(255,255,255,0.08)'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                    <span style={{ color: '#FF6A00', fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em' }}>用户社区</span>
+                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>2026-04-07</span>
+                  </div>
+                  <h4 style={{ color: '#FFFFFF', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>蔚来车主社区活跃度持续攀升，用户粘性领先行业</h4>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', lineHeight: 1.5 }}>蔚来App日活跃用户突破100万，社区互动量环比增长25%，用户满意度评分持续位居行业第一。</p>
+                </div>
+                
+                {/* 动态卡片 3 */}
+                <div style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  border: '1px solid rgba(255,255,255,0.08)'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                    <span style={{ color: '#FF6A00', fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em' }}>赛事活动</span>
+                    <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px' }}>2026-04-06</span>
+                  </div>
+                  <h4 style={{ color: '#FFFFFF', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>蔚来车队在电动方程式锦标赛中取得优异成绩</h4>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', lineHeight: 1.5 }}>在最新一站电动方程式比赛中，蔚来车队车手获得季军，车队总积分排名提升至前三，展现了蔚来在电动化领域的技术实力。</p>
+                </div>
+              </div>
             </div>
           )}
         </div>
