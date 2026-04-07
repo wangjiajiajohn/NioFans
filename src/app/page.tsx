@@ -62,6 +62,42 @@ export default function AppShell() {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [activeTab]);
 
+  // ── Scroll-driven navigation bar animation ──
+  const headerRef = useRef<HTMLDivElement>(null);
+  const brandRowRef = useRef<HTMLDivElement>(null);
+  const tabRowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      const headerEl = headerRef.current;
+      const brandRowEl = brandRowRef.current;
+      const tabRowEl = tabRowRef.current;
+      
+      if (!headerEl || !brandRowEl || !tabRowEl) return;
+      
+      const brandHeight = brandRowEl.offsetHeight;
+      const tabHeight = tabRowEl.offsetHeight;
+      const headerHeight = headerEl.offsetHeight;
+      
+      // Calculate scroll progress (0 to 1)
+      const progress = Math.min(Math.max(scrollY / brandHeight, 0), 1);
+      
+      // Move header up
+      const translateY = -Math.min(scrollY, brandHeight);
+      headerEl.style.transform = `translate3d(0, ${translateY}px, 0)`;
+      
+      // Scale tab row
+      const scale = 1 - progress * 0.05; // Scale down by 5%
+      const scaleOrigin = 'center bottom';
+      tabRowEl.style.transform = `scale(${scale})`;
+      tabRowEl.style.transformOrigin = scaleOrigin;
+    };
+    
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   // ── Swipe carousel (direct DOM for zero-lag tracking) ──
   const panelRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
@@ -152,6 +188,7 @@ export default function AppShell() {
 
       {/* ── Sticky Header ── */}
       <div
+        ref={headerRef}
         style={{
           position: 'sticky',
           top: 0,
@@ -161,11 +198,11 @@ export default function AppShell() {
           backdropFilter: 'blur(24px) saturate(200%)',
           WebkitBackdropFilter: 'blur(24px) saturate(200%)',
           borderBottom: '1px solid #EBEBEB',
-          transform: 'translate3d(0,0,0)',
+          transition: 'transform 0.1s ease-out',
         }}
       >
         {/* Brand row */}
-        <div style={{ padding: '10px 20px 6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div ref={brandRowRef} style={{ padding: '10px 20px 6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <StockTicker />
           <button
             onClick={toggleLang}
@@ -183,7 +220,7 @@ export default function AppShell() {
         </div>
 
         {/* Tab row */}
-        <div style={{ padding: '0 0 8px', display: 'flex', justifyContent: 'center' }}>
+        <div ref={tabRowRef} style={{ padding: '0 0 8px', display: 'flex', justifyContent: 'center' }}>
           <div className="nav-capsule" style={{ margin: 0 }}>
             <div
               className="nav-indicator"
