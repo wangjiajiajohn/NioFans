@@ -202,7 +202,7 @@ export default function AppShell() {
         }}
       >
         {/* Brand row */}
-        <div ref={brandRowRef} style={{ padding: '10px 20px 6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div ref={brandRowRef} style={{ padding: '6px 20px 4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <StockTicker />
           <button
             onClick={toggleLang}
@@ -220,7 +220,7 @@ export default function AppShell() {
         </div>
 
         {/* Tab row */}
-        <div ref={tabRowRef} style={{ padding: '0 0 8px', display: 'flex', justifyContent: 'center' }}>
+        <div ref={tabRowRef} style={{ padding: '0 0 4px', display: 'flex', justifyContent: 'center' }}>
           <div className="nav-capsule" style={{ margin: 0 }}>
             <div
               className="nav-indicator"
