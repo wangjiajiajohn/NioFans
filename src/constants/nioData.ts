@@ -197,25 +197,25 @@ export const FINANCIAL_ANNUAL_SNAPSHOT = [
 ];
 
 // Official NIO Power data — source: nio.cn/official-map
-// 截至 2026.04.06 11:28:43
+// 截至 2026.04.08 02:44:15
 export const POWER_DATA = {
   // 充换电站总数
-  totalStations: 8750,
+  totalStations: 8751,
   // 换电站
-  swapStations: 3789,
+  swapStations: 3790,
   swapHighway: 1027,          // 高速公路换电站
   // 累计换电次数
-  totalSwapSessions: 106926764,
+  totalSwapSessions: 107136000,
   // 充电站
   chargeStations: 4961,
   chargePoles: 28456,         // 充电桩根数
   // 第三方充电桩
-  thirdPartyPoles: 1576336,
+  thirdPartyPoles: 1576244,
   thirdPartyUserRatio: 86.02, // 第三方用户占比 %
   // 实时累计充电次数
-  totalChargeSessions: 85373549,
+  totalChargeSessions: 85498874,
   // 数据更新时间
-  updatedAt: '2026.04.06',
+  updatedAt: '2026.04.08',
 };
 
 // 换电站季度历史增长（用于趋势图）— 来源：公开报道及官方披露
@@ -234,7 +234,7 @@ export const SWAP_GROWTH_HISTORY = [
 
 // 向后兼容旧引用
 export const SWAP_DATA = {
-  total: 3789,
+  total: 3790,
   target2025: 4000,
   highway: 1027,
   ytd: 750,
