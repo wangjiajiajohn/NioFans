@@ -29,12 +29,12 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
   financial: {
     zh: [
       { tag: '财务亮点', text: '2025 Q4 首次实现单季度盈利，盈亏平衡历史性突破' },
-      { tag: '2026 Q1', text: '预估营收 316.4 亿元，汽车毛利率 19.4%' },
+      { tag: '2026 Q1', text: '预估报表营收 285.0 亿元，经营利润 7.1 亿' },
       { tag: '研发投入', text: '2025 全年研发投入超 130 亿元，智能化持续领跑' },
     ],
     en: [
       { tag: 'HIGHLIGHT', text: 'Q4 2025: First-ever quarterly profit — breakeven achieved' },
-      { tag: 'Q1 2026', text: 'Est. revenue ¥31.6B, vehicle margin 19.4%' },
+      { tag: 'Q1 2026', text: 'Est. Revenue ¥28.50B, OP Profit ¥710M' },
       { tag: 'R&D', text: 'FY2025 R&D spend exceeds ¥13B, leading in smart tech' },
     ],
   },
@@ -52,14 +52,14 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
   },
   forecast: {
     zh: [
-      { tag: '深度分析', text: '模型预测 Q1 营收 316.4 亿元，超官方指引 64 亿' },
+      { tag: '深度分析', text: '模型预测 Q1 报表营收 285.0 亿元，现金流规模近 300 亿' },
       { tag: '史诗跨越', text: '完成从“量换钱”到“价值驱动”的财务质变' },
-      { tag: '经营盈利', text: 'Non-GAAP 经营利润 5.1 亿，稳步跨越平衡点' },
+      { tag: '经营盈利', text: 'Non-GAAP 经营利润 7.1 亿，大幅超越市场预期' },
     ],
     en: [
-      { tag: 'ANALYSIS', text: 'Model est. Q1 revenue ¥31.6B — ¥6.4B above guidance' },
+      { tag: 'ANALYSIS', text: 'Model est. Q1 report revenue ¥28.50B, cash flow near ¥30B' },
       { tag: 'EPIC LEAP', text: 'Strategic pivot from volume-driven to value-driven growth' },
-      { tag: 'EARNINGS', text: 'Non-GAAP OP yield ¥510M — milestone breakeven achieved' },
+      { tag: 'EARNINGS', text: 'Non-GAAP OP yield ¥710M — significantly beating consensus' },
     ],
   },
 };

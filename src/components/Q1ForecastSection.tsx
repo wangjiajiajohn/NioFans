@@ -35,30 +35,34 @@ export default function Q1ForecastSection() {
           深度研报 · AI 提示词工程 · 穿透式损益演练
         </div>
 
-        {/* ── 三指标卡 ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '24px' }}>
+        {/* ── 六指标卡 ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px', marginBottom: '16px' }}>
           {[
-            { val: '19.3%', label: '综合毛利率' },
-            { val: '5.1亿', label: 'Non-GAAP经营' },
-            { val: '459亿', label: '现金储备' },
+            { val: '285.0亿', label: '报表营收', color: '#FFFFFF' },
+            { val: '7.1亿', label: 'Non-GAAP经营', color: '#00C896' },
+            { val: '-5.1亿', label: 'GAAP 净损益', color: '#FF6B6B' },
+            { val: '19.8%', label: '综合毛利率', color: '#00C3FF' },
+            { val: '35.9万', label: '物理均价', color: '#FFFFFF' },
+            { val: '459亿', label: '现金储备', color: '#FFFFFF' },
           ].map((d, i) => (
             <div key={i} style={{
               background: 'rgba(255,255,255,0.03)',
               border: '1px solid rgba(255,255,255,0.06)',
               borderRadius: '12px',
-              padding: '12px 10px',
+              padding: '10px 8px',
               backdropFilter: 'blur(10px)',
+              textAlign: 'center',
             }}>
               <div style={{
-                fontSize: '18px', fontWeight: 300, color: '#FFFFFF',
+                fontSize: '16px', fontWeight: 300, color: d.color,
                 letterSpacing: '-0.02em', fontFamily: 'Outfit, sans-serif',
               }}>{d.val}</div>
-              <div style={{ fontSize: '9px', fontWeight: 600, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.04em', marginTop: '4px' }}>{d.label}</div>
+              <div style={{ fontSize: '8px', fontWeight: 600, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.04em', marginTop: '2px' }}>{d.label}</div>
             </div>
           ))}
         </div>
 
-        {/* ── 超指引 Badge ── */}
+        {/* ── 交付事实 Badge ── */}
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: '8px',
           background: 'rgba(0,163,218,0.08)',
@@ -67,12 +71,12 @@ export default function Q1ForecastSection() {
           padding: '6px 14px',
           marginBottom: '28px',
         }}>
-          <span style={{ fontSize: '10px', fontWeight: 600, color: '#00C3FF', letterSpacing: '0.04em' }}>
-            报表营收 282.7 亿
+          <span style={{ fontSize: '10px', fontWeight: 600, color: '#00A3DA', letterSpacing: '0.04em' }}>
+            Q1 已交付 8.35 万台
           </span>
           <span style={{ color: 'rgba(255,255,255,0.15)' }}>|</span>
           <span style={{ fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.35)' }}>
-            物理规模 ~300 亿
+            ES8 占比超 54%
           </span>
         </div>
 
@@ -87,7 +91,7 @@ export default function Q1ForecastSection() {
 
         {/* ── 02 核心提示词工程 ── */}
         <DarkCard accentColor="#00C896">
-          <Label>02 · AI 提示词工程 (v5.1)</Label>
+          <Label>02 · AI 提示词工程 (v5.3)</Label>
           <SubHead>如何像高级分析师一样提问？</SubHead>
           <Body>
             要得到具备专业研报水准的结论，关键在于赋予 AI 明确的角色模型和底层财务公式。以下是我们使用的核心提示词：
@@ -95,20 +99,12 @@ export default function Q1ForecastSection() {
           
           <PromptBox>
 {`**Role:** 你是一位深耕中概股汽车行业的资深分析师，擅长使用“车型结构边际贡献模型（Unit Economics）”进行穿透式损益推演。
-**Task:** 基于蔚来 2025 Q4 财报（首次实现单季盈利）为锚点，对 **2026 Q1** 的财务表现进行深度精算。请对比“公司保守营收指引”与“基于 ES8 结构性爆发的实际模型值”，还原财务真相。
-
-**1. 官方已知锚点 (不可变更事实):**
-* **2025 Q4 基准:** 交付 12.48 万辆，营收 346.5 亿，整车毛利率 18.1%，Non-GAAP 经营利润 **12.51 亿元**。
-* **2026 Q1 交付:** 共计 **83,465 辆**（NIO品牌 5.85 万，乐道 1.33 万，萤火虫 1.16 万）。
-* **2026 Q1 官方指引:** 营收指引为 **244.8 亿 - 251.8 亿元**（注：此为 3 月中旬发布的保守指引）。
-* **现金储备:** 截至 2025 年末约为 **459 亿**。
-
-**2. 核心精算逻辑 (差异化来源):**
-* **车型结构重组:** 请注意，Q1 交付的 8.35 万辆中，高均价的 **ES8 占比激增至 54.1% (约 4.52 万辆)**。这是由于其在新一代 NT3.0 平台后的爆发。
-* **营收预测:** 按 ES8 均价 42.3 万，其他车型均价 24.5 万进行穿透计算。
-* **毛利逻辑:** ES8 边际毛利设定为 25.0%。其他车型综合毛利 8.0%。服务及其他业务营收 31.5 亿，毛利 12.0%。
-* **成本与费用:** SG&A 刚性支出约 31.0 亿，研发支出 20.5 亿，D&A 折旧约 14 亿。
-* **关键调优项目:** 计入单车约 1 万元的终端购车补贴/购置税对冲影响。`}
+**Task:** 既然我们要建立最科学的模型，基于蔚来 2025 Q4 财报（首次实现单季盈利）为锚点，对 **2026 Q1** 的财务表现进行深度精算。
+**Core Logic:** 
+* **BaaS 模式对齐：** 不管用户选不选 BaaS，电池的钱已经由“蔚能”代用户一次性全额付给蔚来，现金流（物理体量）完全对等。
+* **会计确认原则：** 将“物理经营规模”与“报表会计营收”分离，剔除电池转让在报表中的非车销售体现。
+* **营收验证：** 设定报表营收验证区间为 **280-290 亿**，验证毛利润稳定性。
+* **目标：** 指导 Non-GAAP 经营利润锚定在 **9 亿**。`}
           </PromptBox>
 
           <div style={{ 
@@ -122,33 +118,49 @@ export default function Q1ForecastSection() {
 
         {/* ── 03 模型调优实录 ── */}
         <DarkCard accentColor="#FF6B6B">
-          <Label>03 · 模型调优实录</Label>
-          <SubHead>从“虚幻利润”到“真实平衡”</SubHead>
+          <Label>03 · 精准逻辑核算 (Logic Subtraction)</Label>
+          <SubHead>从 Q4 锚点到 Q1 报表天花板</SubHead>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
-            {[
-              { step: 'Phase 1: 理论模型', res: 'Revenue 316亿', desc: '物理经营规模全额确认，未考虑会计脱敏。' },
-              { step: 'Phase 2: 财务脱敏', res: 'Net Profit +5.5亿', desc: '计入 14 亿 D&A 刚性折旧及服务盈亏。' },
-              { step: 'Phase 3: 会计对齐', res: 'Revenue 282.7亿', desc: '基于审慎原则，剔除 BaaS 会计分拆影响。' },
-              { step: 'Phase 4: 实战共识', res: 'Op. Profit +5.1亿', desc: '计入单车 1 万补贴，达成最终精算平衡。' },
-            ].map((s, i) => (
-              <div key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                <div style={{ width: '4px', height: '40px', background: i === 3 ? '#FF6B6B' : 'rgba(255,255,255,0.1)', borderRadius: '2px' }} />
-                <div>
-                  <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF' }}>{s.step} — <span style={{ color: i === 3 ? '#FF6B6B' : 'rgba(255,255,255,0.4)' }}>{s.res}</span></div>
-                  <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)' }}>{s.desc}</div>
-                </div>
-              </div>
-            ))}
+          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '12px', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '11px' }}>
+              <span style={{ color: 'rgba(255,255,255,0.4)' }}>Q4 基准营收</span>
+              <span style={{ color: '#FFFFFF', fontWeight: 600 }}>346.5 亿</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '11px' }}>
+              <span style={{ color: 'rgba(255,255,255,0.4)' }}>销量变动损失 (少卖 4.0 万台)</span>
+              <span style={{ color: '#FF6B6B', fontWeight: 600 }}>-75.0 亿</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '11px' }}>
+              <span style={{ color: 'rgba(255,255,255,0.4)' }}>ES8 溢价补差 (多卖 0.5 万台 ES8)</span>
+              <span style={{ color: '#00C896', fontWeight: 600 }}>+8.5 亿</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', fontSize: '11px' }}>
+              <span style={{ color: 'rgba(255,255,255,0.4)' }}>其他业务惯性 (换电/服务费增长)</span>
+              <span style={{ color: '#00C896', fontWeight: 600 }}>+5.0 亿</span>
+            </div>
+            <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', marginBottom: '12px' }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px' }}>
+              <span style={{ color: '#FFFFFF', fontWeight: 700 }}>26Q1 报表营收计算结果</span>
+              <span style={{ color: '#00C3FF', fontWeight: 700 }}>285.0 亿</span>
+            </div>
+          </div>
+
+          <div style={{ 
+            fontSize: '10px', color: 'rgba(255,107,107,0.7)', 
+            padding: '12px', background: 'rgba(255,107,107,0.03)', 
+            borderRadius: '8px', borderLeft: '2px solid #FF6B6B',
+            lineHeight: 1.6
+          }}>
+            <W>避坑指南：</W>为什么大模型会算出 300 亿？通常是把“选装件溢价”算太高了。若假设 4.5 万 ES8 车主均选配 4 万选装（Nappa/行政位），营收会多出 18 亿冲向 300 亿。但基于审慎原则，285 亿才是真正的会计天花板。
           </div>
         </DarkCard>
 
         {/* ── 04 指标卡 ── */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '24px' }}>
           {[
-            { val: '282.7亿', label: '财报营收' },
-            { val: '5.1亿', label: 'Non-GAAP经营' },
-            { val: '19.3%', label: '综合毛利率' },
+            { val: '285.0亿', label: '报表营收' },
+            { val: '7.1亿', label: 'Non-GAAP经营' },
+            { val: '19.8%', label: '综合毛利率' },
           ].map((d, i) => (
             <div key={i} style={{
               background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
@@ -167,31 +179,30 @@ export default function Q1ForecastSection() {
           <DarkTable
             headers={['科目', '金额(亿)', '备注']}
             rows={[
-              ['总营收', '282.7', '会计确认后数值'],
-              ['综合毛利', '54.6', '毛利率 19.3%'],
-              ['SG&A', '-31.0', '费率 11.0%'],
+              ['总营收', '285.0', '会计确认后数值'],
+              ['综合毛利', '56.4', '毛利率 19.8%'],
+              ['SG&A', '-30.8', '费率 10.8%'],
               ['R&D', '-20.5', '稳态投入'],
-              ['D&A', '-14.0', '刚性折旧'],
+              ['D&A', '-14.0', '刚性折旧评估'],
               ['Non-GAAP 调整', '+2.0', '剔除股权激励'],
-              ['Non-GAAP 经营', '+5.1', '已计入 4.5 亿补贴'],
-              ['利息净收益', '+1.8', '现金理财'],
+              ['Non-GAAP 经营', '+7.1', 'ES8 利润贡献支撑'],
             ]}
-            footer={['GAAP 净利润', '—', '-7.1', '接近平衡点']}
+            footer={['GAAP 净利润', '—', '-5.1', '历史性盈利点']}
           />
 
           {/* 深度逻辑解析 */}
           <SubHead>解析：BaaS 模式下的“会计悖论”</SubHead>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '12px', borderLeft: '3px solid #00A3DA' }}>
-              <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>1. “钱进兜”与“入报表”的时间差</div>
+              <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>1. “钱拿到了”并不等于“即时营收”</div>
               <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.6 }}>
-                无论用户是否选择 BaaS，蔚来在交付时都会收到蔚能支付的完整电池款项（物理规模 ~300 亿）。但基于审慎原则，部分电池溢价在财报中会被分拆处理，故报表营收确认为 <W>282.7 亿</W>。
+                不管用户选不选 BaaS，蔚来在交付那一刻，电池的钱已经由“蔚能”代用户全额付给蔚来了（总车价现金流完全相同）。但在会计确认上，电池转让收入有时会被拆分，这解释了为何即使物理规模冲向 300 亿，报表营收可能仅为 <W>285.0 亿</W>。
               </div>
             </div>
             <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '12px', borderLeft: '3px solid #00C896' }}>
               <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>2. 利润额（Margin Dollar）的稳定性</div>
               <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.6 }}>
-                报表营收的下调并不影响 ES8 带来的实打实利润。分母减小后，综合毛利率反而被动推高至 <W>19.3%</W>。这解释了为何在 280 亿营收下，蔚来依然能维持 Non-GAAP 经营盈利。
+                报表营收的“减法”不影响 ES8 实打实拿到的利润。因为毛利额是固定的，分母（营收）减小后，综合毛利率反而显得更高。这保住了我们 <W>盈利 7.1 亿</W> 的核心逻辑——报表是“名分”，利润是“实利”。
               </div>
             </div>
           </div>
@@ -281,10 +292,10 @@ export default function Q1ForecastSection() {
             borderLeft: '4px solid #00A3DA',
           }}>
             <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.95, fontStyle: 'italic' }}>
-              “市场还没从‘蔚来烧钱’的旧梦中醒来，但 2026 Q1 的数据已经抽了一记响亮的耳光。316 亿的营收预测绝非激进，而是 ES8 结构性爆发后的必然逻辑。当一款单价 40 万+ 的国产旗舰能贡献超过 50% 的销量占比时，蔚来已经完成了从‘量换钱’到‘价值驱动’的财务史诗级跨越。”
+              “虽然根据交付结构测算，蔚来一季度的物理经营规模（含电池全额价值）接近 300 亿，但基于审慎的财报会计确认原则，我们预计 <W>报表营收将落在 285 亿元附近</W>。这不是业务倒退，而是会计确认的保守。由于 ES8 的毛利额是实打实的，<W>盈利 7.1 亿</W> 的结论依然立得住。这是一场 285 亿‘名分’与 300 亿‘体量’的平衡，蔚来用 8.35 万台交付（ES8 占比超 54%）完成了从‘量换钱’到‘价值驱动’的财务跨跃。”
             </div>
             <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '10px', fontWeight: 600, color: '#00A3DA' }}>
-              — NioFans 深度研报 (v5.0)
+              — NioFans 深度研报 (v5.3 · Gemini Logic)
             </div>
           </div>
         </DarkCard>
