@@ -54,12 +54,12 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
     zh: [
       { tag: '深度分析', text: '模型预测 Q1 营收 316.4 亿元，超官方指引 64 亿' },
       { tag: '史诗跨越', text: '完成从“量换钱”到“价值驱动”的财务质变' },
-      { tag: '经营盈利', text: 'Non-GAAP 经营利润 9.6 亿，破除亏损旧梦' },
+      { tag: '经营盈利', text: 'Non-GAAP 经营利润 5.1 亿，稳步跨越平衡点' },
     ],
     en: [
       { tag: 'ANALYSIS', text: 'Model est. Q1 revenue ¥31.6B — ¥6.4B above guidance' },
       { tag: 'EPIC LEAP', text: 'Strategic pivot from volume-driven to value-driven growth' },
-      { tag: 'EARNINGS', text: 'Non-GAAP OP yield ¥960M — the profit engine is surging' },
+      { tag: 'EARNINGS', text: 'Non-GAAP OP yield ¥510M — milestone breakeven achieved' },
     ],
   },
 };

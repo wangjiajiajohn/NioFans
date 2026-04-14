@@ -49,8 +49,8 @@ export default function Q1ForecastSection() {
         {/* ── 三指标卡 ── */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '24px' }}>
           {[
-            { val: '18.7%', label: '综合毛利率' },
-            { val: '9.6亿', label: 'Non-GAAP经营' },
+            { val: '17.3%', label: '综合毛利率' },
+            { val: '5.1亿', label: 'Non-GAAP经营' },
             { val: '459亿', label: '现金储备' },
           ].map((d, i) => (
             <div key={i} style={{
@@ -266,10 +266,11 @@ export default function Q1ForecastSection() {
             rows={[
               ['ES8', '191.1', '25.0%', '47.8'],
               ['其他车型', '93.8', '8.0%', '7.5'],
-              ['车辆毛利合计', '284.9', '19.4%', '55.3'],
+              ['单车补贴(1w/辆)', '—', '—', '-4.5'],
+              ['车辆毛利合计', '284.9', '17.8%', '50.8'],
               ['服务及其他', '31.5', '12.0%', '3.8'],
             ]}
-            footer={['综合毛利', '316.4', '18.7%', '59.1']}
+            footer={['综合毛利', '316.4', '17.3%', '54.6']}
           />
 
           <Body>
@@ -285,15 +286,15 @@ export default function Q1ForecastSection() {
             headers={['科目', '金额(亿)', '备注']}
             rows={[
               ['总营收', '316.4', '大幅超越指引'],
-              ['综合毛利', '59.1', '毛利率 18.7%'],
+              ['综合毛利', '54.6', '毛利率 17.3%'],
               ['SG&A', '-31.0', '费率 9.8%'],
               ['R&D', '-20.5', '稳态投入'],
               ['D&A', '-14.0', '刚性折旧'],
               ['Non-GAAP 调整', '+2.0', '剔除股权激励'],
-              ['Non-GAAP 经营', '+9.6', '历史性盈利'],
+              ['Non-GAAP 经营', '+5.1', '已计入 4.5 亿补贴'],
               ['利息净收益', '+1.8', '现金理财'],
             ]}
-            footer={['GAAP 净利润', '—', '-2.6', '极度接近平衡']}
+            footer={['GAAP 净利润', '—', '-7.1', '接近平衡点']}
           />
 
           {/* 深度逻辑解析 */}
@@ -309,7 +310,6 @@ export default function Q1ForecastSection() {
               <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>2. ES8 的“利润收割机”效应</div>
               <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.6 }}>
                 单台 ES8 营收贡献相当于 3 台萤火虫。4.5 万辆规模下产生的 <W>47.8 亿车辆毛利</W>，足以覆盖全司研发开支（20.5 亿）及 2/3 的销售行政开支。
-              </div>
             </div>
           </div>
 
