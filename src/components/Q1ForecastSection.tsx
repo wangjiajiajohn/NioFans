@@ -38,7 +38,7 @@ export default function Q1ForecastSection() {
         {/* ── 三指标卡 ── */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '24px' }}>
           {[
-            { val: '17.3%', label: '综合毛利率' },
+            { val: '19.3%', label: '综合毛利率' },
             { val: '5.1亿', label: 'Non-GAAP经营' },
             { val: '459亿', label: '现金储备' },
           ].map((d, i) => (
@@ -68,11 +68,11 @@ export default function Q1ForecastSection() {
           marginBottom: '28px',
         }}>
           <span style={{ fontSize: '10px', fontWeight: 600, color: '#00C3FF', letterSpacing: '0.04em' }}>
-            模型值 316.4 亿
+            报表营收 282.7 亿
           </span>
           <span style={{ color: 'rgba(255,255,255,0.15)' }}>|</span>
           <span style={{ fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.35)' }}>
-            官方指引 ~250 亿
+            物理规模 ~300 亿
           </span>
         </div>
 
@@ -116,7 +116,7 @@ export default function Q1ForecastSection() {
             padding: '12px', background: 'rgba(0,200,150,0.03)', 
             borderRadius: '8px', borderLeft: '2px solid #00C896' 
           }}>
-            <W>Tips：</W>提示词中锁定了“ES8 结构性爆发”和“D&A 刚性折旧”，这是防止 AI 陷入盲目乐观的关键“紧箍咒”。
+            <W>Tips：</W>提示词中增加了“审慎会计确认”约束，通过逻辑减法屏蔽了 BaaS 模式在财报确认上的干扰，直指盈利核心。
           </div>
         </DarkCard>
 
@@ -127,14 +127,15 @@ export default function Q1ForecastSection() {
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
             {[
-              { step: 'Phase 1: 理论模型', res: 'Net Profit +14.8亿', desc: '未计入折旧与服务业务亏损，过于理想化。' },
-              { step: 'Phase 2: 财务脱敏', res: 'Net Profit +5.5亿', desc: '计入 14 亿 D&A 及真实的 10% 服务毛利。' },
-              { step: 'Phase 3: 实战精算', res: 'Net Profit +5.1亿', desc: '加入单车 1 万购车补贴对冲，达成最终共识。' },
+              { step: 'Phase 1: 理论模型', res: 'Revenue 316亿', desc: '物理经营规模全额确认，未考虑会计脱敏。' },
+              { step: 'Phase 2: 财务脱敏', res: 'Net Profit +5.5亿', desc: '计入 14 亿 D&A 刚性折旧及服务盈亏。' },
+              { step: 'Phase 3: 会计对齐', res: 'Revenue 282.7亿', desc: '基于审慎原则，剔除 BaaS 会计分拆影响。' },
+              { step: 'Phase 4: 实战共识', res: 'Op. Profit +5.1亿', desc: '计入单车 1 万补贴，达成最终精算平衡。' },
             ].map((s, i) => (
               <div key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                <div style={{ width: '4px', height: '40px', background: i === 2 ? '#FF6B6B' : 'rgba(255,255,255,0.1)', borderRadius: '2px' }} />
+                <div style={{ width: '4px', height: '40px', background: i === 3 ? '#FF6B6B' : 'rgba(255,255,255,0.1)', borderRadius: '2px' }} />
                 <div>
-                  <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF' }}>{s.step} — <span style={{ color: i === 2 ? '#FF6B6B' : 'rgba(255,255,255,0.4)' }}>{s.res}</span></div>
+                  <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF' }}>{s.step} — <span style={{ color: i === 3 ? '#FF6B6B' : 'rgba(255,255,255,0.4)' }}>{s.res}</span></div>
                   <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)' }}>{s.desc}</div>
                 </div>
               </div>
@@ -145,9 +146,9 @@ export default function Q1ForecastSection() {
         {/* ── 04 指标卡 ── */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '24px' }}>
           {[
-            { val: '316.4亿', label: '预估营收' },
+            { val: '282.7亿', label: '财报营收' },
             { val: '5.1亿', label: 'Non-GAAP经营' },
-            { val: '17.3%', label: '综合毛利率' },
+            { val: '19.3%', label: '综合毛利率' },
           ].map((d, i) => (
             <div key={i} style={{
               background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
@@ -166,9 +167,9 @@ export default function Q1ForecastSection() {
           <DarkTable
             headers={['科目', '金额(亿)', '备注']}
             rows={[
-              ['总营收', '316.4', '大幅超越指引'],
-              ['综合毛利', '54.6', '毛利率 17.3%'],
-              ['SG&A', '-31.0', '费率 9.8%'],
+              ['总营收', '282.7', '会计确认后数值'],
+              ['综合毛利', '54.6', '毛利率 19.3%'],
+              ['SG&A', '-31.0', '费率 11.0%'],
               ['R&D', '-20.5', '稳态投入'],
               ['D&A', '-14.0', '刚性折旧'],
               ['Non-GAAP 调整', '+2.0', '剔除股权激励'],
@@ -179,18 +180,18 @@ export default function Q1ForecastSection() {
           />
 
           {/* 深度逻辑解析 */}
-          <SubHead>深度逻辑：为何模型预测超官方指引？</SubHead>
+          <SubHead>解析：BaaS 模式下的“会计悖论”</SubHead>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '12px', borderLeft: '3px solid #00A3DA' }}>
-              <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>1. 官方指引的“保守性”陷阱</div>
+              <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>1. “钱进兜”与“入报表”的时间差</div>
               <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.6 }}>
-                官方指引通常按低客单价车型占比大来预估以降低风险。但模型锁定了 <W>ES8 占比 54.1%</W> 的客观事实，高均价车型的脉冲式交付直接拉高了营收天板。
+                无论用户是否选择 BaaS，蔚来在交付时都会收到蔚能支付的完整电池款项（物理规模 ~300 亿）。但基于审慎原则，部分电池溢价在财报中会被分拆处理，故报表营收确认为 <W>282.7 亿</W>。
               </div>
             </div>
             <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '12px', borderLeft: '3px solid #00C896' }}>
-              <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>2. ES8 的“利润收割机”效应</div>
+              <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>2. 利润额（Margin Dollar）的稳定性</div>
               <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.6 }}>
-                单台 ES8 营收贡献相当于 3 台萤火虫。4.5 万辆规模下产生的 <W>47.8 亿车辆毛利</W>，足以覆盖全司研发开支（20.5 亿）及 2/3 的销售行政开支。
+                报表营收的下调并不影响 ES8 带来的实打实利润。分母减小后，综合毛利率反而被动推高至 <W>19.3%</W>。这解释了为何在 280 亿营收下，蔚来依然能维持 Non-GAAP 经营盈利。
               </div>
             </div>
           </div>

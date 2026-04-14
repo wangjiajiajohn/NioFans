@@ -135,8 +135,8 @@ export const FINANCIAL_DATA = [
   {
     quarter: "2026 Q1",
     status: "ESTIMATED",
-    revenue: 316.4,
-    grossMargin: 17.3,
+    revenue: 282.7,
+    grossMargin: 19.3,
     vehicleMargin: 17.8,
     netLoss: -7.1,      // 亿元，GAAP 净亏损
     cash: 459.0,      // 亿元，现金资产
@@ -171,7 +171,7 @@ export const FINANCIAL_QUARTERLY = [
   { period: "25 Q2", revenue: 210.2, grossMargin: 14.2,  vehicleMargin: 19.0,  netLoss: -15.0, rd: 25.0 },
   { period: "25 Q3", revenue: 235.5, grossMargin: 15.5,  vehicleMargin: 19.8,  netLoss: -10.5, rd: 26.5 },
   { period: "25 Q4", revenue: 346.5, grossMargin: 18.1,  vehicleMargin: 18.1,  netLoss: 8.5,   rd: 20.5 },
-  { period: "26 Q1", revenue: 316.4, grossMargin: 17.3,  vehicleMargin: 17.8,  netLoss: -7.1,  rd: 20.5, cash: 459.0 },
+  { period: "26 Q1", revenue: 282.7, grossMargin: 19.3, vehicleMargin: 17.8, netLoss: -7.1,  rd: 20.5, cash: 459.0 },
 ];
 
 // Historical Annual Data
