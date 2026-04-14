@@ -21,29 +21,18 @@ export default function Q1ForecastSection() {
           pointerEvents: 'none',
         }} />
 
-        {/* ── Section Label ── */}
-        <div style={{
-          fontSize: '10px', fontWeight: 600, letterSpacing: '0.18em',
-          color: '#00A3DA', textTransform: 'uppercase' as const, marginBottom: '14px',
-          position: 'relative',
-        }}>Q1 FINANCIAL FORECAST</div>
-
-        {/* ── Hero Number ── */}
-        <div style={{ marginBottom: '6px', position: 'relative' }}>
-          <span style={{
-            fontSize: '52px', fontWeight: 100, color: '#FFFFFF',
-            letterSpacing: '-0.04em', lineHeight: 1, fontFamily: 'Outfit, sans-serif',
-          }}>316.4</span>
-          <span style={{
-            fontSize: '18px', fontWeight: 300, color: 'rgba(255,255,255,0.35)',
-            marginLeft: '6px', letterSpacing: '-0.02em',
-          }}>亿元</span>
+        {/* ── Article Title ── */}
+        <div style={{ 
+          fontSize: '28px', fontWeight: 700, color: '#FFFFFF', 
+          letterSpacing: '-0.02em', marginBottom: '8px', lineHeight: 1.2
+        }}>
+          使用 AI 预估蔚来<br />一季度财务数据
         </div>
         <div style={{
-          fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.4)',
-          letterSpacing: '0.04em', marginBottom: '20px',
+          fontSize: '11px', fontWeight: 400, color: 'rgba(255,255,255,0.4)',
+          letterSpacing: '0.04em', marginBottom: '32px',
         }}>
-          模型预测 Q1 总营收 — 跨越价值驱动转折点
+          深度研报 · AI 提示词工程 · 穿透式损益演练
         </div>
 
         {/* ── 三指标卡 ── */}
@@ -87,200 +76,84 @@ export default function Q1ForecastSection() {
           </span>
         </div>
 
-        {/* ── 01 Q4 锚点 ── */}
+        {/* ── 01 为什么要用 AI？ ── */}
         <DarkCard accentColor="#00A3DA">
-          <Label>01 · Q4 盈利锚点</Label>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '14px' }}>
+          <Label>01 · 背景与初衷</Label>
+          <SubHead>传统分析的“时滞”与 AI 的“即时穿透”</SubHead>
+          <Body>
+            当市场还在对官方指引进行线性推演时，我们尝试利用大语言模型（LLM）的深度精算能力，结合“车型结构边际贡献模型（Unit Economics）”，对已既定的 8.3 万台交付数据进行穿透式拆解。
+          </Body>
+        </DarkCard>
+
+        {/* ── 02 核心提示词工程 ── */}
+        <DarkCard accentColor="#00C896">
+          <Label>02 · AI 提示词工程 (v5.1)</Label>
+          <SubHead>如何像高级分析师一样提问？</SubHead>
+          <Body>
+            要得到具备专业研报水准的结论，关键在于赋予 AI 明确的角色模型和底层财务公式。以下是我们使用的核心提示词：
+          </Body>
+          
+          <PromptBox>
+{`**Role:** 你是一位深耕中概股汽车行业的资深分析师，擅长使用“车型结构边际贡献模型（Unit Economics）”进行穿透式损益推演。
+**Task:** 基于蔚来 2025 Q4 财报为锚点，对 2026 Q1 的财务表现进行深度精算。
+**Parameter:** 
+1. 交付 83,465 辆（ES8 占比 54.1%）。
+2. ES8 毛利设定 25%，其他车型 8%。
+3. 关键变量：计入单车 1 万元的终端补贴对冲。
+...`}
+          </PromptBox>
+
+          <div style={{ 
+            fontSize: '10px', color: 'rgba(0,200,150,0.6)', 
+            padding: '12px', background: 'rgba(0,200,150,0.03)', 
+            borderRadius: '8px', borderLeft: '2px solid #00C896' 
+          }}>
+            <W>Tips：</W>提示词中锁定了“ES8 结构性爆发”和“D&A 刚性折旧”，这是防止 AI 陷入盲目乐观的关键“紧箍咒”。
+          </div>
+        </DarkCard>
+
+        {/* ── 03 模型调优实录 ── */}
+        <DarkCard accentColor="#FF6B6B">
+          <Label>03 · 模型调优实录</Label>
+          <SubHead>从“虚幻利润”到“真实平衡”</SubHead>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
             {[
-              { val: '12.48万', label: '交付量' },
-              { val: '346.5亿', label: '营收' },
-              { val: '18.1%', label: '整车毛利率' },
-              { val: '12.51亿', label: 'Non-GAAP利润' },
-            ].map((d, i) => (
-              <div key={i} style={{
-                background: 'rgba(0,163,218,0.08)',
-                border: '1px solid rgba(0,163,218,0.15)',
-                borderRadius: '10px', padding: '10px 12px',
-              }}>
-                <div style={{
-                  fontSize: '16px', fontWeight: 300, color: '#FFFFFF',
-                  fontFamily: 'Outfit, sans-serif',
-                }}>{d.val}</div>
-                <div style={{ fontSize: '9px', fontWeight: 600, color: 'rgba(255,255,255,0.3)', marginTop: '2px', letterSpacing: '0.04em' }}>{d.label}</div>
+              { step: 'Phase 1: 理论模型', res: 'Net Profit +14.8亿', desc: '未计入折旧与服务业务亏损，过于理想化。' },
+              { step: 'Phase 2: 财务脱敏', res: 'Net Profit +5.5亿', desc: '计入 14 亿 D&A 及真实的 10% 服务毛利。' },
+              { step: 'Phase 3: 实战精算', res: 'Net Profit +5.1亿', desc: '加入单车 1 万购车补贴对冲，达成最终共识。' },
+            ].map((s, i) => (
+              <div key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '4px', height: '40px', background: i === 2 ? '#FF6B6B' : 'rgba(255,255,255,0.1)', borderRadius: '2px' }} />
+                <div>
+                  <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF' }}>{s.step} — <span style={{ color: i === 2 ? '#FF6B6B' : 'rgba(255,255,255,0.4)' }}>{s.res}</span></div>
+                  <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)' }}>{s.desc}</div>
+                </div>
               </div>
             ))}
           </div>
-          <Body>
-            2025 年 Q4 是蔚来的历史性转折点——<W>首次实现单季度盈利</W>。交付量突破 12 万辆后的规模效应，叠加 ES8 高溢价车型占比提升，推动毛利率从 Q3 的 13.1% 跃升至 18.1%。
-          </Body>
         </DarkCard>
 
-        {/* ── 02 交付结构 ── */}
-        <DarkCard accentColor="#00C896">
-          <Label>02 · Q1 交付结构拆解</Label>
-
-          {/* ES8 主力卡 */}
-          <div style={{
-            background: 'rgba(0,200,150,0.06)',
-            border: '1px solid rgba(0,200,150,0.12)',
-            borderRadius: '14px', padding: '16px', marginBottom: '12px',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div>
-                <span className="badge-blue" style={{
-                  background: 'rgba(0,163,218,0.1)', color: '#00A3DA',
-                  fontSize: '10px', fontWeight: 600, letterSpacing: '0.04em',
-                  padding: '3px 8px', borderRadius: '100px',
-                }}>销量冠军</span>
-                <div style={{
-                  fontSize: '24px', fontWeight: 200, color: '#FFFFFF',
-                  fontFamily: 'Outfit, sans-serif', marginTop: '8px',
-                }}>ES8</div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{
-                  fontSize: '26px', fontWeight: 300, color: '#00C3FF',
-                  fontFamily: 'Outfit, sans-serif',
-                }}>45,184</div>
-                <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.04em' }}>辆 · 占比 54.1%</div>
-              </div>
-            </div>
-            {/* 进度条 */}
-            <div style={{
-              marginTop: '14px', background: 'rgba(255,255,255,0.06)',
-              borderRadius: '100px', height: '6px', overflow: 'hidden',
+        {/* ── 04 指标卡 ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '24px' }}>
+          {[
+            { val: '316.4亿', label: '预估营收' },
+            { val: '5.1亿', label: 'Non-GAAP经营' },
+            { val: '17.3%', label: '综合毛利率' },
+          ].map((d, i) => (
+            <div key={i} style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+              padding: '16px 12px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)',
             }}>
-              <div style={{
-                width: '54.1%', height: '100%',
-                background: 'linear-gradient(90deg, #00A3DA, #00E5FF)',
-                borderRadius: '100px',
-                boxShadow: '0 0 10px rgba(0,195,255,0.4)',
-              }} />
+              <div style={{ fontSize: '14px', fontWeight: 300, color: '#FFFFFF', marginBottom: '4px' }}>{d.val}</div>
+              <div style={{ fontSize: '8px', fontWeight: 600, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.04em' }}>{d.label}</div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
-              <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.25)' }}>ES8 · 54.1%</span>
-              <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.25)' }}>ASP ¥42.3 万</span>
-            </div>
-          </div>
+          ))}
+        </div>
 
-          {/* 其他车型 */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-            {[
-              { name: 'NIO其他', vol: '13,316', pct: '16.0%' },
-              { name: '乐道', vol: '13,300', pct: '15.9%' },
-              { name: '萤火虫', vol: '11,665', pct: '14.0%' },
-            ].map((d, i) => (
-              <div key={i} style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                borderRadius: '10px', padding: '10px',
-              }}>
-                <div style={{ fontSize: '9px', fontWeight: 600, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.04em', marginBottom: '6px' }}>{d.name}</div>
-                <div style={{ fontSize: '14px', fontWeight: 300, color: '#FFFFFF', fontFamily: 'Outfit, sans-serif' }}>{d.vol}</div>
-                <div style={{ fontSize: '8px', color: 'rgba(255,255,255,0.2)', marginTop: '2px' }}>{d.pct}</div>
-              </div>
-            ))}
-          </div>
-
-          <Body>
-            ES8 作为蔚来均价最高的量产车型，其份额爆发直接改写了 Q1 营收结构。乐道和萤火虫合计交付约 2.5 万辆，虽处爬坡期，但对品牌矩阵下探至关重要。
-          </Body>
-        </DarkCard>
-
-        {/* ── 03 营收重构 ── */}
-        <DarkCard accentColor="#8E5AFF">
-          <Label>03 · 营收穿透式重构</Label>
-
-          <DarkTable
-            headers={['分项', '交付量', 'ASP(万)', '营收(亿)']}
-            rows={[
-              ['ES8 车辆销售', '45,184', '42.3', '191.1'],
-              ['其他车型', '38,281', '24.5', '93.8'],
-              ['车辆销售小计', '83,465', '—', '284.9'],
-              ['服务及其他', '—', '—', '~31.5'],
-            ]}
-            footer={['总营收', '—', '—', '316.4']}
-          />
-
-          {/* 对比 */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '14px' }}>
-            <div style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              borderRadius: '12px', padding: '12px',
-            }}>
-              <div style={{ fontSize: '9px', fontWeight: 600, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.08em', marginBottom: '6px' }}>官方指引</div>
-              <div style={{ fontSize: '22px', fontWeight: 200, color: '#FFFFFF', fontFamily: 'Outfit, sans-serif' }}>~250<span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}> 亿</span></div>
-            </div>
-            <div style={{
-              background: 'rgba(0,163,218,0.08)',
-              border: '1px solid rgba(0,163,218,0.15)',
-              borderRadius: '12px', padding: '12px',
-            }}>
-              <div style={{ fontSize: '9px', fontWeight: 600, color: '#00A3DA', letterSpacing: '0.08em', marginBottom: '6px' }}>模型推演值</div>
-              <div style={{ fontSize: '22px', fontWeight: 200, color: '#00C3FF', fontFamily: 'Outfit, sans-serif' }}>316.4<span style={{ fontSize: '12px', color: 'rgba(0,195,255,0.5)' }}> 亿</span></div>
-            </div>
-          </div>
-
-          <Body>
-            <W>偏差核心：ES8 结构性爆发。</W>官方指引基于保守的交付结构假设。ES8 以 42.3 万元 ASP 单独贡献车辆营收 <W>191.1 亿元</W>（占 67.1%）。若将 ES8 份额回调至历史均值 30%，营收降至 ~255 亿，恰好落入指引区间。
-          </Body>
-        </DarkCard>
-
-        {/* ── 04 毛利分析 ── */}
-        <DarkCard accentColor="#00C896">
-          <Label>04 · 毛利穿透分析</Label>
-
-          {/* ES8 利润贡献 */}
-          <div style={{
-            background: 'rgba(0,200,150,0.06)',
-            border: '1px solid rgba(0,200,150,0.12)',
-            borderRadius: '14px', padding: '16px', marginBottom: '14px',
-          }}>
-            <div style={{ fontSize: '9px', fontWeight: 600, color: '#00C896', letterSpacing: '0.08em', marginBottom: '10px' }}>ES8 利润贡献</div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '4px' }}>
-              <div style={{ fontSize: '32px', fontWeight: 200, color: '#FFFFFF', fontFamily: 'Outfit, sans-serif' }}>55.3</div>
-              <span style={{ fontSize: '14px', fontWeight: 300, color: 'rgba(255,255,255,0.35)' }}>亿元毛利</span>
-            </div>
-            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)' }}>占车辆总毛利 100% · 毛利率 19.4%</div>
-            <div style={{
-              marginTop: '12px', background: 'rgba(255,255,255,0.06)',
-              borderRadius: '100px', height: '6px', overflow: 'hidden', display: 'flex', gap: '2px',
-            }}>
-              <div style={{
-                width: '86.4%', height: '100%',
-                background: 'linear-gradient(90deg, #00C896, #00E5B0)',
-                borderRadius: '100px 0 0 100px',
-                boxShadow: '0 0 10px rgba(0,200,150,0.4)',
-              }} />
-              <div style={{ width: '13.6%', height: '100%', background: 'rgba(255,255,255,0.06)', borderRadius: '0 100px 100px 0' }} />
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
-              <span style={{ fontSize: '8px', color: '#00C896' }}>车辆毛利: 55.3亿</span>
-              <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.2)' }}>服务毛利: 3.2亿</span>
-            </div>
-          </div>
-
-          <DarkTable
-            headers={['分项', '营收(亿)', '毛利率', '毛利(亿)']}
-            rows={[
-              ['ES8', '191.1', '25.0%', '47.8'],
-              ['其他车型', '93.8', '8.0%', '7.5'],
-              ['单车补贴(1w/辆)', '—', '—', '-4.5'],
-              ['车辆毛利合计', '284.9', '17.8%', '50.8'],
-              ['服务及其他', '31.5', '12.0%', '3.8'],
-            ]}
-            footer={['综合毛利', '316.4', '17.3%', '54.6']}
-          />
-
-          <Body>
-            ES8 以 <W>25% 毛利率</W>贡献 <W>47.8 亿</W>毛利，为乐道和萤火虫爬坡提供充足财务缓冲。其他车型 8% 毛利率已实现正毛利，避免了"卖一辆亏一辆"的困境。
-          </Body>
-        </DarkCard>
-
-        {/* ── 05 损益总表 ── */}
+        {/* ── 04 最终精算模型报告 ── */}
         <DarkCard accentColor="#00A3DA">
-          <Label>05 · Q1 损益预测总表</Label>
+          <Label>04 · 最终精算模型报告</Label>
 
           <DarkTable
             headers={['科目', '金额(亿)', '备注']}
@@ -332,9 +205,9 @@ export default function Q1ForecastSection() {
           </div>
         </DarkCard>
 
-        {/* ── 06 逻辑分析 ── */}
+        {/* ── 05 总结 ── */}
         <DarkCard accentColor="#8E5AFF">
-          <Label>06 · 盈利质变逻辑</Label>
+          <Label>05 · 总结：史诗级的跨越</Label>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '16px' }}>
             {[
@@ -479,6 +352,23 @@ function Body({ children }: { children: React.ReactNode }) {
 
 function W({ children }: { children: React.ReactNode }) {
   return <span style={{ color: 'rgba(255,255,255,0.85)', fontWeight: 500 }}>{children}</span>;
+}
+
+function PromptBox({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{
+      background: 'rgba(255,255,255,0.03)',
+      border: '1px solid rgba(255,255,255,0.1)',
+      borderRadius: '12px', padding: '16px',
+      marginBottom: '20px', position: 'relative',
+      fontFamily: 'SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace',
+    }}>
+      <div style={{ position: 'absolute', top: '-10px', right: '16px', background: '#00A3DA', color: '#FFF', fontSize: '9px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>AI PROMPT</div>
+      <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
+        {children}
+      </div>
+    </div>
+  );
 }
 
 function DarkTable({ headers, rows, footer }: { headers: string[]; rows: string[][]; footer?: string[] }) {
