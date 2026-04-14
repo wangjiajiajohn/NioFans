@@ -310,6 +310,7 @@ export default function Q1ForecastSection() {
               <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>2. ES8 的“利润收割机”效应</div>
               <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.6 }}>
                 单台 ES8 营收贡献相当于 3 台萤火虫。4.5 万辆规模下产生的 <W>47.8 亿车辆毛利</W>，足以覆盖全司研发开支（20.5 亿）及 2/3 的销售行政开支。
+              </div>
             </div>
           </div>
 
