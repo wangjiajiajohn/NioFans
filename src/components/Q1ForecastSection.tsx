@@ -33,24 +33,24 @@ export default function Q1ForecastSection() {
           <span style={{
             fontSize: '52px', fontWeight: 100, color: '#FFFFFF',
             letterSpacing: '-0.04em', lineHeight: 1, fontFamily: 'Outfit, sans-serif',
-          }}>312.8</span>
+          }}>316.4</span>
           <span style={{
             fontSize: '18px', fontWeight: 300, color: 'rgba(255,255,255,0.35)',
             marginLeft: '6px', letterSpacing: '-0.02em',
           }}>亿元</span>
         </div>
         <div style={{
-          fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.3)',
+          fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.4)',
           letterSpacing: '0.04em', marginBottom: '20px',
         }}>
-          模型预测 Q1 总营收 — 超官方指引 25%
+          模型预测 Q1 总营收 — 跨越价值驱动转折点
         </div>
 
         {/* ── 三指标卡 ── */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '24px' }}>
           {[
-            { val: '20.2%', label: '综合毛利率' },
-            { val: '13.7亿', label: 'Non-GAAP利润' },
+            { val: '18.7%', label: '综合毛利率' },
+            { val: '9.6亿', label: 'Non-GAAP经营' },
             { val: '459亿', label: '现金储备' },
           ].map((d, i) => (
             <div key={i} style={{
@@ -79,7 +79,7 @@ export default function Q1ForecastSection() {
           marginBottom: '28px',
         }}>
           <span style={{ fontSize: '10px', fontWeight: 600, color: '#00C3FF', letterSpacing: '0.04em' }}>
-            模型值 312.8 亿
+            模型值 316.4 亿
           </span>
           <span style={{ color: 'rgba(255,255,255,0.15)' }}>|</span>
           <span style={{ fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.35)' }}>
@@ -197,9 +197,9 @@ export default function Q1ForecastSection() {
               ['ES8 车辆销售', '45,184', '42.3', '191.1'],
               ['其他车型', '38,281', '24.5', '93.8'],
               ['车辆销售小计', '83,465', '—', '284.9'],
-              ['服务及其他', '—', '—', '~27.9'],
+              ['服务及其他', '—', '—', '~31.5'],
             ]}
-            footer={['总营收', '—', '—', '312.8']}
+            footer={['总营收', '—', '—', '316.4']}
           />
 
           {/* 对比 */}
@@ -218,7 +218,7 @@ export default function Q1ForecastSection() {
               borderRadius: '12px', padding: '12px',
             }}>
               <div style={{ fontSize: '9px', fontWeight: 600, color: '#00A3DA', letterSpacing: '0.08em', marginBottom: '6px' }}>模型推演值</div>
-              <div style={{ fontSize: '22px', fontWeight: 200, color: '#00C3FF', fontFamily: 'Outfit, sans-serif' }}>312.8<span style={{ fontSize: '12px', color: 'rgba(0,195,255,0.5)' }}> 亿</span></div>
+              <div style={{ fontSize: '22px', fontWeight: 200, color: '#00C3FF', fontFamily: 'Outfit, sans-serif' }}>316.4<span style={{ fontSize: '12px', color: 'rgba(0,195,255,0.5)' }}> 亿</span></div>
             </div>
           </div>
 
@@ -239,10 +239,10 @@ export default function Q1ForecastSection() {
           }}>
             <div style={{ fontSize: '9px', fontWeight: 600, color: '#00C896', letterSpacing: '0.08em', marginBottom: '10px' }}>ES8 利润贡献</div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '4px' }}>
-              <span style={{ fontSize: '32px', fontWeight: 200, color: '#FFFFFF', fontFamily: 'Outfit, sans-serif' }}>47.8</span>
+              <div style={{ fontSize: '32px', fontWeight: 200, color: '#FFFFFF', fontFamily: 'Outfit, sans-serif' }}>55.3</div>
               <span style={{ fontSize: '14px', fontWeight: 300, color: 'rgba(255,255,255,0.35)' }}>亿元毛利</span>
             </div>
-            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)' }}>占车辆总毛利 86.4% · 毛利率 25%</div>
+            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)' }}>占车辆总毛利 100% · 毛利率 19.4%</div>
             <div style={{
               marginTop: '12px', background: 'rgba(255,255,255,0.06)',
               borderRadius: '100px', height: '6px', overflow: 'hidden', display: 'flex', gap: '2px',
@@ -256,8 +256,8 @@ export default function Q1ForecastSection() {
               <div style={{ width: '13.6%', height: '100%', background: 'rgba(255,255,255,0.06)', borderRadius: '0 100px 100px 0' }} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
-              <span style={{ fontSize: '8px', color: '#00C896' }}>ES8: 47.8亿 (86.4%)</span>
-              <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.2)' }}>其他: 7.5亿</span>
+              <span style={{ fontSize: '8px', color: '#00C896' }}>车辆毛利: 55.3亿</span>
+              <span style={{ fontSize: '8px', color: 'rgba(255,255,255,0.2)' }}>服务毛利: 3.2亿</span>
             </div>
           </div>
 
@@ -267,9 +267,9 @@ export default function Q1ForecastSection() {
               ['ES8', '191.1', '25.0%', '47.8'],
               ['其他车型', '93.8', '8.0%', '7.5'],
               ['车辆毛利合计', '284.9', '19.4%', '55.3'],
-              ['服务及其他', '27.9', '~30%', '~8.4'],
+              ['服务及其他', '31.5', '12.0%', '3.8'],
             ]}
-            footer={['综合毛利', '312.8', '20.4%', '63.7']}
+            footer={['综合毛利', '316.4', '18.7%', '59.1']}
           />
 
           <Body>
@@ -284,18 +284,34 @@ export default function Q1ForecastSection() {
           <DarkTable
             headers={['科目', '金额(亿)', '备注']}
             rows={[
-              ['总营收', '312.8', '模型推演值'],
-              ['综合毛利', '63.7', '毛利率 20.4%'],
-              ['SG&A', '-31.5', '费用率 10.1%'],
-              ['R&D', '-20.5', '同比持平'],
-              ['GAAP 经营利润', '11.7', '—'],
-              ['利息净收益', '+1.8', '459亿理财'],
-              ['其他收益/费用', '-0.4', '—'],
-              ['GAAP 净利润', '13.1', '连续两季盈利'],
+              ['总营收', '316.4', '大幅超越指引'],
+              ['综合毛利', '59.1', '毛利率 18.7%'],
+              ['SG&A', '-31.0', '费率 9.8%'],
+              ['R&D', '-20.5', '稳态投入'],
+              ['D&A', '-14.0', '刚性折旧'],
               ['Non-GAAP 调整', '+2.0', '剔除股权激励'],
+              ['Non-GAAP 经营', '+9.6', '历史性盈利'],
+              ['利息净收益', '+1.8', '现金理财'],
             ]}
-            footer={['Non-GAAP 经营利润', '13.7', '超Q4 12.51亿']}
+            footer={['GAAP 净利润', '—', '-2.6', '极度接近平衡']}
           />
+
+          {/* 深度逻辑解析 */}
+          <SubHead>深度逻辑：为何模型预测超官方指引？</SubHead>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '12px', borderLeft: '3px solid #00A3DA' }}>
+              <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>1. 官方指引的“保守性”陷阱</div>
+              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.6 }}>
+                官方指引通常按低客单价车型占比大来预估以降低风险。但模型锁定了 <W>ES8 占比 54.1%</W> 的客观事实，高均价车型的脉冲式交付直接拉高了营收天板。
+              </div>
+            </div>
+            <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '12px', borderLeft: '3px solid #00C896' }}>
+              <div style={{ fontSize: '11px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>2. ES8 的“利润收割机”效应</div>
+              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.6 }}>
+                单台 ES8 营收贡献相当于 3 台萤火虫。4.5 万辆规模下产生的 <W>47.8 亿车辆毛利</W>，足以覆盖全司研发开支（20.5 亿）及 2/3 的销售行政开支。
+              </div>
+            </div>
+          </div>
 
           {/* 现金储备 */}
           <div style={{
@@ -336,9 +352,9 @@ export default function Q1ForecastSection() {
             ))}
           </div>
 
-          <SubHead>降本增效：裁员红利释放</SubHead>
+          <SubHead>降本增效：运营费用率最优</SubHead>
           <Body>
-            SG&A 控制在 31.5 亿元（费用率 10.1%，对比 2024 同期 ~15%）。R&D 稳定在 20.5 亿元，同等投入下已完成 NT3.0 平台全系车型量产。合计运营费用率压缩至 16.6%——<W>质的飞跃</W>。
+            SG&A 控制在 31.5 亿元（费用率 9.95%），对比 2024 同期大幅下降。R&D 稳定在 20.5 亿元。即便计入 14 亿元折旧（D&A），损益表现已极度接近盈亏平衡线——<W>质的飞跃</W>。
           </Body>
 
           <SubHead>产品结构升级：ES8 重塑盈利模型</SubHead>
@@ -374,15 +390,18 @@ export default function Q1ForecastSection() {
             ))}
           </div>
 
-          {/* 结论 */}
+          {/* 结语 */}
           <div style={{
             background: 'rgba(0,163,218,0.08)',
             border: '1px solid rgba(0,163,218,0.15)',
-            borderRadius: '12px', padding: '14px',
-            borderLeft: '3px solid #00A3DA',
+            borderRadius: '12px', padding: '16px',
+            borderLeft: '4px solid #00A3DA',
           }}>
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.8 }}>
-              <W>蔚来 Q1 的盈利并非一次性事件，而是"降本"与"增效"双轮驱动下的结构性拐点。</W>459 亿现金储备支撑三品牌全面布局，随着乐道和萤火虫下半年放量，营收与盈利能力有望进一步上台阶。
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.95, fontStyle: 'italic' }}>
+              “市场还没从‘蔚来烧钱’的旧梦中醒来，但 2026 Q1 的数据已经抽了一记响亮的耳光。316 亿的营收预测绝非激进，而是 ES8 结构性爆发后的必然逻辑。当一款单价 40 万+ 的国产旗舰能贡献超过 50% 的销量占比时，蔚来已经完成了从‘量换钱’到‘价值驱动’的财务史诗级跨越。”
+            </div>
+            <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '10px', fontWeight: 600, color: '#00A3DA' }}>
+              — NioFans 深度研报 (v5.0)
             </div>
           </div>
         </DarkCard>

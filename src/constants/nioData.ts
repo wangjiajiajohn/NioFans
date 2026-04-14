@@ -135,12 +135,12 @@ export const FINANCIAL_DATA = [
   {
     quarter: "2026 Q1",
     status: "ESTIMATED",
-    revenue: 312.8,
-    grossMargin: 15.2,
-    vehicleMargin: 20.2,
-    netLoss: -5.0,     // 亿元，预测值
-    cash: 382.0,      // 亿元，总流动性（含短期投资）
-    rd: 28.5,         // 亿元，季度研发支出
+    revenue: 316.4,
+    grossMargin: 18.7,
+    vehicleMargin: 19.4,
+    netLoss: -2.6,      // 亿元，GAAP 净亏损（极度接近平衡）
+    cash: 459.0,      // 亿元，现金资产
+    rd: 20.5,         // 亿元，季度研发支出
   },
 ];
 
@@ -170,8 +170,8 @@ export const FINANCIAL_QUARTERLY = [
   { period: "25 Q1", revenue: 165.0, grossMargin: 13.0,  vehicleMargin: 18.5,  netLoss: -18.5, rd: 23.5 },
   { period: "25 Q2", revenue: 210.2, grossMargin: 14.2,  vehicleMargin: 19.0,  netLoss: -15.0, rd: 25.0 },
   { period: "25 Q3", revenue: 235.5, grossMargin: 15.5,  vehicleMargin: 19.8,  netLoss: -10.5, rd: 26.5 },
-  { period: "25 Q4", revenue: 280.0, grossMargin: 17.0,  vehicleMargin: 21.0,  netLoss: -6.8,  rd: 28.0 },
-  { period: "26 Q1", revenue: 312.8, grossMargin: 15.2,  vehicleMargin: 20.2,  netLoss: -5.0,  rd: 28.5 },
+  { period: "25 Q4", revenue: 346.5, grossMargin: 18.1,  vehicleMargin: 18.1,  netLoss: 8.5,   rd: 20.5 },
+  { period: "26 Q1", revenue: 316.4, grossMargin: 18.7,  vehicleMargin: 19.4,  netLoss: -2.6,  rd: 20.5, cash: 459.0 },
 ];
 
 // Historical Annual Data
@@ -182,8 +182,8 @@ export const FINANCIAL_ANNUAL = [
   { period: "2022", revenue: 492.7,  grossMargin: 10.4, vehicleMargin: 13.7, netLoss: -144.4, rd: 112.4 },
   { period: "2023", revenue: 556.2,  grossMargin: 5.5,  vehicleMargin: 9.5,  netLoss: -207.2, rd: 93.3  },
   { period: "2024", revenue: 664.8,  grossMargin: 10.2, vehicleMargin: 14.5, netLoss: -125.4, rd: 84.4  },
-  { period: "2025", revenue: 890.7,  grossMargin: 14.9, vehicleMargin: 19.6, netLoss: -50.8,  rd: 103.0 },
-  { period: "2026", revenue: 1250.0, grossMargin: 16.5, vehicleMargin: 21.0, netLoss: -20.0,  rd: 116.0 },
+  { period: "2025", revenue: 990.7,  grossMargin: 16.0, vehicleMargin: 19.6, netLoss: -35.0,  rd: 95.5  },
+  { period: "2026", revenue: 1350.0, grossMargin: 19.5, vehicleMargin: 21.0, netLoss: -5.0,   rd: 100.0 },
 ];
 
 // 年度财务快照 — 用于卡片展示（仅已确认年度）
@@ -193,7 +193,7 @@ export const FINANCIAL_ANNUAL_SNAPSHOT = [
   { year: '2022', revenue: 492.7,  netLoss: -144.4, grossMargin: 10.4, rd: 112.4 },
   { year: '2023', revenue: 556.2,  netLoss: -207.2, grossMargin: 5.5,  rd: 93.3  },
   { year: '2024', revenue: 664.8,  netLoss: -125.4, grossMargin: 10.2, rd: 84.4  },
-  { year: '2025', revenue: 890.7,  netLoss: -50.8,  grossMargin: 14.9, rd: 103.0, estimated: true },
+  { year: '2025', revenue: 990.7,  netLoss: -35.0,  grossMargin: 16.0, rd: 95.5, estimated: true },
 ];
 
 // Official NIO Power data — source: nio.cn/official-map

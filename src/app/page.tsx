@@ -29,12 +29,12 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
   financial: {
     zh: [
       { tag: '财务亮点', text: '2025 Q4 首次实现单季度盈利，盈亏平衡历史性突破' },
-      { tag: '2026 Q1', text: '预估营收 312.8 亿元，汽车毛利率 20.2%' },
+      { tag: '2026 Q1', text: '预估营收 316.4 亿元，汽车毛利率 19.4%' },
       { tag: '研发投入', text: '2025 全年研发投入超 130 亿元，智能化持续领跑' },
     ],
     en: [
       { tag: 'HIGHLIGHT', text: 'Q4 2025: First-ever quarterly profit — breakeven achieved' },
-      { tag: 'Q1 2026', text: 'Est. revenue ¥31.3B, vehicle margin 20.2%' },
+      { tag: 'Q1 2026', text: 'Est. revenue ¥31.6B, vehicle margin 19.4%' },
       { tag: 'R&D', text: 'FY2025 R&D spend exceeds ¥13B, leading in smart tech' },
     ],
   },
@@ -52,14 +52,14 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
   },
   forecast: {
     zh: [
-      { tag: '深度分析', text: '模型预测 Q1 营收 312.8 亿元，超官方指引 25%' },
-      { tag: '利润拐点', text: 'ES8 占比过半，单车型毛利贡献 47.8 亿元' },
-      { tag: '持续盈利', text: 'Non-GAAP 经营利润预计达 13.7 亿元，连续两季度盈利' },
+      { tag: '深度分析', text: '模型预测 Q1 营收 316.4 亿元，超官方指引 64 亿' },
+      { tag: '史诗跨越', text: '完成从“量换钱”到“价值驱动”的财务质变' },
+      { tag: '经营盈利', text: 'Non-GAAP 经营利润 9.6 亿，破除亏损旧梦' },
     ],
     en: [
-      { tag: 'ANALYSIS', text: 'Model est. Q1 revenue ¥31.3B — 25% above guidance' },
-      { tag: 'PROFIT', text: 'ES8 over 50% mix, single-model gross profit ¥4.78B' },
-      { tag: 'EARNINGS', text: 'Non-GAAP op. profit est. ¥1.37B — 2nd consecutive profit' },
+      { tag: 'ANALYSIS', text: 'Model est. Q1 revenue ¥31.6B — ¥6.4B above guidance' },
+      { tag: 'EPIC LEAP', text: 'Strategic pivot from volume-driven to value-driven growth' },
+      { tag: 'EARNINGS', text: 'Non-GAAP OP yield ¥960M — the profit engine is surging' },
     ],
   },
 };

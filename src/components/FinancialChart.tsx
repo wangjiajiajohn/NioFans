@@ -25,21 +25,25 @@ interface TooltipProps {
 const CustomTooltip = ({ active, payload, label, metric }: TooltipProps) => {
   if (active && payload && payload.length) {
     const val = payload[0].value;
-    const isLoss = metric === 'netLoss';
+    const metricVal = metric === 'netLoss' ? (payload[0].payload.netLoss ?? -val) : val;
+    const isProfit = metric === 'netLoss' && metricVal > 0;
+    const isLoss = metric === 'netLoss' && metricVal < 0;
     const unit = metric === 'revenue' || metric === 'netLoss' || metric === 'rd' ? '亿' : '%';
+    const displayColor = isProfit ? '#00C896' : isLoss ? '#FF6B6B' : '#FFF';
+    
     return (
       <div style={{
         background: 'rgba(11, 15, 20, 0.97)',
         backdropFilter: 'blur(12px)',
-        border: `1px solid ${isLoss ? 'rgba(255,92,92,0.2)' : 'rgba(255,255,255,0.1)'}`,
+        border: `1px solid ${isLoss ? 'rgba(255,92,92,0.2)' : isProfit ? 'rgba(0,200,150,0.2)' : 'rgba(255,255,255,0.1)'}`,
         padding: '10px 14px',
         borderRadius: '10px',
         boxShadow: '0 8px 32px rgba(0,0,0,0.8)'
       }}>
         <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '9px', marginBottom: '3px', letterSpacing: '0.06em' }}>{label}</p>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '3px' }}>
-          <span style={{ color: isLoss ? '#FF6B6B' : '#FFF', fontSize: '18px', fontWeight: 700 }}>
-            {isLoss ? val.toFixed(1) : Math.abs(val).toFixed(metric === 'revenue' || metric === 'rd' ? 1 : 1)}
+          <span style={{ color: displayColor, fontSize: '18px', fontWeight: 700 }}>
+            {metric === 'netLoss' ? (metricVal > 0 ? `+${metricVal.toFixed(1)}` : metricVal.toFixed(1)) : val.toFixed(metric === 'revenue' || metric === 'rd' ? 1 : 1)}
           </span>
           <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '9px' }}>{unit}</span>
         </div>
@@ -128,13 +132,21 @@ function FinancialSubChart({ title, subtitle, metric, period, data, axisLabel }:
                   <stop offset="5%"  stopColor="#FF6B6B" stopOpacity={0.9}/>
                   <stop offset="95%" stopColor="#FF6B6B" stopOpacity={0.15}/>
                 </linearGradient>
+                <linearGradient id="profitGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%"  stopColor="#00C896" stopOpacity={0.9}/>
+                  <stop offset="95%" stopColor="#00C896" stopOpacity={0.15}/>
+                </linearGradient>
               </defs>
               <XAxis dataKey="period" axisLine={false} tickLine={false}
                 tick={{ fontSize: 8, fill: 'rgba(255,255,255,0.3)' }}
                 interval={period === 'quarterly' ? 3 : 0}
               />
               <Tooltip content={<CustomTooltip metric={metric} />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
-              <Bar dataKey="netLossAbs" radius={[3, 3, 0, 0]} fill="url(#lossGradient)" />
+              <Bar dataKey="netLossAbs" radius={[3, 3, 0, 0]}>
+                {chartData.map((d, index) => (
+                  <Cell key={`cell-${index}`} fill={d.netLoss > 0 ? 'url(#profitGradient)' : 'url(#lossGradient)'} />
+                ))}
+              </Bar>
             </BarChart>
           ) : (
             <AreaChart data={data} margin={{ top: 8, right: 20, left: -22, bottom: 0 }}>
@@ -228,9 +240,9 @@ function AnnualSnapshotCard({ year, revenue, netLoss, grossMargin, rd, estimated
 
       {/* Net Loss */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-        <p style={{ fontSize: '7px', color: 'rgba(255,255,255,0.3)' }}>净亏损</p>
-        <p style={{ fontSize: '11px', fontWeight: 600, color: lossColor }}>
-          -{lossAbs.toFixed(0)}<span style={{ fontSize: '8px', marginLeft: '1px', opacity: 0.7 }}>亿</span>
+        <p style={{ fontSize: '7px', color: 'rgba(255,255,255,0.3)' }}>{netLoss > 0 ? '净利润' : '净亏损'}</p>
+        <p style={{ fontSize: '11px', fontWeight: 600, color: netLoss > 0 ? '#00C896' : lossColor }}>
+          {netLoss > 0 ? '+' : '-'}{lossAbs.toFixed(0)}<span style={{ fontSize: '8px', marginLeft: '1px', opacity: 0.7 }}>亿</span>
         </p>
       </div>
 
@@ -336,11 +348,15 @@ export default function FinancialChart() {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
-              {/* 净亏损 */}
-              <div style={{ background: 'rgba(255,92,92,0.06)', borderRadius: '10px', padding: '10px 8px', borderLeft: '2px solid #FF6B6B' }}>
-                <p style={{ fontSize: '7px', color: 'rgba(255,255,255,0.3)', marginBottom: '3px', letterSpacing: '0.04em' }}>{t.finNetLoss}</p>
-                <p style={{ fontSize: '14px', fontWeight: 600, color: '#FF6B6B' }}>
-                  -<CountUp end={Math.abs(latestQ.netLoss)} decimals={1} />
+              {/* 净损益 */}
+              <div style={{ 
+                background: latestQ.netLoss > 0 ? 'rgba(0,200,150,0.06)' : 'rgba(255,92,92,0.06)', 
+                borderRadius: '10px', padding: '10px 8px', 
+                borderLeft: `2px solid ${latestQ.netLoss > 0 ? '#00C896' : '#FF6B6B'}` 
+              }}>
+                <p style={{ fontSize: '7px', color: 'rgba(255,255,255,0.3)', marginBottom: '3px', letterSpacing: '0.04em' }}>{latestQ.netLoss > 0 ? '净利润' : t.finNetLoss}</p>
+                <p style={{ fontSize: '14px', fontWeight: 600, color: latestQ.netLoss > 0 ? '#00C896' : '#FF6B6B' }}>
+                  {latestQ.netLoss > 0 ? '+' : '-'}<CountUp end={Math.abs(latestQ.netLoss)} decimals={1} />
                   <span style={{ fontSize: '8px', opacity: 0.7 }}>亿</span>
                 </p>
               </div>
@@ -348,7 +364,7 @@ export default function FinancialChart() {
               <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '10px 8px', borderLeft: '2px solid rgba(255,255,255,0.2)' }}>
                 <p style={{ fontSize: '7px', color: 'rgba(255,255,255,0.3)', marginBottom: '3px', letterSpacing: '0.04em' }}>{t.finKpiCash}</p>
                 <p style={{ fontSize: '14px', fontWeight: 600, color: '#FFF' }}>
-                  382<span style={{ fontSize: '8px', opacity: 0.5 }}>亿</span>
+                  {latestQ.cash ?? 459}<span style={{ fontSize: '8px', opacity: 0.5 }}>亿</span>
                 </p>
               </div>
               {/* 季度研发 */}
