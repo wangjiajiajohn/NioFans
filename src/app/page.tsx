@@ -8,9 +8,10 @@ import PullEasterEgg from '@/components/PullEasterEgg';
 import NewsTicker from '@/components/NewsTicker';
 import StockTicker from '@/components/StockTicker';
 import TestDriveButton from '@/components/TestDriveButton';
+import Q1ForecastSection from '@/components/Q1ForecastSection';
 import { useLang } from '@/contexts/LangContext';
 
-type TabType = 'delivery' | 'financial' | 'power' | 'dynamic';
+type TabType = 'delivery' | 'financial' | 'power' | 'forecast';
 
 const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: string; text: string }[] }> = {
   delivery: {
@@ -49,24 +50,24 @@ const NEWS: Record<TabType, { zh: { tag: string; text: string }[]; en: { tag: st
       { tag: 'CHARGING', text: '28,456 3rd-party poles; 86% users are non-NIO owners' },
     ],
   },
-  dynamic: {
+  forecast: {
     zh: [
-      { tag: '品牌动态', text: '蔚来ES9全球首秀，引领智能电动SUV新潮流' },
-      { tag: '用户社区', text: '蔚来车主社区活跃度持续攀升，用户粘性领先行业' },
-      { tag: '赛事活动', text: '蔚来车队在电动方程式锦标赛中取得优异成绩' },
+      { tag: '深度分析', text: '模型预测 Q1 营收 312.8 亿元，超官方指引 25%' },
+      { tag: '利润拐点', text: 'ES8 占比过半，单车型毛利贡献 47.8 亿元' },
+      { tag: '持续盈利', text: 'Non-GAAP 经营利润预计达 13.7 亿元，连续两季度盈利' },
     ],
     en: [
-      { tag: 'BRAND', text: 'NIO ES9 global debut — leading smart electric SUV trend' },
-      { tag: 'COMMUNITY', text: 'NIO owner community engagement continues to rise' },
-      { tag: 'RACING', text: 'NIO team achieves excellent results in Formula E championship' },
+      { tag: 'ANALYSIS', text: 'Model est. Q1 revenue ¥31.3B — 25% above guidance' },
+      { tag: 'PROFIT', text: 'ES8 over 50% mix, single-model gross profit ¥4.78B' },
+      { tag: 'EARNINGS', text: 'Non-GAAP op. profit est. ¥1.37B — 2nd consecutive profit' },
     ],
   },
 };
 
 export default function AppShell() {
   const { lang, toggleLang, t } = useLang();
-  const [activeTab, setActiveTab] = useState<TabType>('dynamic');
-  const tabs: TabType[] = ['dynamic', 'delivery', 'financial', 'power'];
+  const [activeTab, setActiveTab] = useState<TabType>('forecast');
+  const tabs: TabType[] = ['forecast', 'delivery', 'financial', 'power'];
   const activeIndex = tabs.indexOf(activeTab);
 
   // Scroll to top when tab changes
@@ -246,7 +247,7 @@ export default function AppShell() {
                 onClick={() => setActiveTab(tab)}
                 style={{ width: '100px', textAlign: 'center' }}
               >
-                {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : tab === 'power' ? t.tabPower : '动态'}
+                {tab === 'delivery' ? t.tabDelivery : tab === 'financial' ? t.tabFinancial : tab === 'power' ? t.tabPower : lang === 'zh' ? 'Q1预测' : 'Q1 Est.'}
               </button>
             ))}
           </div>
@@ -272,160 +273,7 @@ export default function AppShell() {
           )}
           {activeTab === 'financial' && <FinancialSection />}
           {activeTab === 'power' && <PowerSection />}
-          {activeTab === 'dynamic' && (
-            <div style={{ padding: '20px' }}>
-              <h3 style={{ color: '#0D0D0D', marginBottom: '20px', fontSize: '18px', fontWeight: 600 }}>最近动态</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {/* 动态卡片 1 */}
-                <div 
-                  style={{
-                    background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
-                    borderRadius: '16px',
-                    padding: '20px',
-                    border: '1px solid var(--nio-blue-glow)',
-                    boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => window.open('https://www.nio.cn/news', '_blank')}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0, 163, 218, 0.1)';
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-                    <span style={{ 
-                      background: 'rgba(0, 163, 218, 0.1)',
-                      color: 'var(--nio-blue)',
-                      fontSize: '10px', 
-                      fontWeight: 600, 
-                      letterSpacing: '0.08em',
-                      padding: '4px 12px',
-                      borderRadius: '100px'
-                    }}>品牌动态</span>
-                    <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>2026-04-09</span>
-                  </div>
-                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>蔚来 ES9 产品技术发布会即将举行</h4>
-                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来 ES9 产品技术发布会将于4月9日 19:00举行，全新旗舰SUV将带来5,280mm车长、2,010mm车宽、1,800mm车高、3,130mm轴距的豪华体验。</p>
-                </div>
-                
-                {/* 动态卡片 2 */}
-                <div 
-                  style={{
-                    background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
-                    borderRadius: '16px',
-                    padding: '20px',
-                    border: '1px solid var(--nio-blue-glow)',
-                    boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => window.open('https://www.nio.cn/news', '_blank')}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0, 163, 218, 0.1)';
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-                    <span style={{ 
-                      background: 'rgba(0, 163, 218, 0.1)',
-                      color: 'var(--nio-blue)',
-                      fontSize: '10px', 
-                      fontWeight: 600, 
-                      letterSpacing: '0.08em',
-                      padding: '4px 12px',
-                      borderRadius: '100px'
-                    }}>技术创新</span>
-                    <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>2026-04-08</span>
-                  </div>
-                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>智能辅助驾驶系统全面升级</h4>
-                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来推出安心高效的全场景智能辅助驾驶体验，依托蔚来云技术，实时关注车辆状态，提供安心之至的出行服务体验。</p>
-                </div>
-                
-                {/* 动态卡片 3 */}
-                <div 
-                  style={{
-                    background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
-                    borderRadius: '16px',
-                    padding: '20px',
-                    border: '1px solid var(--nio-blue-glow)',
-                    boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => window.open('https://www.nio.cn/news', '_blank')}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0, 163, 218, 0.1)';
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-                    <span style={{ 
-                      background: 'rgba(0, 163, 218, 0.1)',
-                      color: 'var(--nio-blue)',
-                      fontSize: '10px', 
-                      fontWeight: 600, 
-                      letterSpacing: '0.08em',
-                      padding: '4px 12px',
-                      borderRadius: '100px'
-                    }}>产品更新</span>
-                    <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>2026-04-07</span>
-                  </div>
-                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>萤火中换新改款</h4>
-                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来萤火中换新改款正式发布，全新设计语言，升级智能驾驶辅助系统，续航里程提升至600公里，为用户带来更加出色的驾驶体验。</p>
-                </div>
-                
-                {/* 动态卡片 4 */}
-                <div 
-                  style={{
-                    background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)',
-                    borderRadius: '16px',
-                    padding: '20px',
-                    border: '1px solid var(--nio-blue-glow)',
-                    boxShadow: '0 4px 16px rgba(0, 163, 218, 0.1)',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => window.open('https://www.nio.cn/news', '_blank')}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 20px rgba(0, 163, 218, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
-                    (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0, 163, 218, 0.1)';
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
-                    <span style={{ 
-                      background: 'rgba(0, 163, 218, 0.1)',
-                      color: 'var(--nio-blue)',
-                      fontSize: '10px', 
-                      fontWeight: 600, 
-                      letterSpacing: '0.08em',
-                      padding: '4px 12px',
-                      borderRadius: '100px'
-                    }}>用户服务</span>
-                    <span style={{ color: 'rgba(0,0,0,0.4)', fontSize: '9px' }}>2026-04-06</span>
-                  </div>
-                  <h4 style={{ color: '#0D0D0D', fontSize: '15px', fontWeight: 600, marginBottom: '10px' }}>NIO House 佛山顺德顺峰山蔚来中心开业</h4>
-                  <p style={{ color: 'rgba(0,0,0,0.6)', fontSize: '13px', lineHeight: 1.6 }}>蔚来中心·佛山顺德顺峰山正式开业，为用户提供Living Café、Gallery、Joy Camp和Community Chamber等多元化服务空间。</p>
-                </div>
-              </div>
-            </div>
-          )}
+          {activeTab === 'forecast' && <Q1ForecastSection />}
         </div>
       </div>
 
